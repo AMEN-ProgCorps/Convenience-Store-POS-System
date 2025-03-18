@@ -12,7 +12,7 @@ Enhance the visual appeal of the project with the following colors:
 - **Light Green**: `#038C3E`
 - **Greyish White**: `#F2F2F2`
 - **Pinkish Red**: `#BF4141`
-- **Greyish White Vol.2**: `#F2F2F2`
+- **Greyish White Vol.2**: `#D9D9D9`
 
 ## 🚀 Getting Started
 1. Clone this repository:

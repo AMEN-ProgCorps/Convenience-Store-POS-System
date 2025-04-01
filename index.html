@@ -6,7 +6,7 @@
         <title>Home</title>
         <link rel="stylesheet" href="style/index.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        <script src="script/index.js"></script>
+        <script src="script/index.js" defer></script>
     </head>
     <body>
         <div class="body_container">
@@ -19,44 +19,52 @@
                         Hello! {Username}
                 </div>
                 <div class="tab-container">
-                    <div class="tab active">
+                    <div class="tab active" data-target="items-content">
                         <div class="tab-icon">
                             <i class="fas fa-th-large"></i> 
                         </div>
                         <div class="tab-label">Items</div>
                     </div>
-                    <div class="tab">
+                    <div class="tab" data-target="discounts-content">
                         <div class="tab-icon"><i class="fas fa-tag"></i></div>
                         <div class="tab-label">Discounts</div>
                     </div>
-                    <div class="tab">
+                    <div class="tab" data-target="orders-content">
                         <div class="tab-icon"><i class="fas fa-shopping-cart"></i></div>
                         <div class="tab-label">My Orders</div>
                     </div>
                 </div>
             </div>
             <div class="center-bar"><!--Main bar for for stuffs-->
-                <div class="center-bar-header">
-                    <div class="tab-toggle">
-                        <i class="fas fa-bars"></i>
-                    </div>
-                    <div class="search-bar-container">
-                        <input type="text" placeholder="Search Product here...">
-                    </div>
-                </div>
-                <div class="center-bar-category-container">
-                    <div class="category active">ALL<br><small>99 Items</small></div>
-                    <div class="category">Food & Snacks<br><small>30 Items</small></div>
-                </div>
-                <div class="center-bar-body-main-container">
-                    <div class="item-card">
-                        <div class="item-image"></div>
-                        <div class="item-details">
-                            <div class="item-name">Item Name</div>
-                            <div class="item-price">₱99.99</div>
-                            <button class="add-to-order">Add to Order</button>
+                <div class="content-container active" id="items-content"><!--Items content-->
+                    <div class="center-bar-header">
+                        <div class="tab-toggle">
+                            <i class="fas fa-bars"></i>
+                        </div>
+                        <div class="search-bar-container">
+                            <input type="text" placeholder="Search Product here...">
                         </div>
                     </div>
+                    <div class="center-bar-category-container">
+                        <div class="category active">ALL<br><small>99 Items</small></div>
+                        <div class="category">Food & Snacks<br><small>30 Items</small></div>
+                    </div>
+                    <div class="center-bar-body-main-container">
+                        <div class="item-card">
+                            <div class="item-image"></div>
+                            <div class="item-details">
+                                <div class="item-name">Item Name</div>
+                                <div class="item-price">₱99.99</div>
+                                <button class="add-to-order">Add to Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-container" id="discounts-content"><!--Discounts content-->
+                    discount
+                </div>
+                <div class="content-container" id="orders-content"><!--My Orders content-->
+                    my orders
                 </div>
             </div>
             <div class="cart-bar"><!--Side bar for Cart-->

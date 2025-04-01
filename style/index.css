@@ -99,6 +99,23 @@ body {
     .center-bar{
         grid-area: 1 / 2 / 6 / 5;
         padding: 15px 25px;
+        overflow-x: hidden;
+    }
+    .content-container {
+        display: none;
+        opacity: 0;
+        transform: translateY(20px); /* Start slightly below */
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .content-container.active {
+        display: block;
+        opacity: 1;
+        transform: translateY(0); /* Move to original position */
+    }
+    .content-container.exiting {
+        opacity: 0;
+        transform: translateX(100%); /* Exit to the right */
+        transition: opacity 0.5s ease, transform 0.5s ease;
     }
         .center-bar-header {
             padding: 10px 20px;

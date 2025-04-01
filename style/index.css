@@ -80,11 +80,19 @@ body {
                     }
                 .tab:hover{
                     cursor: pointer;
-                    background-color: #038C3E;
+                    background-color: #0A401E;
                     color: white;
                     transition: .5s;
                     gap: 15px;
                 }
+                .tab.active{
+                    background-color: #038C3E;
+                    color: white;
+                    gap: 15px;
+                }
+                    .tab.active .tab-label {
+                        font-size: larger;
+                    }
                 .tab:hover .tab-label {
                     font-size: larger;
                 }
@@ -93,10 +101,23 @@ body {
         padding: 15px 25px;
     }
         .center-bar-header {
-            background-color: #fff;
             padding: 10px 20px;
             border-radius: 10px;
+            display: flex;
+                gap: 20px;
+                align-items: center;
         }
+            .tab-toggle {
+                padding: 10px 20px;
+                background-color: white;
+                border-radius: 10px;
+                user-select: none;
+                cursor: pointer;
+                font-weight: bold;
+            }
+            .search-bar-container{
+                user-select: none;
+            }
             .search-bar-container input {
                 width: 300px;
                 padding: 8px 15px;

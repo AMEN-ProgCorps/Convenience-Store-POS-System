@@ -21,6 +21,7 @@ body {
     }
         .logo-container {
             display: flex;
+            user-select: none;
             gap: 10px;
             width: 80%;
             padding: 5%;
@@ -38,6 +39,7 @@ body {
                 font-weight: bold;
             }
         .username-container{
+            user-select: none;
             width: 90%;
             padding: 2.5%;
             display: flex;
@@ -55,6 +57,7 @@ body {
                 width: 80%; /* Adjusted width */
                 padding: 10px 20px 10px 20px; /* Adjusted padding for better spacing */
                 display: grid;
+                user-select: none;
                 grid-template-columns: 40px auto; /* Adjusted grid for icon and label */
                 align-items: center; /* Center content vertically */
                 border-radius: 25px; /* Adjusted border-radius for smoother edges */
@@ -89,6 +92,76 @@ body {
         grid-area: 1 / 2 / 6 / 5;
         padding: 15px 25px;
     }
+        .center-bar-header {
+            background-color: #fff;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+            .search-bar-container input {
+                width: 300px;
+                padding: 8px 15px;
+                border-radius: 20px;
+                border: 1px solid #ccc;
+                font-size: 16px;
+            }
+        .center-bar-category-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+            .category {
+                padding: 15px;
+                background-color: white;
+                border-radius: 15px;
+                width: 120px;
+                text-align: center;
+                font-weight: bold;
+                cursor: pointer;
+                user-select: none;
+            }
+            
+            .category.active {
+                background-color: #038C3E;
+                color: white;
+            }
+        .center-bar-body-main-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+            
+            .item-card {
+                background-color: white;
+                border-radius: 10px;
+                padding: 10px;
+            }
+            
+            .item-image {
+                width: 100%;
+                height: 150px;
+                background-color: #B52E2E;
+                border-radius: 10px;
+            }
+            
+            .item-details {
+                margin-top: 10px;
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                align-items: center;
+            }
+            
+            .add-to-order {
+                padding: 5px 10px;
+                background-color: #038C3E;
+                color: white;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+            }
+            
     .cart-bar{
         background-color: blue;
         grid-area: 1 / 5 / 6 / 6;

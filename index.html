@@ -45,6 +45,9 @@
                         <div class="search-bar-container">
                             <input type="text" placeholder="Search Product here...">
                         </div>
+                        <div class="cart_toggle" onclick="toggleCart()">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
                     </div>
                     <div class="center-bar-category-container active">
                         <div class="category-items-labels">
@@ -53,9 +56,9 @@
                         </div>
                     </div>
                     <div class="center-bar-body-main-container">
-                        <div class="item-card">
-                            <div class="item-image"></div>
-                            <div class="item-details">
+                        <div class="item-card"><!--Item card can be multiplied-->
+                            <div class="item-image"></div><!--Item image-->
+                            <div class="item-details"><!--Items Details and action here-->
                                 <div class="item-name">Item Name</div>
                                 <div class="item-price">₱99.99</div>
                                 <button class="add-to-order">Add to Order</button>
@@ -70,7 +73,7 @@
                     my orders
                 </div>
             </div>
-            <div class="cart-bar"><!--Side bar for Cart-->
+            <div class="cart-bar active"><!--Side bar for Cart-->
                 R
             </div>
         </div>

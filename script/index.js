@@ -38,3 +38,24 @@ function toggleCategory() {
         }, 400); // Match the CSS animation duration
     }
 }
+
+function toggleCart(){
+    const cart_btn = document.querySelector('.cart_toggle');
+    const cart_body = document.querySelector('.cart-bar');
+    cart_btn.classList.toggle('active');
+    if (!cart_body.classList.contains('active')) {
+        cart_body.classList.remove('exit');
+        cart_body.classList.add('active');
+        setTimeout(() => {
+            cart_body.style.display = 'block';
+        }, 500); // Match the CSS animation duration
+    } else {
+        cart_body.classList.remove('active');
+        cart_body.classList.add('exit');
+        setTimeout(() => {
+            cart_body.style.display = 'none';
+        }, 800); // Match the CSS animation duration
+    }
+
+
+}

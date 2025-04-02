@@ -4,15 +4,11 @@ body {
     background-color: #D9D9D9;
 }
 .body_container {
-    display: grid;
-    grid-template-columns: .75fr repeat(4, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
+    display: flex;
     height: 100vh;
 }
     .side-bar {
-        grid-area: 1 / 1 / 6 / 2; 
+        width: 340px;
         background-color: white;
         display: flex;
             align-items: center;
@@ -97,7 +93,7 @@ body {
                     font-size: larger;
                 }
     .center-bar{
-        grid-area: 1 / 2 / 6 / 5;
+        flex-grow: 3;
         padding: 15px 25px;
         overflow-x: hidden;
     }
@@ -208,6 +204,19 @@ body {
                 background-color: #038C3E;
                 color: white;
             }
+        .cart_toggle{
+            padding: 10px 20px;
+            background-color: white;
+            border-radius: 10px;
+            user-select: none;
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+            .cart_toggle.active {
+                background-color: #038C3E;
+                color: white;
+            }
         .center-bar-body-main-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -245,7 +254,34 @@ body {
                 cursor: pointer;
             }
             
-    .cart-bar{
+    .cart-bar {
+        width: 540px;
         background-color: blue;
-        grid-area: 1 / 5 / 6 / 6;
     }
+        .cart-bar.exit {
+            animation: slow-exit 0.5s ease-in-out forwards; /* Adjusted duration and easing */
+        }
+            @keyframes slow-exit {
+                0% {
+                    width: 540px; /* Start with full width */
+                    opacity: 1;
+                }
+                100% {
+                    width: 0; /* Gradually reduce width to 0 */
+                    opacity: 0;
+                }
+            }
+        .cart-bar.active {
+            animation: slow-enter 0.5s ease-in-out forwards; /* Adjusted duration and easing */
+        }
+            @keyframes slow-enter {
+                0% {
+                    width: 0; /* Start with width 0 */
+                    opacity: 0;
+                }
+                100% {
+                    width: 540px; /* Gradually increase to full width */
+                    opacity: 1;
+                }
+                
+            }

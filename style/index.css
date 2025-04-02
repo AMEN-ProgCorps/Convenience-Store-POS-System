@@ -124,14 +124,22 @@ body {
                 gap: 20px;
                 align-items: center;
         }
-            .tab-toggle {
+            .category-toggle {
                 padding: 10px 20px;
                 background-color: white;
                 border-radius: 10px;
                 user-select: none;
+                font-size: 20px;
                 cursor: pointer;
                 font-weight: bold;
             }
+            .category-toggle.active {
+                background-color: #038C3E;
+                color: white;
+            }
+                .category-toggle.active i {
+                    font-size: 20px;
+                }
             .search-bar-container{
                 user-select: none;
             }
@@ -143,10 +151,47 @@ body {
                 font-size: 16px;
             }
         .center-bar-category-container {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
+            display: none;
+            overflow: hidden;
+            
         }
+            @keyframes scale-out-ver-top {
+                0% {
+                    transform: scaleY(1);
+                    transform-origin: top;
+                    opacity: 1;
+                }
+                100% {
+                    transform: scaleY(0.8); /* Slightly shrink for smoother effect */
+                    transform-origin: top;
+                    opacity: 0; /* Fade out for smoothness */
+                }
+            }
+            @keyframes scale-in-ver-top {
+                0% {
+                    transform: scaleY(0.8); /* Start slightly shrunk */
+                    transform-origin: top;
+                    opacity: 0; /* Fade in for smoothness */
+                }
+                100% {
+                    transform: scaleY(1);
+                    transform-origin: top;
+                    opacity: 1;
+                }
+            }
+            .center-bar-category-container.active {
+                display: block;
+                animation: scale-in-ver-top 0.4s ease-in-out both; /* Adjusted duration and easing */
+            }
+            .center-bar-category-container.exiting {
+                display: block;
+                animation: scale-out-ver-top 0.4s ease-in-out both; /* Adjusted duration and easing */
+            }
+            .category-items-labels{
+                display: flex;
+                gap: 15px;
+                margin-top: 20px;
+            }
         
             .category {
                 padding: 15px;

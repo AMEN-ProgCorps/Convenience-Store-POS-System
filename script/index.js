@@ -24,3 +24,17 @@ document.querySelectorAll('.tab').forEach(tab => {
      
     });
 });
+
+function toggleCategory() {
+    const category = document.querySelector('.category-toggle');
+    const category_body = document.querySelector('.center-bar-category-container');
+    category.classList.toggle('active');
+    if (!category_body.classList.contains('active')) {
+        category_body.classList.add('active');
+    } else {
+        category_body.classList.add('exiting');
+        setTimeout(() => {
+            category_body.classList.remove('active', 'exiting');
+        }, 400); // Match the CSS animation duration
+    }
+}

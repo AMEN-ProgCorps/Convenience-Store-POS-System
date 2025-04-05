@@ -54,7 +54,7 @@ function toggleCart(){
         cart_body.classList.add('exit');
         setTimeout(() => {
             cart_body.style.display = 'none';
-        }, 800); // Match the CSS animation duration
+        }, 400); // Match the CSS animation duration
     }
 
 

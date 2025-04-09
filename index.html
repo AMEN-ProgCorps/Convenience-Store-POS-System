@@ -67,7 +67,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="item-card"></div>
+                        <script>
+                            const centerBarBodyMainContainer = document.querySelector('.center-bar-body-main-container');
+                            for (let i = 0; i < 10; i++) {
+                                const itemCard = document.createElement('div');
+                                itemCard.className = 'item-card';
+                                centerBarBodyMainContainer.appendChild(itemCard);
+                            }
+                        </script>
                     </div>
                 </div>
                 <div class="content-container" id="discounts-content"><!--Discounts content-->
@@ -80,9 +87,26 @@
             <div class="cart-bar active"><!--Side bar for Cart-->
                 <div class="add-cart-container">
                     <div class="cart-top">tops</div>
-                    <div class="cart-down">down</div>
+                    <div class="cart-down">
+                        <div class="total_container">
+                            prices
+                        </div>
+                        <div class="payment_container">
+                            <div class="box-toggle" onclick="togglePayment()">
+                                <div class="cash-box active">
+                                    Cash
+                                </div>
+                                <div class="ewallet-box">
+                                    e-Wallet
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order_container">
+                            <button type="submit" class="order-button">Place Order</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </div> 
         </div>
     </body>
 </html>

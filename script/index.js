@@ -25,6 +25,7 @@ document.querySelectorAll('.tab').forEach(tab => {
     });
 });
 
+
 function toggleCategory() {
     const category = document.querySelector('.category-toggle');
     const category_body = document.querySelector('.center-bar-category-container');
@@ -58,4 +59,11 @@ function toggleCart(){
     }
 
 
+}
+
+function togglePayment() {
+    const cash = document.querySelector('.cash-box');
+    const ewallet = document.querySelector('.ewallet-box');
+    cash.classList.toggle('active');
+    ewallet.classList.toggle('active');
 }

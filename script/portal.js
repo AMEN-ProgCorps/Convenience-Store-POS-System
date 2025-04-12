@@ -31,5 +31,15 @@ function toggleChoice(target) {
             Array.from(register).forEach(item => item.classList.remove("deactive_show"));
             Array.from(choices).forEach(choice => choice.classList.add("active_show"));
         }, 500); // Match the CSS transition duration
+
+        // Clear input fields in login and register containers
+        Array.from(login).forEach(item => {
+            const inputs = item.querySelectorAll("input");
+            inputs.forEach(input => input.value = "");
+        });
+        Array.from(register).forEach(item => {
+            const inputs = item.querySelectorAll("input");
+            inputs.forEach(input => input.value = "");
+        });
     }
 }

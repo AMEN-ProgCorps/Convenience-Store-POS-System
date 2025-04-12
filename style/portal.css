@@ -152,6 +152,7 @@ background: linear-gradient(347deg, rgba(0, 66, 29, 1) 19%, rgba(0, 120, 52, 1) 
         justify-content: center;
         align-items: center;
         gap: 20px;
+    padding-bottom: 20px;
 } 
     .back_button {
         user-select: none;

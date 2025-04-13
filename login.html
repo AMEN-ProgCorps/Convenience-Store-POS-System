@@ -39,7 +39,7 @@
                         <label for="password"><i class="fas fa-lock"></i></label>
                         <input type="password" id="password" placeholder="Enter your password" required>
                     </div>
-                    <button type="submit" class="choice_item submit_button" onclick="alert('Button pressed!')">Login</button>
+                    <button type="submit" class="choice_item submit_button" onclick="Checkstatus()">Login</button>
                 </div>
                 <div class="back_button" onclick="toggleChoice('choice')">Back</div>
             </div>
@@ -67,9 +67,19 @@
                         <label for="confirm_password"><i class="fas fa-lock"></i></label>
                         <input type="password" id="confirm_password" placeholder="Confirm your password" required>
                     </div>
-                    <button type="submit" class="choice_item submit_button" onclick="alert('Button pressed!')">Register</button>
+                    <button type="submit" class="choice_item submit_button" onclick="Checkstatus()">Register</button>
                 </div>
                 <div class="back_button" onclick="toggleChoice('choice')">Back</div>
+            </div>
+        </div>
+        <div class="status_container">
+            <div class="box">
+                <div class="text_box">
+                    <span class="sublabel">ALERT!</span>
+                    <div class="label_status">
+                        <p>Button is pressed here</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

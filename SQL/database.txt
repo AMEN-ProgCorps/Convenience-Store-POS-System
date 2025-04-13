@@ -1,0 +1,11 @@
+-- Databse Creation 
+CREATE DATABASE post_system;
+
+/*
+Created by AMEN-ProgCorps Development Team
+This code is Open Source meaning anyone has
+access and free modify its post_system
+
+- MacCloudGZ(2025)
+txtfile created on 13/04/2025 15:43 UTC
+*/

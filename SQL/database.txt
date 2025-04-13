@@ -1,11 +1,27 @@
--- Databse Creation 
-CREATE DATABASE post_system;
-
 /*
 Created by AMEN-ProgCorps Development Team
 This code is Open Source meaning anyone has
-access and free modify its post_system
+access and free modify its Code Structure
 
 - MacCloudGZ(2025)
 txtfile created on 13/04/2025 15:43 UTC
 */
+
+-- Database Creation 
+CREATE DATABASE ConvenienceStorePOST;
+
+USE ConvenienceStorePOST;
+
+-- Users Table Creation
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    verification BOOLEAN NOT NULL DEFAULT 0,
+    dateregistered DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Insert Guest Data
+INSERT INTO users (username, password, email, verification, dateregistered)
+VALUES ('guest', '', 'guest@example.com', 0, CURDATE());

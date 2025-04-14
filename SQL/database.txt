@@ -25,3 +25,10 @@ CREATE TABLE users (
 -- Insert Guest Data
 INSERT INTO users (username, password, email, verification, dateregistered)
 VALUES ('guest', '', 'guest@example.com', 0, CURDATE());
+
+--Users Verification Table
+CREATE TABLE verification_token (
+    id INT PRIMARY KEY,
+    verification_token VARCHAR(255) NOT NULL,
+    FOREIGN KEY (id) REFERENCES users(id) ON DELETE CASCADE
+);

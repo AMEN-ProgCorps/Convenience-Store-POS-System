@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACCESS PORTAL</title>
     <link rel="stylesheet" href="../style/portal.css">
-    
+    <script src="https://www.google.com/recaptcha/enterprise.js?render=6LeD9xcrAAAAABd3Q1NbdwgV0iF4Adpj1NNzFlC1"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="../script/portal.js" defer></script>
 </head>
@@ -27,6 +27,7 @@
         </div>
         <div class="recaptcha_container">
             <div class="box">
+                recaptcha
                 <!--Recaptcha for .php layout-->
             </div>
         </div>
@@ -35,7 +36,7 @@
                 <div class="text_box">
                     <span class="label">Welcome</span>
                     <span class="sublabel">Login to your create account</span>
-                </div>
+                </div> 
                 <div class="input_box">
                     <div class="input_field">
                         <label for="username"><i class="fas fa-user"></i></label>
@@ -45,7 +46,7 @@
                         <label for="password"><i class="fas fa-lock"></i></label>
                         <input type="password" id="password" placeholder="Enter your password" required>
                     </div>
-                    <button type="submit" class="choice_item submit_button" onclick="Checkstatus()">Login</button>
+                    <button type="submit" class="choice_item submit_button" onclick="Checkstatus();">Login</button>
                 </div>
                 <div class="back_button" onclick="toggleChoice('choice')">Back</div>
             </div>

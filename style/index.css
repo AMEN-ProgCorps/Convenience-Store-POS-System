@@ -47,7 +47,9 @@ body {
             .logo-icon {
                 width: 50px;
                 aspect-ratio: 1/1;
-                background-color: red;
+                background-image: url(../style/ToMart_Logo.png); /* Placeholder for icon */
+                background-position: center;
+                background-size: cover; /* Ensured icon covers the area */
                 border-radius: 50%;
             }
             .logo-label {

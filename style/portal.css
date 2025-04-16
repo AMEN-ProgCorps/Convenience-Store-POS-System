@@ -20,8 +20,9 @@
 }
 
 html,body{
-    background: #00421d;
-background: linear-gradient(347deg, rgba(0, 66, 29, 1) 19%, rgba(0, 120, 52, 1) 52%, rgba(3, 140, 62, 1) 75%, rgba(0, 171, 74, 1) 100%);
+    /* background: #00421d; */
+    background: linear-gradient(347deg, rgba(0, 66, 29, 1) 19%, rgba(0, 120, 52, 1) 52%, rgba(3, 140, 62, 1) 75%, rgba(0, 171, 74, 1) 100%);
+    /* background: linear-gradient(347deg,rgba(82, 0, 10, 1) 19%, rgba(140, 0, 16, 1) 52%, rgba(199, 0, 23, 1) 75%, rgba(252, 0, 29, 1) 100%); */
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -55,7 +56,7 @@ background: linear-gradient(347deg, rgba(0, 66, 29, 1) 19%, rgba(0, 120, 52, 1) 
         }
         .logo{
             user-select: none;
-            background-color: #d3d3d3;
+            /* background-color: #d3d3d3; */
             width: 120px;
             aspect-ratio: 1/1;
             display: flex;

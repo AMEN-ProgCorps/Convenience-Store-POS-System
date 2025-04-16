@@ -52,16 +52,11 @@ function toggleChoice(target) {
         }, 600); // Match the CSS transition duration
     }
 }
-function Checkstatus(){
-    const recaptcha = document.getElementsByClassName("recaptcha_container");
+function Checkstatus() {
     const status = document.getElementsByClassName("status_container");
-    if(!recaptcha[0].classList.contains("show_recaptcha")){
-        BotChecker();
-    }
-    if(!status[0].classList.contains("show_status")){
+    if (!status[0].classList.contains("show_status")) {
         Array.from(status).forEach(item => item.classList.add("show_status"));
-    }
-    else{
+    } else {
         Array.from(status).forEach(item => item.classList.remove("show_status"));
         Array.from(status).forEach(item => item.classList.add("exit_status"));
         setTimeout(() => {
@@ -69,6 +64,14 @@ function Checkstatus(){
         }, 500); // Match the CSS transition duration
     }
 }
+
+// Prevent site reset when showing errors
+document.addEventListener('DOMContentLoaded', function () {
+    const statusContainer = document.querySelector('.status_container');
+    if (statusContainer && statusContainer.classList.contains('show_status')) {
+        statusContainer.scrollIntoView({ behavior: 'smooth' });
+    }
+});
 
 function BotChecker(){
     const recaptcha = document.getElementsByClassName("recaptcha_container");

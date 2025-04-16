@@ -8,9 +8,9 @@ txtfile created on 13/04/2025 15:43 UTC
 */
 
 -- Database Creation 
-CREATE DATABASE ConvenienceStorePOST;
+CREATE DATABASE convenience_store_post;
 
-USE ConvenienceStorePOST;
+USE convenience_store_post;
 
 -- Users Table Creation
 CREATE TABLE users (
@@ -30,5 +30,12 @@ VALUES ('guest', '', 'guest@example.com', 0, CURDATE());
 CREATE TABLE verification_token (
     id INT PRIMARY KEY,
     verification_token VARCHAR(255) NOT NULL,
+    FOREIGN KEY (id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE account_ip (
+    id INT NOT NULL,
+    ip_address VARCHAR(45) NOT NULL,
+    PRIMARY KEY (id),
     FOREIGN KEY (id) REFERENCES users(id) ON DELETE CASCADE
 );

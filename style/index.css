@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inspiration&display=swap');
 * {
     --sb-track-color: #232e33;
     --sb-thumb-color: #6baf8d;
@@ -55,8 +56,9 @@ body {
             .logo-label {
                 display: flex;
                     align-items: center;
-                font-size: large;
-                font-weight: bold;
+                font-family: "Inspiration", cursive; /* Ensure the font matches the target style */
+                font-size: 2rem; /* Adjust font size for better visibility */
+                font-weight: normal; /* Ensure the font weight aligns with the target */
             }
         .username-container{
             user-select: none;

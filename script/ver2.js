@@ -66,6 +66,7 @@ function togglePayment() {
 }
 
 function addCartToggle(itemCard) {
+    resetShownumber();
     // Deactivate any currently active item-card
     const activeCard = document.querySelector('.item-card.active');
     if (activeCard && activeCard !== itemCard) {
@@ -112,3 +113,57 @@ function addCartToggle(itemCard) {
         console.error('Placeholder button not found in this item-card!');
     }
 }
+
+function removeCartToggle() {
+    // Find the currently active item-card
+    const activeCard = document.querySelector('.item-card.active');
+    if (activeCard) {
+        activeCard.classList.remove('active'); // Remove the active class from the item-card
+
+        // Reset the add-to-order button
+        const placeholderButton = activeCard.querySelector('.add-to-order');
+        if (placeholderButton) {
+            placeholderButton.classList.add('active'); // Restore the active state
+        }
+
+        // Hide the total-input-container
+        const actualInput = activeCard.querySelector('.total-input-container');
+        if (actualInput) {
+            actualInput.classList.remove('active'); // Hide the input container
+        }
+
+        // Reset the total_input container
+        const inputDelay = activeCard.querySelector('.total_input');
+        if (inputDelay) {
+            inputDelay.classList.remove('flex'); // Remove the flex class
+            inputDelay.classList.add('late'); // Add the late class for reset
+        }
+    } else {
+        console.error('No active item-card found to reset!');
+    }
+}
+// Reset shownumber to zero for all item-cards
+function resetShownumber() {
+    document.querySelectorAll('.item-card .shownumber').forEach(shownumber => {
+        shownumber.textContent = '0'; // Reset the value to zero
+    });
+}
+// Add event listeners for subtract buttons
+document.querySelectorAll('.total_input-subtract').forEach(button => {
+    button.addEventListener('click', () => {
+        const shownumber = button.nextElementSibling;
+        let currentValue = parseInt(shownumber.textContent);
+        if (currentValue > 0) {
+            shownumber.textContent = currentValue - 1;
+        }
+    });
+});
+
+// Add event listeners for add buttons
+document.querySelectorAll('.total_input-add').forEach(button => {
+    button.addEventListener('click', () => {
+        const shownumber = button.previousElementSibling;
+        let currentValue = parseInt(shownumber.textContent);
+        shownumber.textContent = currentValue + 1;
+    });
+});

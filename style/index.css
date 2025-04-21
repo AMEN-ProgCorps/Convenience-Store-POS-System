@@ -439,15 +439,15 @@ body {
                 
             }
         .add-cart-container {
-            padding: 2.5% 2.5% 0 2.5%;
+            padding: 0 2.5%;
             width: 95%;
-            height: 98%;
+            height: 100%;
             display: flex;
                 flex-direction: column;
                 justify-content: center;
         }
             .cart-top {
-                flex-grow: 4;
+                flex-grow: 3;
                 background-color: blue;
             }   
             .cart-down{ 
@@ -457,9 +457,22 @@ body {
                     align-items: center;
             }   
                 .total_container {
-                    background-color: red;
-                    flex-grow: 5;
+                    width: 100%;
+                    display: flex;
+                        align-items: center;
+                    flex-direction: column;
+                    flex-grow: 1;
                 }
+                    .discount-container{
+                        width: 100%;
+                        flex-grow: 1;
+                        background-color: yellow;
+                    }
+                    .pricing-container{
+                        width: 100%;
+                        flex-grow: 4;
+                        background-color: red;
+                    }
                 .payment_container{
                     display: flex;
                         justify-content: center;
@@ -491,6 +504,7 @@ body {
                             background-position: left;
                             transition: 1s;
                             font-weight: bolder;
+                            font-size: 24px;
                             display: flex;
                                 justify-content: center;
                                 align-items: center;
@@ -511,6 +525,7 @@ body {
                             height: 100%;
                             font-weight: bolder;
                             width: auto;
+                            font-size: 24px;
                             transition: 1s;
                             background: linear-gradient(270deg, rgba(65,165,146,0) 0%, rgba(46,130,106,0) 31%, rgba(10,64,30,1) 53%, rgba(10,64,30,1) 100%);
                             background-size: 1000%;
@@ -538,7 +553,7 @@ body {
                         background-color: #0A401E;
                         color: white;
                         border-radius: 30px;
-                        font-size: 40px;
+                        font-size: 32px;
                         border:none;
                     }
                     .order-button:hover{

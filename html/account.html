@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ToMart</title>
+        <link rel="icon" href="../style/ToMart_Logo.png" type="image/x-icon">
+        <link rel="stylesheet" href="../style/index.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <script src="../script/ver2.js" defer></script>
+    </head>
+    <body>
+        <div class="body_container">
+            <div class="side-bar"><!--Side bar for tabs-->
+                <div class="logo-container">
+                    <div class="logo-icon"></div>
+                    <div class="logo-label">ToMart</div> 
+                </div>
+                <div class="username-container">
+                        Hello! {Username}
+                </div>
+                <div class="tab-container">
+                    <div class="items-tab tab" onclick="toggleMenu('items')">
+                        <div class="tab-icon"><i class="fas fa-th-large"></i></div>
+                        <div class="tab-label">Items</div>
+                    </div>
+                    <div class="order-tab tab active">
+                        <div class="tab-icon"><i class="fas fa-shopping-cart"></i></div>
+                        <div class="tab-label">My Orders</div>
+                    </div>
+                </div>
+            </div>
+            <div class="center-bar"><!--Main bar for for stuffs-->
+                <div class="content-container active order-container"><!--My Orders content-->
+                    my orders
+                </div>
+            </div>
+        </div> 
+    </body>
+</html>

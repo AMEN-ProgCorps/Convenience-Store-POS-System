@@ -7,7 +7,7 @@
         <link rel="icon" href="../style/ToMart_Logo.png" type="image/x-icon">
         <link rel="stylesheet" href="../style/index.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        <script src="../script/index.js" defer></script>
+        <script src="../script/ver2.js" defer></script>
     </head>
     <body>
         <div class="body_container">
@@ -20,21 +20,18 @@
                         Hello! {Username}
                 </div>
                 <div class="tab-container">
-                    <div class="tab active" data-target="items-content">
-                        <div class="tab-icon">
-                            <i class="fas fa-th-large"></i> 
-                        </div>
+                    <div class="items-tab tab active">
+                        <div class="tab-icon"><i class="fas fa-th-large"></i></div>
                         <div class="tab-label">Items</div>
                     </div>
-                    <div class="tab" data-target="orders-content">
+                    <div class="order-tab tab" onclick="toggleMenu('order')">
                         <div class="tab-icon"><i class="fas fa-shopping-cart"></i></div>
                         <div class="tab-label">My Orders</div>
                     </div>
                 </div>
-                <div class="side-bar"></div>
             </div>
             <div class="center-bar"><!--Main bar for for stuffs-->
-                <div class="content-container active" id="items-content"><!--Items content-->
+                <div class="content-container items-container active"><!--Items content-->
                     <div class="center-bar-header">
                         <div class="category-toggle active" onclick="toggleCategory()">
                             <i class="fas fa-bars"></i>
@@ -60,7 +57,60 @@
                                 <div class="item-name">Item Name</div>
                                 <div class="item-price">₱99.99</div>
                                 <div class="div_button-container">
-                                    <button class="add-to-order">Add to Order</button>
+                                    <div class="add-to-order active" onclick="addCartToggle(this.closest('.item-card'))">Add&nbsp;<p>to Order</p></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-card"><!--Item card can be multiplied-->
+                            <div class="item-image"></div><!--Item image-->
+                            <div class="item-details"><!--Items Details and action here-->
+                                <div class="item-name">Item Name</div>
+                                <div class="item-price">₱99.99</div>
+                                <div class="div_button-container active">
+                                    <div class="total-input-container">
+                                        <button class="add_cart"><i class="fa-solid fa-cart-shopping"></i>Add</button>
+                                        <div class="total_input">
+                                            <button class="total_input-subtract"><i class="fa-solid fa-minus"></i></button>
+                                            <div class="shownumber">0</div>
+                                            <button class="total_input-add"><i class="fa-solid fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-card"><!--Item card can be multiplied-->
+                            <div class="item-image"></div><!--Item image-->
+                            <div class="item-details"><!--Items Details and action here-->
+                                <div class="item-name">Item Name</div>
+                                <div class="item-price">₱99.99</div>
+                                <div class="div_button-container">
+                                    <div class="add-to-order active" onclick="addCartToggle(this.closest('.item-card'))">Add&nbsp;<p>to Order</p></div>
+                                    <div class="total-input-container">
+                                        <button class="add_cart"><i class="fa-solid fa-cart-shopping"></i>Add</button>
+                                        <div class="total_input">
+                                            <button class="total_input-subtract"><i class="fa-solid fa-minus"></i></button>
+                                            <div class="shownumber">0</div>
+                                            <button class="total_input-add"><i class="fa-solid fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-card"><!--Item card can be multiplied-->
+                            <div class="item-image"></div><!--Item image-->
+                            <div class="item-details"><!--Items Details and action here-->
+                                <div class="item-name">Item Name</div>
+                                <div class="item-price">₱99.99</div>
+                                <div class="div_button-container">
+                                    <div class="add-to-order active" onclick="addCartToggle(this.closest('.item-card'))">Add&nbsp;<p>to Order</p></div>
+                                    <div class="total-input-container">
+                                        <button class="add_cart"><i class="fa-solid fa-cart-shopping"></i>Add</button>
+                                        <div class="total_input">
+                                            <button class="total_input-subtract"><i class="fa-solid fa-minus"></i></button>
+                                            <div class="shownumber">0</div>
+                                            <button class="total_input-add"><i class="fa-solid fa-plus"></i></button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -73,9 +123,6 @@
                             }
                         </script>
                     </div>
-                </div>
-                <div class="content-container" id="orders-content"><!--My Orders content-->
-                    my orders
                 </div>
             </div>
             <div class="cart-bar active"><!--Side bar for Cart-->
@@ -102,31 +149,5 @@
                 </div>
             </div> 
         </div> 
-        <script>
-            // Save active tab to localStorage
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const target = tab.getAttribute('data-target');
-                    localStorage.setItem('activeTab', target);
-                });
-            });
-
-            // Restore active tab on page load
-            document.addEventListener('DOMContentLoaded', () => {
-                const activeTab = localStorage.getItem('activeTab') || 'items-content';
-                tabs.forEach(tab => {
-                    const target = tab.getAttribute('data-target');
-                    const content = document.getElementById(target);
-                    if (target === activeTab) {
-                        tab.classList.add('active');
-                        content.classList.add('active');
-                    } else {
-                        tab.classList.remove('active');
-                        content.classList.remove('active');
-                    }
-                });
-            });
-        </script>
     </body>
 </html>

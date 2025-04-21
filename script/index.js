@@ -1,3 +1,4 @@
+// Due to new design this function is not used anymore
 document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
         // Remove active class from all tabs 
@@ -5,7 +6,7 @@ document.querySelectorAll('.tab').forEach(tab => {
         // Add active class to the clicked tab
         if (tab.classList.contains('active')) return;
         tab.classList.add('active');
-
+        
         // Handle content container animations
         const activeContainer = document.querySelector('.content-container.active');
         if (activeContainer) {
@@ -24,7 +25,6 @@ document.querySelectorAll('.tab').forEach(tab => {
      
     });
 });
-
 
 function toggleCategory() {
     const category = document.querySelector('.category-toggle');

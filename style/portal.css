@@ -196,6 +196,7 @@ html,body{
     padding-bottom: 20px;
 } 
     .back_button {
+        cursor: pointer;
         user-select: none;
         color: #686868;
         margin-top: 10px;

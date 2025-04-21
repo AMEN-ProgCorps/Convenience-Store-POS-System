@@ -70,14 +70,29 @@ function addCartToggle(itemCard) {
     const activeCard = document.querySelector('.item-card.active');
     if (activeCard && activeCard !== itemCard) {
         activeCard.classList.remove('active');
+
+        // Reset the add-to-order button of the previously active card
+        const previousPlaceholderButton = activeCard.querySelector('.add-to-order');
+        const previousInputContainer = activeCard.querySelector('.total-input-container');
+        if (previousPlaceholderButton) {
+            previousPlaceholderButton.classList.add('active'); // Restore the active state
+        }
+        if (previousInputContainer) {
+            previousInputContainer.classList.remove('active'); // Hide the input container
+        }
     }
 
     // Activate the clicked item-card
     itemCard.classList.add('active');
 
     const placeholderButton = itemCard.querySelector('.add-to-order'); // Target the button within the specific item-card
+    const actualInput = itemCard.querySelector('.total-input-container'); // Target the input within the specific item-card
     if (placeholderButton) {
-        alert('Button clicked for this item!');
+        placeholderButton.classList.add('exiting');
+        setTimeout(() => {
+            placeholderButton.classList.remove('active', 'exiting'); // Hide the add-to-order button
+            actualInput.classList.add('active'); // Show the input container
+        }, 500); // Match the animation duration
     } else {
         console.error('Placeholder button not found in this item-card!');
     }

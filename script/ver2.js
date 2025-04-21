@@ -87,11 +87,26 @@ function addCartToggle(itemCard) {
 
     const placeholderButton = itemCard.querySelector('.add-to-order'); // Target the button within the specific item-card
     const actualInput = itemCard.querySelector('.total-input-container'); // Target the input within the specific item-card
+    const inputDelay = itemCard.querySelector('.total_input'); // Target the total input within the specific item-card
     if (placeholderButton) {
         placeholderButton.classList.add('exiting');
         setTimeout(() => {
             placeholderButton.classList.remove('active', 'exiting'); // Hide the add-to-order button
             actualInput.classList.add('active'); // Show the input container
+            setTimeout(() => {
+                inputDelay.classList.add('late'); // Add 'late' class after showing
+                setTimeout(() => {
+                    inputDelay.classList.add('flex'); // Add 'flex' class after showing
+                }, 1400); // Match the animation duration
+            }, 900); // Match the CSS animation duration
+
+            // Remove 'late' and 'flex' classes from other item-cards when clicking a new one
+            const allItemCards = document.querySelectorAll('.item-card .total_input');
+            allItemCards.forEach((input) => {
+                if (input !== inputDelay) {
+                    input.classList.remove('late', 'flex');
+                }
+            });
         }, 500); // Match the animation duration
     } else {
         console.error('Placeholder button not found in this item-card!');

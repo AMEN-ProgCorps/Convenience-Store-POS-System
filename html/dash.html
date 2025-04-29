@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .dashed-line {
+            --s:15px; /* control the space between dashes */
+
+            width: 6px;
+            height: 180px;
+            background: 
+            radial-gradient(circle closest-side,#4b9ed9 98%,#0000) 0 0/100% var(--s),
+            linear-gradient(#4b9ed9 50%, #0000 0) 0 calc(var(--s)/2)/100% calc(2*var(--s));
+            }
+
+            .dashed-line-alt {
+            --s:15px;
+
+            height: 6px;
+            background: 
+            radial-gradient(circle closest-side,#4b9ed9 98%,#0000) 0 0/var(--s) 100%,
+            linear-gradient(90deg,#4b9ed9 50%, #0000 0) calc(var(--s)/2) 0/calc(2*var(--s)) 100%;
+            }
+    </style>
+</head>
+<body>
+    <div class="dashed-line"></div>
+    <div class="dashed-line-alt"></div>
+</body>
+</html>

@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="../style/index.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <script src="../script/ver2.js" defer></script>
+        <script src="../script/sortingCategory.js"></script>
     </head>
     <body>
         <div class="body_container">
@@ -45,13 +46,13 @@
                         </div>
                     </div>
                     <div class="center-bar-category-container active">
-                        <div class="category-items-labels">
+                        <div class="category-items-labels"><!--Filter section-->
                             <div class="category active">ALL<br><small>99 Items</small></div>
                             <div class="category">Food & Snacks<br><small>30 Items</small></div>
                         </div>
                     </div>
                     <div class="center-bar-body-main-container">
-                        <div class="item-card"><!--Item card can be multiplied-->
+                        <div class="item-card" id="001"><!--Item card can be multiplied-->
                             <div class="item-image"></div><!--Item image-->
                             <div class="item-details"><!--Items Details and action here-->
                                 <div class="item-name">Item Name</div>
@@ -69,19 +70,46 @@
                                 </div>
                             </div>
                         </div>
-                        <script>
+                        <!-- <script>
                             const centerBarBodyMainContainer = document.querySelector('.center-bar-body-main-container');
                             for (let i = 0; i <3; i++) {
                                 const itemCard = document.querySelector('.item-card').cloneNode(true);
                                 centerBarBodyMainContainer.appendChild(itemCard);
                             }
-                        </script>
+                        </script> -->
                     </div>
                 </div>
             </div>
             <div class="cart-bar active"><!--Side bar for Cart-->
                 <div class="add-cart-container">
-                    <div class="cart-top">tops</div>
+                    <div class="cart-top">
+                        <div class="cart-top-header">
+                            <div class="cart-top-header-content">
+                                <div class="cart-top-header-label">My Cart<i class="fas fa-shopping-cart"></i> </div>
+                                <div class="cart-top-header-acccount"> {Account_Name} </div>
+                            </div>
+                        </div>
+                        <div class="dashed-line"></div>
+                        <div class="cart-top-body">
+                            <div class="cart-top-body-product"><!--This is the product layout in cart use this for cloning-->
+                                <div class="cart-top-body-product-image"></div>
+                                <div class="cart-top-body-product-label">
+                                    <div class="cart-top-body-product-label-name">
+                                        Item Name
+                                    </div>
+                                    <div class="cart-top-body-product-label-details">
+                                        <div class="cart-top-body-product-label-details-price">
+                                            P99.99
+                                        </div>
+                                        <div class="cart-top-body-product-label-details-quantity">
+                                            {Quantity}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cart-top-body-product-total_price">₱99.99</div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="cart-down">
                         <div class="total_container">
                             <div class="discount-container">
@@ -89,12 +117,13 @@
                                     <div class="discount-layer">
                                         <div class="discount-label">ToMart Discount</div>
                                         <div class="discount-active">Select Voucher</div>
+                                        <!--if discount is chosen select Voucher will be change to tha t discount-->
                                     </div>
                                 </div>
                             </div>
                             <div class="pricing-container">
                                 <div class="total-box">
-                                    m
+                                    
                                 </div>
                             </div>
                         </div>

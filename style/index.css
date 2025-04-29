@@ -451,8 +451,96 @@ body {
         }
             .cart-top {
                 flex-grow: 3;
-                background-color: blue;
+                display: flex;
+                    flex-direction: column;
             }   
+                .dashed-line {
+                    --s:15px;
+        
+                    height: 2px;
+                    background: 
+                    radial-gradient(circle closest-side,#000000 98%,#0000) 0 0/var(--s) 100%,
+                    linear-gradient(90deg,#000000 50%, #0000 0) calc(var(--s)/2) 0/calc(2*var(--s)) 100%;
+                }
+                .cart-top-header {
+                    width: 100%;
+                    user-select: none;
+                    height: 40px;
+                    flex-grow: 1;
+                    display: flex;
+                        justify-content: center;
+                        align-items: center;
+                }
+                    .cart-top-header-content{
+                        width: 90%;
+                        height: 100%;
+                        display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                    }
+                        .cart-top-header-label {
+                            font-size: 32px;
+                            color: #0A401E;
+                            font-weight: bold;
+                            font-family: 'Inter';
+                        }
+                            .cart-top-header-label i{
+                                font-size: 10px;
+                            }
+                        .cart-top-header-account {
+                            font-family: 'Inter';
+                        }
+                .cart-top-body{
+                    padding: 5%;
+                    flex-grow: 5;
+                    display: flex;
+                        align-items: center;
+                        flex-direction: column; 
+                }
+                    .cart-top-body-product{
+                        width: 100%;
+                        padding: 5px;
+                        border: solid 1px #000000;
+                        display: flex;
+                        border-radius: 10px;
+                        display: flex;
+                            align-items: center;
+                    }
+                        .cart-top-body-product-image{
+                            aspect-ratio: 5/4;
+                            width: 100px;
+                            background-color: #B52E2E;
+                            border-radius: 10px;
+                        }
+                        .cart-top-body-product-label{
+                            flex-grow: 3;
+                            height: 100%;
+                            padding: 10px;
+                            display: flex;
+                                flex-direction: column;
+                                justify-content: space-between;
+                        }
+                            .cart-top-body-product-label-name{
+                                font-size: 20px;
+                                font-weight: bold;
+                                font-family: 'Inter';
+                            }
+                            .cart-top-body-product-label-details{
+                                width: 100%;
+                                display: flex;
+                                    justify-content: space-between;
+                                    align-items: center;
+                            }
+                        .cart-top-body-product-total_price{
+                            flex-grow: 2;
+                            user-select: none;
+                            color: #038C3E;
+                            font-family: 'Inter';
+                            font-weight: bold;
+                            display: flex;
+                                justify-content: center;
+                                align-items: center;
+                        }
             .cart-down{ 
                 flex-grow: 1;
                 display: flex;
@@ -475,6 +563,7 @@ body {
                             align-items: center;    
                     }
                         .discount-layer{
+                            user-select: none;
                             width: 90%;
                             height: 100%;
                             display: flex;

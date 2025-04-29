@@ -23,3 +23,11 @@ Enhance the visual appeal of the project with the following colors:
    ```bash
    git clone https://github.com/yourusername/Post-records-inventory.git
    ```
+
+## Charts
+
+Here's the Crow Notation for the Database
+
+```bash
+https://lucid.app/lucidchart/5d0352e1-4670-4e5c-8b66-cc3dae4f405e/edit?viewport_loc=-1165%2C139%2C2348%2C1298%2C0_0&invitationId=inv_cc812635-325c-4de2-9803-858809b8c07b
+```

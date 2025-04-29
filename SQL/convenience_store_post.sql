@@ -12,6 +12,35 @@ CREATE DATABASE convenience_store_post;
 
 USE convenience_store_post;
 
+-- Discounts table 
+CREATE TABLE discounts (
+    discount_id INT PRIMARY KEY,
+    valid_from DATE NOT NULL,
+    valid_till DATE NOT NULL,
+    description VARCHAR(250) NOT NULL,
+    discount_percentage DECIMAL(5,2) NOT NULL
+)
+
+-- category table
+CREATE TABLE categories (
+    category_id INT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
+);
+
+--Product table
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    category_id INT,
+    name VARCHAR(50) NOT NULL,
+    stock_level INT NOT NULL,
+    price DECIMAL(10,5) NOT NULL,
+    
+    FOREIGN KEY (category_id) REFERENCES categories(category_id);
+)
+
+
+-- below is for Experimental Purposes 
+
 -- Users Table Creation
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,

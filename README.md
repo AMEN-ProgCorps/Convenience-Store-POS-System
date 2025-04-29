@@ -24,7 +24,7 @@ Enhance the visual appeal of the project with the following colors:
    git clone https://github.com/yourusername/Post-records-inventory.git
    ```
 
-## Charts
+## 📈 Charts
 
 Here's the Crow Notation for the Database
 

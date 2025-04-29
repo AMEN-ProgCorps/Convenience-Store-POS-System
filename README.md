@@ -31,3 +31,9 @@ Here's the Crow Notation for the Database
 ```bash
 https://lucid.app/lucidchart/5d0352e1-4670-4e5c-8b66-cc3dae4f405e/edit?viewport_loc=-1165%2C139%2C2348%2C1298%2C0_0&invitationId=inv_cc812635-325c-4de2-9803-858809b8c07b
 ```
+
+Heres the ERM Chart
+
+```bash
+https://lucid.app/lucidchart/0a702c6a-850f-4066-9cc2-5ff4c1eb3805/edit?viewport_loc=1329%2C-1490%2C4290%2C1994%2C0_0&invitationId=inv_d5b7f7b7-b1a2-431c-90ea-4ced7607cfc2
+```

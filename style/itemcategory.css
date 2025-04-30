@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Inspiration&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+.category {
+    padding: 15px;
+    background-color: #f2f2f2;
+    border-radius: 15px;
+    width: 100px;
+    aspect-ratio: 4/5;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+    .category.active {
+        background-color: #038c3eaf;
+    }
+    .category-icon{
+        display: flex;
+            justify-content: center;
+            align-content: center;
+        width: 49px;
+        height: 49px;
+        border-radius: 5px;
+    }
+        .category-icon svg{
+            color:transparent;
+            font-size: 50px;
+            stroke: black;
+            stroke-width: 50px;
+        }
+    .category-label{
+        padding: 5px;
+        font-family: 'Inter';
+    }
+        .category-label-name{
+            font-size: 24px;
+        }
+        .category-label-total-outcomes{
+            font-size: 13px;
+        }

@@ -100,8 +100,11 @@ body {
                         justify-content: center;
                     border-radius: 50%; /* Circular icon */
                 }
-                    .tab-icon i {
+                    .tab-icon svg {
                         font-size: 100%;
+                        color: transparent;
+                        stroke: #000000;
+                        stroke-width: 50px;
                     }
                 .tab:hover{
                     cursor: pointer;
@@ -115,6 +118,9 @@ body {
                     color: white;
                     gap: 15px;
                 }
+                    .tab.active .tab-icon svg {
+                        stroke: #f2f2f2; /* Ensured icon color changes on active */
+                    }
                     .tab.active .tab-label {
                         font-size: larger;
                     }
@@ -220,22 +226,6 @@ body {
                 display: flex;
                 gap: 15px;
                 margin-top: 20px;
-            }
-        
-            .category {
-                padding: 15px;
-                background-color: white;
-                border-radius: 15px;
-                width: 120px;
-                text-align: center;
-                font-weight: bold;
-                cursor: pointer;
-                user-select: none;
-            }
-            
-            .category.active {
-                background-color: #038C3E;
-                color: white;
             }
         .cart_toggle{
             padding: 10px 20px;

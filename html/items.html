@@ -6,6 +6,7 @@
         <title>ToMart</title>
         <link rel="icon" href="../style/ToMart_Logo.png" type="image/x-icon">
         <link rel="stylesheet" href="../style/index.css">
+        <link rel="stylesheet" href="../style/itemcategory.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <script src="../script/ver2.js" defer></script>
         <script src="../script/sortingCategory.js"></script>
@@ -22,7 +23,9 @@
                 </div>
                 <div class="tab-container">
                     <div class="items-tab tab active">
-                        <div class="tab-icon"><i class="fas fa-th-large"></i></div>
+                        <div class="tab-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M160 448a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zM160 896a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32z"/></svg>
+                        </div>
                         <div class="tab-label">Items</div>
                     </div>
                     <div class="order-tab tab" onclick="toggleMenu('order')">
@@ -47,8 +50,19 @@
                     </div>
                     <div class="center-bar-category-container active">
                         <div class="category-items-labels"><!--Filter section-->
-                            <div class="category active">ALL<br><small>99 Items</small></div>
-                            <div class="category">Food & Snacks<br><small>30 Items</small></div>
+                            <div class="category active">
+                                <div class="category-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M160 448a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zM160 896a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32z"/></svg>
+                                </div>
+                                <div class="category-label">
+                                    <div class="category-label-name">
+                                        ALL
+                                    </div>
+                                    <div class="category-label-total-outcomes">
+                                        {00} items
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="center-bar-body-main-container">

@@ -113,6 +113,10 @@ body {
                     transition: .5s;
                     gap: 15px;
                 }
+                    .tab:hover .tab-icon svg {
+                        stroke: #f2f2f2; /* Ensured icon color changes on hover */
+                        transition: .5s;
+                    }
                 .tab.active{
                     background-color: #038C3E;
                     color: white;

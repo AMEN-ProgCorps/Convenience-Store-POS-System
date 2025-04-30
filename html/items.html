@@ -49,27 +49,60 @@
                         </div>
                     </div>
                     <div class="center-bar-category-container active">
-                        <div class="category-items-labels"><!--Filter section-->
-                            <div class="category active">
+                        <div class="category-items-labels">
+                            <!--Filter section-->
+                            <div class="category active" onclick="sortCategory('All')">
                                 <div class="category-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M160 448a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zM160 896a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32z"/></svg>
                                 </div>
                                 <div class="category-label">
-                                    <div class="category-label-name">
-                                        ALL
-                                    </div>
-                                    <div class="category-label-total-outcomes">
-                                        {00} items
-                                    </div>
+                                    <div class="category-label-name">ALL</div>
+                                    <div class="category-label-total-outcomes">{00} items</div>
+                                </div>
+                            </div>
+                            <div class="category" onclick="sortCategory('Food')">
+                                <div class="category-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M160 448a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zM160 896a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32z"/></svg>
+                                </div>
+                                <div class="category-label">
+                                    <div class="category-label-name">Food</div>
+                                    <div class="category-label-total-outcomes">{00} items</div>
+                                </div>
+                            </div>
+                            <div class="category" onclick="sortCategory('Supply')">
+                                <div class="category-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M160 448a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zM160 896a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32z"/></svg>
+                                </div>
+                                <div class="category-label">
+                                    <div class="category-label-name">Supply</div>
+                                    <div class="category-label-total-outcomes">{00} items</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="center-bar-body-main-container">
-                        <div class="item-card" id="001"><!--Item card can be multiplied-->
+                        <div class="item-card" category="Food"><!--Item card can be multiplied-->
                             <div class="item-image"></div><!--Item image-->
                             <div class="item-details"><!--Items Details and action here-->
-                                <div class="item-name">Item Name</div>
+                                <div class="item-name">Item Food</div>
+                                <div class="item-price">₱99.99</div>
+                                <div class="div_button-container">
+                                    <div class="add-to-order active" onclick="addCartToggle(this.closest('.item-card'))">Add&nbsp;<p>to Order</p></div>
+                                    <div class="total-input-container">
+                                        <button class="add_cart" onclick="removeCartToggle()"><i class="fa-solid fa-cart-shopping"></i>Add</button>
+                                        <div class="total_input">
+                                            <button class="total_input-subtract"><i class="fa-solid fa-minus"></i></button>
+                                            <div class="shownumber">0</div>
+                                            <button class="total_input-add"><i class="fa-solid fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-card" category="Supply"><!--Item card can be multiplied-->
+                            <div class="item-image"></div><!--Item image-->
+                            <div class="item-details"><!--Items Details and action here-->
+                                <div class="item-name">Item Supply</div>
                                 <div class="item-price">₱99.99</div>
                                 <div class="div_button-container">
                                     <div class="add-to-order active" onclick="addCartToggle(this.closest('.item-card'))">Add&nbsp;<p>to Order</p></div>

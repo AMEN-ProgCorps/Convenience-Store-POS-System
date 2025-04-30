@@ -2,8 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inspiration&family=Roboto:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inspiration&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 * {
-    --sb-track-color: #232e33;
-    --sb-thumb-color: #6baf8d;
+    --sb-track-color: #ffffff00;
+    --sb-thumb-color: #ffffff00;
     --sb-size: 1px;
 }
 
@@ -128,7 +128,7 @@ body {
                     font-size: larger;
                 }
     .center-bar{
-        flex-grow: 3;
+        flex-grow: 1;
         padding: 15px 25px;
         overflow-x: hidden;
     }
@@ -188,44 +188,40 @@ body {
             }
         .center-bar-category-container {
             display: none;
+            width: 100%;    
+            height: 165px; /* Fixed height to prevent vertical overflow */
+            overflow-x: hidden;
+            position: relative;
+            align-items: center;
             
         }
             @keyframes scale-out-ver-top {
                 0% {
-                    transform: scaleY(1);
-                    transform-origin: top;
+                    height: 165px;
                     opacity: 1;
                 }
                 100% {
-                    transform: scaleY(0.8); /* Slightly shrink for smoother effect */
-                    transform-origin: top;
+                    height: 0;
                     opacity: 0; /* Fade out for smoothness */
                 }
             }
             @keyframes scale-in-ver-top {
                 0% {
-                    transform: scaleY(0.8); /* Start slightly shrunk */
-                    transform-origin: top;
-                    opacity: 0; /* Fade in for smoothness */
+                    height: 0;
+                    opacity: 1;
                 }
                 100% {
-                    transform: scaleY(1);
-                    transform-origin: top;
+                    height: 165px;
                     opacity: 1;
                 }
             }
             .center-bar-category-container.active {
-                display: block;
+                display: flex;
                 animation: scale-in-ver-top 0.4s ease-in-out both; /* Adjusted duration and easing */
             }
             .center-bar-category-container.exiting {
-                display: block;
-                animation: scale-out-ver-top 0.4s ease-in-out both; /* Adjusted duration and easing */
-            }
-            .category-items-labels{
                 display: flex;
-                gap: 15px;
-                margin-top: 20px;
+                animation: scale-out-ver-top 0.4s ease-in-out both; /* Adjusted duration and easing */
             }
         .cart_toggle{
             padding: 10px 20px;

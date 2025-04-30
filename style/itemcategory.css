@@ -1,40 +1,61 @@
 @import url('https://fonts.googleapis.com/css2?family=Inspiration&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-.category {
-    padding: 15px;
-    background-color: #f2f2f2;
-    border-radius: 15px;
-    width: 100px;
-    aspect-ratio: 4/5;
-    cursor: pointer;
-    user-select: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.category-items-labels {
+    display: flex; /* Removed flex-wrap */
+    gap: 15px;
+    position: absolute;
+    width: 100%; /* Make the width dynamic */
+    height: 155px; /* Fixed height to prevent vertical overflow */
+    margin-top: 20px;
+    overflow-y: scroll; /* Prevent vertical scrolling */
+    padding-bottom: 10px; /* Add padding to prevent content from being cut off */
+    scroll-behavior: smooth; /* Smooth scrolling for better UX */
 }
-    .category.active {
-        background-color: #038c3eaf;
+    .category-items-labels::-webkit-scrollbar {
+        display: none;
     }
-    .category-icon{
+    .category-items-labels::-webkit-scrollbar-thumb {
+        background-color: #cccccc; /* Subtle scrollbar color */
+        border-radius: 10px;
+    }
+    .category-items-labels::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    .category {
+        padding: 15px;
+        background-color: #f2f2f2;
+        border-radius: 15px;
+        width: 100px;
+        aspect-ratio: 4/5;
+        cursor: pointer;
+        user-select: none;
         display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+        .category.active {
+            background-color: #038c3eaf;
+        }
+        .category-icon {
+            display: flex;
             justify-content: center;
             align-content: center;
-        width: 49px;
-        height: 49px;
-        border-radius: 5px;
-    }
-        .category-icon svg{
-            color:transparent;
-            font-size: 50px;
-            stroke: black;
-            stroke-width: 50px;
+            width: 49px;
+            height: 49px;
+            border-radius: 5px;
         }
-    .category-label{
-        padding: 5px;
-        font-family: 'Inter';
-    }
-        .category-label-name{
-            font-size: 24px;
+            .category-icon svg {
+                color: transparent;
+                font-size: 50px;
+                stroke: black;
+                stroke-width: 50px;
+            }
+        .category-label {
+            padding: 5px;
+            font-family: 'Inter';
         }
-        .category-label-total-outcomes{
-            font-size: 13px;
-        }
+            .category-label-name {
+                font-size: 24px;
+            }
+            .category-label-total-outcomes {
+                font-size: 13px;
+            }

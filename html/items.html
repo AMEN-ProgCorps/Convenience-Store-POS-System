@@ -7,9 +7,11 @@
         <link rel="icon" href="../style/ToMart_Logo.png" type="image/x-icon">
         <link rel="stylesheet" href="../style/index.css">
         <link rel="stylesheet" href="../style/itemcategory.css">
+        <link rel="stylesheet" href="../style/discount.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <script src="../script/ver2.js" defer></script>
         <script src="../script/sortingCategory.js"></script>
+        <script src="../script/cart.js"></script>
     </head>
     <body>
         <div class="body_container">
@@ -161,7 +163,7 @@
                         <div class="total_container">
                             <div class="discount-container">
                                 <div class="total-box">
-                                    <div class="discount-layer">
+                                    <div class="discount-layer" onclick="toggleDiscount()">
                                         <div class="discount-label">ToMart Discount</div>
                                         <div class="discount-active">Select Voucher</div>
                                         <!--if discount is chosen select Voucher will be change to tha t discount-->
@@ -191,5 +193,10 @@
                 </div>
             </div> 
         </div> 
+        <div class="discount_body">
+            <div class="discount_sidebar">
+                disocunt
+            </div>
+        </div>
     </body>
 </html>

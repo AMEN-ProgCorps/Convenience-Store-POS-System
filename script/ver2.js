@@ -115,33 +115,85 @@ function addCartToggle(itemCard) {
 }
 
 function removeCartToggle() {
-    // Find the currently active item-card
     const activeCard = document.querySelector('.item-card.active');
+    const cartBody = document.querySelector('.cart-top-body');
+    const noItemPlaceholder = cartBody.querySelector('p');
+
     if (activeCard) {
-        activeCard.classList.remove('active'); // Remove the active class from the item-card
+        const shownumberElement = activeCard.querySelector('.shownumber');
+        const quantity = parseInt(shownumberElement.textContent);
 
-        // Reset the add-to-order button
+        if (quantity > 0) {
+            const itemId = activeCard.getAttribute('id');
+            let cartItem = cartBody.querySelector(`.cart-top-body-product[data-id="${itemId}"]`);
+
+            // If the item is not already in the cart, create it
+            if (!cartItem) {
+                cartItem = document.createElement('div');
+                cartItem.classList.add('cart-top-body-product');
+                cartItem.setAttribute('data-id', itemId);
+
+                // Clone item details
+                const itemImage = activeCard.querySelector('.item-image').cloneNode(true);
+                const itemName = activeCard.querySelector('.item-name').textContent;
+                const itemPrice = activeCard.querySelector('.item-price').textContent;
+
+                cartItem.innerHTML = `
+                    <div class="cart-top-body-product-image">${itemImage.outerHTML}</div>
+                    <div class="cart-top-body-product-label">
+                        <div class="cart-top-body-product-label-name">${itemName}</div>
+                        <div class="cart-top-body-product-label-details">
+                            <div class="cart-top-body-product-label-details-price">${itemPrice}</div>
+                            <div class="cart-top-body-product-label-details-quantity">${quantity}</div>
+                        </div>
+                    </div>
+                    <div class="cart-top-body-product-total_price">₱${(parseFloat(itemPrice.replace('₱', '')) * quantity).toFixed(2)}</div>
+                `;
+
+                cartBody.appendChild(cartItem);
+            } else {
+                // Update the quantity and total price if the item already exists in the cart
+                const quantityElement = cartItem.querySelector('.cart-top-body-product-label-details-quantity');
+                const totalPriceElement = cartItem.querySelector('.cart-top-body-product-total_price');
+                const itemPrice = parseFloat(activeCard.querySelector('.item-price').textContent.replace('₱', ''));
+
+                const newQuantity = parseInt(quantityElement.textContent) + quantity;
+                quantityElement.textContent = newQuantity;
+                totalPriceElement.textContent = `₱${(itemPrice * newQuantity).toFixed(2)}`;
+            }
+
+            // Remove the "no item present" placeholder if it exists
+            if (noItemPlaceholder) {
+                noItemPlaceholder.remove();
+            }
+        }
+
+        // Reset the active card
+        activeCard.classList.remove('active');
         const placeholderButton = activeCard.querySelector('.add-to-order');
-        if (placeholderButton) {
-            placeholderButton.classList.add('active'); // Restore the active state
-        }
-
-        // Hide the total-input-container
         const actualInput = activeCard.querySelector('.total-input-container');
-        if (actualInput) {
-            actualInput.classList.remove('active'); // Hide the input container
-        }
-
-        // Reset the total_input container
         const inputDelay = activeCard.querySelector('.total_input');
-        if (inputDelay) {
-            inputDelay.classList.remove('flex'); // Remove the flex class
-            inputDelay.classList.add('late'); // Add the late class for reset
+
+        if (placeholderButton) {
+            placeholderButton.classList.add('active');
         }
-    } else {
-        console.error('No active item-card found to reset!');
+        if (actualInput) {
+            actualInput.classList.remove('active');
+        }
+        if (inputDelay) {
+            inputDelay.classList.remove('flex');
+            inputDelay.classList.add('late');
+        }
+    }
+
+    // If no items are in the cart, show the "no item present" placeholder
+    if (!cartBody.querySelector('.cart-top-body-product')) {
+        const placeholder = document.createElement('p');
+        placeholder.textContent = 'No item present';
+        cartBody.appendChild(placeholder);
     }
 }
+
 // Reset shownumber to zero for all item-cards
 function resetShownumber() {
     document.querySelectorAll('.item-card .shownumber').forEach(shownumber => {

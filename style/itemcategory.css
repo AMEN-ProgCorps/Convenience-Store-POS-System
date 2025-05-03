@@ -5,8 +5,7 @@
     position: absolute;
     width: 100%; /* Make the width dynamic */
     height: 155px; /* Fixed height to prevent vertical overflow */
-    margin-top: 20px;
-    overflow-y: scroll; /* Prevent vertical scrolling */
+    overflow-y: hidden; /* Prevent vertical scrolling */
     padding-bottom: 10px; /* Add padding to prevent content from being cut off */
     scroll-behavior: smooth; /* Smooth scrolling for better UX */
 }
@@ -29,8 +28,8 @@
         cursor: pointer;
         user-select: none;
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+            flex-direction: column;
+            justify-content: space-between;
     }
         .category.active {
             background-color: #038c3eaf;

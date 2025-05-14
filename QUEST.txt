@@ -1,0 +1,8 @@
+QUEST:
+
+ACTIVE:
+
+
+
+NAME: IF PAGE IS FINISHED!!!!
+        CODE: 00F02

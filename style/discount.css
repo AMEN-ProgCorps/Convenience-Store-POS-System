@@ -1,3 +1,41 @@
+
+    .discount-layer{
+        cursor: pointer;;
+        user-select: none;
+        width: 90%;
+        height: 100%;
+        display: flex;
+            justify-content: space-between;
+            align-items: center;
+    }
+        .discount-label{
+            font-size: 20px;
+            font-weight: bold;
+            font-family: 'Inter';
+        }
+
 .discount_body{
-    display: none;
+    position: absolute;
+        top: 0;
+        left: 0;
+
+    display: block;
+    background-color: rgba(0, 0, 0, 0.62);
+    height: 100%;
+    width: 100%;
 }
+    .discount_container{
+        width: 100%;
+        height: 100%;
+        display: flex;
+            justify-content: end;
+    }
+        .discount_sidebar{
+            width: 600px;
+            height: 100%;
+            background-color: #f2f2f2;
+            display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+        }

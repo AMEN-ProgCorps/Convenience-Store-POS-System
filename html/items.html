@@ -162,7 +162,7 @@
                     <div class="cart-down">
                         <div class="total_container">
                             <div class="discount-container">
-                                <div class="total-box">
+                                <div class="total-box total-box-discount">
                                     <div class="discount-layer" onclick="toggleDiscount()">
                                         <div class="discount-label">ToMart Discount</div>
                                         <div class="discount-active">Select Voucher</div>
@@ -171,8 +171,17 @@
                                 </div>
                             </div>
                             <div class="pricing-container">
-                                <div class="total-box">
-                                    
+                                <div class="total-box total-box-real">
+                                    <div class="t1 total-box-label">Sub Total</div><!--Stage one -->
+                                    <div class="t2 total-box-label-price">{ST}</div><!--Sub Total of product-->
+                                    <div class="t3 total-box-label">Discount</div><!--Stage two-->
+                                    <div class="t4 total-box-label-price">{D}</div><!--Discount that is active-->
+                                    <div class="t5 total-box-label">Tax 15%</div>
+                                    <div class="t6 total-box-label-price">{Tax}</div><!--Tax of overall total product-->
+                                    <div class="out7 total-box-label-output">
+                                        <div class="total-box-label">Total</div><!--Stage three-->
+                                        <div class="total-box-label-price">{Total}</div><!--Total of product-->
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -194,8 +203,15 @@
             </div> 
         </div> 
         <div class="discount_body">
-            <div class="discount_sidebar">
-                disocunt
+            <div class="discount_container">
+                <div class="discount_sidebar">
+                    <div class="cart-top-header">
+                        <div class="cart-top-header-content">
+                            <div class="cart-top-header-label">Select Discount Vouchers</div>
+                        </div>
+                    </div>
+                    <div class="dashed-line"></div>
+                </div>
             </div>
         </div>
     </body>

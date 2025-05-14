@@ -2,7 +2,7 @@
 session_start();
 include '../import/database.php';
 
-$categoriesWithCounts = [];
+$categoriesWithCounts =[];
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -150,23 +150,28 @@ $conn->close();
                         </div>
                         <div class="dashed-line"></div>
                         <div class="cart-top-body">
-                            <div class="cart-top-body-product"><!--This is the product layout in cart use this for cloning-->
-                                <div class="cart-top-body-product-image"></div>
-                                <div class="cart-top-body-product-label">
-                                    <div class="cart-top-body-product-label-name">
-                                        Item Name
-                                    </div>
-                                    <div class="cart-top-body-product-label-details">
-                                        <div class="cart-top-body-product-label-details-price">
-                                            P99.99
+                            <?php if (empty($products)): ?>
+                                <p>No item present</p>
+                            <?php else: ?> 
+                                <!-- This is the product layout in cart use this for cloning -->
+                                <div class="cart-top-body-product">
+                                    <div class="cart-top-body-product-image"></div>
+                                    <div class="cart-top-body-product-label">
+                                        <div class="cart-top-body-product-label-name">
+                                            Item Name
                                         </div>
-                                        <div class="cart-top-body-product-label-details-quantity">
-                                            {Quantity}
+                                        <div class="cart-top-body-product-label-details">
+                                            <div class="cart-top-body-product-label-details-price">
+                                                P99.99
+                                            </div>
+                                            <div class="cart-top-body-product-label-details-quantity">
+                                                {Quantity}
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="cart-top-body-product-total_price">₱99.99</div>
                                 </div>
-                                <div class="cart-top-body-product-total_price">₱99.99</div>
-                            </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="cart-down">
@@ -182,7 +187,16 @@ $conn->close();
                             </div>
                             <div class="pricing-container">
                                 <div class="total-box">
-                                    
+                                    <div class="t1 total-box-label">Sub Total</div><!--Stage one -->
+                                    <div class="t2 total-box-label-price">{ST}</div><!--Sub Total of product-->
+                                    <div class="t3 total-box-label">Discount</div><!--Stage two-->
+                                    <div class="t4 total-box-label-price">{D}</div><!--Discount that is active-->
+                                    <div class="t5 total-box-label">Tax 15%</div>
+                                    <div class="t6 total-box-label-price">{Tax}</div><!--Tax of overall total product-->
+                                    <div class="out7 total-box-label-output">
+                                        <div class="total-box-label">Total</div><!--Stage three-->
+                                        <div class="total-box-label-price">{Total}</div><!--Total of product-->
+                                    </div>
                                 </div>
                             </div>
                         </div>

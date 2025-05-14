@@ -1,10 +1,7 @@
 <?php
 session_start();
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "convenience_store_post";
+include 'import/database.php';
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Set headers if needed
@@ -103,6 +100,10 @@ if (!empty($error_message)) {
                         <div class="choice_item" id="register_choice" onclick="toggleChoice('register')">Register</div>
                     </div>
                     <a href="index.html" class="home_button">Continue as Guest</a>
+                    <!--
+                        TARGET: URGENT IF PAGE IS FINISHED
+                        CODE: 00F02
+                    -->
                 </div>
             </div>
             <div class="recaptcha_container">

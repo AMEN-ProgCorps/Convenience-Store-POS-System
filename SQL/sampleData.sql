@@ -18,3 +18,9 @@ VALUES
 (4, 4, 'Dishwashing Liquid', 100, 150.00),
 (5, 5, 'Rice', 100, 40.00),
 (6, 6, 'Condoms', 100, 60.00);
+
+INSERT INTO discounts (discount_id, valid_from, valid_till, description, discount_percentage)
+VALUES 
+(1, '2023-10-01', '2023-10-31', 'kiss muna', 10.00),
+(2, '2023-11-01', '2023-11-30', 'November Discount', 15.00),
+(3, '2023-12-01', '2023-12-31', 'December Discount', 20.00);

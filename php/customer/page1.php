@@ -152,41 +152,36 @@ $conn->close();
                         <div class="cart-top-body">
                             <?php if (empty($products)): ?>
                                 <p>No item present</p>
-                            <?php else: ?> 
-                                <!-- This is the product layout in cart use this for cloning -->
+                            <?php endif; ?>
+                            <!-- Cart product template for JS cloning (hidden) -->
+                            <div id="cart-product-template" style="display:none">
                                 <div class="cart-top-body-product">
                                     <div class="cart-top-body-product-image"></div>
                                     <div class="cart-top-body-product-label">
-                                        <div class="cart-top-body-product-label-name">
-                                            Item Name
-                                        </div>
+                                        <div class="cart-top-body-product-label-name">Item Name</div>
                                         <div class="cart-top-body-product-label-details">
-                                            <div class="cart-top-body-product-label-details-price">
-                                                P99.99
-                                            </div>
-                                            <div class="cart-top-body-product-label-details-quantity">
-                                                {Quantity}
-                                            </div>
+                                            <div class="cart-top-body-product-label-details-price">P99.99</div>
+                                            <div class="cart-top-body-product-label-details-quantity">{Quantity}</div>
                                         </div>
                                     </div>
                                     <div class="cart-top-body-product-total_price">₱99.99</div>
                                 </div>
-                            <?php endif; ?>
+                            </div>
                         </div>
                     </div>
                     <div class="cart-down">
                         <div class="total_container">
                             <div class="discount-container">
-                                <div class="total-box">
+                                <div class="total-box total-box-discount">
                                     <div class="discount-layer" onclick="toggleDiscount()">
                                         <div class="discount-label">ToMart Discount</div>
-                                        <div class="discount-active">Select Voucher</div>
+                                        <div class="discount-active">Select Voucher</div><!--if discount active Select Voucher will be change to the VoucherName-->
                                         <!--if discount is chosen select Voucher will be change to tha t discount-->
                                     </div>
                                 </div>
                             </div>
                             <div class="pricing-container">
-                                <div class="total-box">
+                                <div class="total-box total-box-real">
                                     <div class="t1 total-box-label">Sub Total</div><!--Stage one -->
                                     <div class="t2 total-box-label-price">{ST}</div><!--Sub Total of product-->
                                     <div class="t3 total-box-label">Discount</div><!--Stage two-->

@@ -434,13 +434,15 @@ body {
         .add-cart-container {
             padding: 0 2.5%;
             width: 95%;
-            height: 100%;
-            display: flex;
-                flex-direction: column;
-                justify-content: center;
+            height: 100%;            
+            display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(15, 1fr);
+                grid-column-gap: 0px;
+                grid-row-gap: 0px;
         }
             .cart-top {
-                flex-grow: 3;
+                grid-area: 1 / 1 / 10 / 2; 
                 display: flex;
                     flex-direction: column;
             }   
@@ -482,10 +484,12 @@ body {
                         }
                 .cart-top-body{
                     padding: 5%;
-                    flex-grow: 5;
+                    height:70%;
+                    overflow-y: scroll;
                     display: flex;
                         align-items: center;
-                        flex-direction: column; 
+                        flex-direction: column;
+                        gap: 5px;
                 }
                     .cart-top-body-product{
                         width: 100%;
@@ -502,8 +506,13 @@ body {
                             background-color: #B52E2E;
                             border-radius: 10px;
                         }
+                            .cart-top-body-product-image .item-image{
+                                width: 100%;
+                                height: 100%;
+                                border-radius: 10px;
+                            }
                         .cart-top-body-product-label{
-                            flex-grow: 3;
+                            width: 50%;
                             height: 100%;
                             padding: 10px;
                             display: flex;
@@ -511,6 +520,8 @@ body {
                                 justify-content: space-between;
                         }
                             .cart-top-body-product-label-name{
+                                width: 100%;
+                                overflow: hidden;
                                 font-size: 20px;
                                 font-weight: bold;
                                 font-family: 'Inter';
@@ -532,7 +543,7 @@ body {
                                 align-items: center;
                         }
             .cart-down{ 
-                flex-grow: 1;
+                grid-area: 10 / 1 / 16 / 2;
                 display: flex;
                     flex-direction: column;
                     align-items: center;

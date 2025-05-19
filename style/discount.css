@@ -19,11 +19,25 @@
         top: 0;
         left: 0;
 
-    display: block;
+    display: none;
     background-color: rgba(0, 0, 0, 0.62);
     height: 100%;
     width: 100%;
 }
+    .discount_body.active{
+        display: block;
+        animation:slide-in-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    }
+    @keyframes slide-in-right {
+        0% {
+            transform: translateX(1000px);
+            opacity: 0;
+        }
+        100% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
     .discount_container{
         width: 100%;
         height: 100%;
@@ -31,11 +45,148 @@
             justify-content: end;
     }
         .discount_sidebar{
+            user-select: none;
             width: 600px;
             height: 100%;
             background-color: #f2f2f2;
             display: flex;
                 flex-direction: column;
-                justify-content: space-between;
                 align-items: center;
         }
+            .discount_header{
+                position: relative;
+                width: 100%;
+                height: 10%;
+                display: flex;
+                    justify-content: center;
+                    align-items: center;
+            }
+            .d_line{
+                --s: 15px;
+                height: 2px;
+                width: 90%;
+                background: radial-gradient(circle closest-side, #000000 98%, #0000) 0 0 / var(--s) 100%, linear-gradient(90deg, #000000 50%, #0000 0) calc(var(--s) / 2) 0 / calc(2 * var(--s)) 100%;
+            }
+            .discount_box-container{
+                padding-top: 10px;
+                width: 100%;
+                flex-grow: 1;
+                display: flex;
+                    flex-direction: column ;
+                    align-items: center;
+                    gap: 2px;
+            }
+                .dbox{
+                    width: 90%;
+                    border: solid 2px;
+                    border-radius: 20px;
+                    display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                }
+                    .dbox.selected{
+                        background-color: #038C3E;
+                    }
+                    .dbox:hover{
+                        background-color: #038c3e9a;
+                        transition: .5ms;
+                    }
+                .dbox-indicator .indicator{
+                    width: 90%;
+                    height: 10%;
+                    background-color: #f2f2f2;
+                    display: flex;
+                        justify-content: center;
+                        align-items: center;
+                }
+                .dbox-container{
+                    width: 95%;
+                    padding: 10px;
+                    height: 120px;
+                    display: flex;
+                        gap: 10px;
+                        align-items: center;
+                }
+                    .dbox-icon{
+                        height: 100%;
+                        aspect-ratio: 8/7;
+                        background-color: #0A401E;
+                        border-radius: 20px;
+                        display: flex;
+                            justify-content: center;
+                            align-items: center;
+                    }
+                        .dbox-icon svg{
+                            height: 100%;
+                            color: #038C3E;
+                        }
+                    .dbox-label{
+                        color: #0A401E;
+                        font-family: 'Inter';
+                        font-size: larger;
+                        font-weight: bolder;
+                    }
+            .dbox-warning{
+                width: 90%;
+                background-color: #BF4141;
+                padding: 5px 5%;
+                border-radius: 20px;
+                border: solid 2px;
+                display: none;
+                    align-items: center;
+                    gap: 2px;
+            }
+                .dbox-warning.active{
+                    display: flex;
+                    animation: up-slow-show 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+                }
+                @keyframes up-slow-show {
+                    0% {
+                        height: 0;
+                        opacity: 0;
+                    }
+                    100% {
+                        height: auto;
+                        opacity: 1;
+                    }
+                }
+                .dbox-warning-icon{
+                    height: 30px;
+                }
+                    .dbox-warning-icon svg{
+                        height: 100%;
+                        color: #f2f2f2;
+                    }
+                .dbox-warning-details{
+                    color: #f2f2f2;
+                    font-family: 'Inter';
+                    font-size: large;
+                }
+            .discount_footer{
+                height: 10%;
+                width: 100%;
+                background-color: #f2f2f2;
+                display: flex;
+                    justify-content: center;
+            }
+                .dfinisher{
+                    width: 90%;
+                    height: 80%;
+                    display: flex;
+                        justify-content: space-around;
+                        align-items: center;
+                }
+                    .dfinisher button{
+                        width: 35%;
+                        padding: 2%;
+                        color: #f2f2f2;
+                        border-radius: 5vw;
+                        border: none;
+                    }
+                    .dfinisher .cancel{
+                        background-color: #BF4141;
+                    }
+                    .dfinisher .accept{
+                        background-color: #038C3E;
+                    }

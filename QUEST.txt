@@ -2,7 +2,9 @@ QUEST:
 
 ACTIVE:
 
-
-
-NAME: IF PAGE IS FINISHED!!!!
-        CODE: 00F02
+NAME: Account connection
+DETAILS:
+        all pages dont have account bind
+        directory:
+                -/customer/
+                -/employee/                

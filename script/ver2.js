@@ -11,7 +11,7 @@ function toggleMenu(area) {
         toggleCart();
         setTimeout(() => {
             itemsContainer.classList.remove('active', 'exiting');
-            location.replace('../html/account.html');
+            location.replace('page2.php');
         }, 500);
     } else if (area === 'items') {
         orderButton.classList.remove('active');
@@ -19,24 +19,10 @@ function toggleMenu(area) {
         orderContainer.classList.add('exiting');
         setTimeout(() => {
             orderContainer.classList.remove('active', 'exiting');
-            location.replace('../html/items.html');
+            location.replace('page1.php');
         }, 500);
     }
 }
-function toggleCategory() {
-    const category = document.querySelector('.category-toggle');
-    const category_body = document.querySelector('.center-bar-category-container');
-    category.classList.toggle('active');
-    if (!category_body.classList.contains('active')) {
-        category_body.classList.add('active');
-    } else {
-        category_body.classList.add('exiting');
-        setTimeout(() => {
-            category_body.classList.remove('active', 'exiting');
-        }, 400); // Match the CSS animation duration
-    }
-}
-
 function toggleCart(){
     const cart_btn = document.querySelector('.cart_toggle');
     const cart_body = document.querySelector('.cart-bar');

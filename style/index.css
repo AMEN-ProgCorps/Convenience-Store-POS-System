@@ -88,6 +88,22 @@ body {
                 border-radius: 25px; /* Adjusted border-radius for smoother edges */
                 gap: 10px; /* Adjusted gap between icon and label */
             }
+                .login-tab{
+                    color: #038C3E;
+                }
+                    .tab.login-tab:hover{
+                        background-color: #038c3e9a;
+                        color: white;
+                        transition: .5s;
+                    }
+                .logout-tab{
+                    color: #B52E2E;
+                }
+                    .tab.logout-tab:hover{
+                        background-color: #B52E2E;
+                        color: white;
+                        transition: .5s;
+                    }
                 .tab-label {
                     font-size: medium; /* Adjusted font size */
                     font-weight: bold; /* Ensured label stands out */

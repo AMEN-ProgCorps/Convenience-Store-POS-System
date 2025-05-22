@@ -19,38 +19,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $username = $conn->real_escape_string($_POST['log_username']);
         $password = $_POST['log_password'];
 
-        $sql = "SELECT * FROM users WHERE username = '$username'";
+        // Search all_accounts view for username (name) and password
+        $sql = "SELECT * FROM all_accounts WHERE name = '$username'";
         $result = $conn->query($sql);
 
-        if ($result) {
-            if ($result->num_rows > 0) {
-                $user = $result->fetch_assoc();
-                if (password_verify($password, $user['password'])) {
-                    $_SESSION['user_id'] = $user['id'];
-                    echo "<script>console.log('Login successful');</script>";
-                    header("Location: dashboard.php");
+        if ($result && $result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+            // Passwords are stored as plain text in all_accounts, so compare directly
+            if ($password === $user['password']) {
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_name'] = $user['name'];
+                $_SESSION['user_role'] = $user['role'];
+                // Redirect based on id prefix
+                if (strpos($user['id'], 'C') === 0) {
+                    header("Location: customer/page1.php");
+                    exit;
+                } elseif (strpos($user['id'], 'E') === 0) {
+                    header("Location: employee/page1.php");
                     exit;
                 } else {
-                    $error_message = "Invalid username or password.";
+                    // fallback
+                    header("Location: dashboard.php");
+                    exit;
                 }
             } else {
                 $error_message = "Invalid username or password.";
             }
         } else {
-            $error_message = "Error: Unable to execute query. Please try again later.";
+            $error_message = "Invalid username or password.";
         }
     } elseif ($action === 'register') {
         $username = $conn->real_escape_string($_POST['reg_username']);
         $email = $conn->real_escape_string($_POST['reg_email']);
+        $phone = isset($_POST['reg_phone']) ? $conn->real_escape_string($_POST['reg_phone']) : '';
         $password = $_POST['reg_password'];
         $confirm_password = $_POST['reg_confirm_password'];
 
         if ($password !== $confirm_password) {
             $error_message = "Passwords do not match.";
         } else {
-            $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-
-            $sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$hashed_password')";
+            // Store password as plain text to match all_accounts view (for demo, not secure)
+            $sql = "INSERT INTO customer_accounts (name, password, email, phone_number) VALUES ('$username', '$password', '$email', '$phone')";
             if ($conn->query($sql) === TRUE) {
                 echo "<script>console.log('Registration complete');</script>";
                 header("Location: access_portal.php");
@@ -58,6 +67,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 $error_message = "Error: Unable to register. Please try again later.";
             }
+        }
+    } elseif ($action === 'guest') {
+        // Login as guest_account (C101)
+        $sql = "SELECT * FROM all_accounts WHERE id = 'C101' AND name = 'guest_account' AND password = 'password123'";
+        $result = $conn->query($sql);
+        if ($result && $result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['user_role'] = $user['role'];
+            header("Location: customer/page1.php");
+            exit;
+        } else {
+            $error_message = "Guest account not found.";
         }
     }
 }
@@ -99,7 +122,10 @@ if (!empty($error_message)) {
                         <h3 style="user-select: none;">or</h3>
                         <div class="choice_item" id="register_choice" onclick="toggleChoice('register')">Register</div>
                     </div>
-                    <a href="index.html" class="home_button">Continue as Guest</a>
+                    <form method="POST" action="" style="display:inline;">
+                        <input type="hidden" name="action" value="guest">
+                        <button type="submit" class="home_button" style="border:none;background:none;padding:0;cursor:pointer;">Continue as Guest</button>
+                    </form>
                     <!--
                         TARGET: URGENT IF PAGE IS FINISHED
                         CODE: 00F02
@@ -151,6 +177,10 @@ if (!empty($error_message)) {
                             <div class="input_field">
                                 <label for="reg_email"><i class="fas fa-envelope"></i></label>
                                 <input type="email" id="reg_email" name="reg_email" placeholder="Enter your email" required>
+                            </div>
+                            <div class="input_field">
+                                <label for="reg_phone"><i class="fas fa-phone"></i></label>
+                                <input type="text" id="reg_phone" name="reg_phone" placeholder="Enter your phone number" required>
                             </div>
                             <div class="input_field">
                                 <label for="reg_password"><i class="fas fa-lock"></i></label>

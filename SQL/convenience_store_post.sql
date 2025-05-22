@@ -34,7 +34,6 @@ CREATE TABLE products (
     name VARCHAR(50) NOT NULL,
     stock_level INT NOT NULL,
     price DECIMAL(10,5) NOT NULL,
-    
     FOREIGN KEY (category_id) REFERENCES categories(category_id)
 );
 
@@ -119,6 +118,8 @@ CREATE TABLE orders (
     customer_id VARCHAR(10),
     order_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     total_amount DECIMAL(10,5) NOT NULL,
+    payment_type ENUM('cash','e-wallet') NOT NULL,
+    order_status ENUM('pending', 'completed', 'cancelled') NOT NULL,
     FOREIGN KEY (customer_id) REFERENCES customer_accounts(customer_id)
 );
 

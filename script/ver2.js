@@ -186,22 +186,31 @@ function resetShownumber() {
         shownumber.textContent = '0'; // Reset the value to zero
     });
 }
-// Add event listeners for subtract buttons
-document.querySelectorAll('.total_input-subtract').forEach(button => {
-    button.addEventListener('click', () => {
-        const shownumber = button.nextElementSibling;
-        let currentValue = parseInt(shownumber.textContent);
-        if (currentValue > 0) {
-            shownumber.textContent = currentValue - 1;
-        }
+// Add event listeners for subtract and add buttons with stock cap
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.total_input-subtract').forEach(button => {
+        button.addEventListener('click', () => {
+            const shownumber = button.nextElementSibling;
+            let currentValue = parseInt(shownumber.textContent);
+            if (currentValue > 0) {
+                shownumber.textContent = currentValue - 1;
+            }
+        });
     });
-});
 
-// Add event listeners for add buttons
-document.querySelectorAll('.total_input-add').forEach(button => {
-    button.addEventListener('click', () => {
-        const shownumber = button.previousElementSibling;
-        let currentValue = parseInt(shownumber.textContent);
-        shownumber.textContent = currentValue + 1;
+    document.querySelectorAll('.total_input-add').forEach(button => {
+        button.addEventListener('click', () => {
+            const shownumber = button.previousElementSibling;
+            let currentValue = parseInt(shownumber.textContent);
+            // Find the parent item-card to get the stock
+            const itemCard = button.closest('.item-card');
+            let maxStock = 9999;
+            if (itemCard && itemCard.hasAttribute('data-stock')) {
+                maxStock = parseInt(itemCard.getAttribute('data-stock'));
+            }
+            if (currentValue < maxStock) {
+                shownumber.textContent = currentValue + 1;
+            }
+        });
     });
 });

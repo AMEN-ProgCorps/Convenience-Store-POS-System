@@ -22,7 +22,8 @@ if ($result->num_rows > 0) {
 
 // Fetch products
 $products = [];
-$sql = "SELECT p.product_id, p.name AS product_name, p.price, c.name AS category_name 
+// Fetch products with stock_level
+$sql = "SELECT p.product_id, p.name AS product_name, p.price, p.stock_level, c.name AS category_name 
         FROM products p 
         JOIN categories c ON p.category_id = c.category_id";
 $result = $conn->query($sql);
@@ -44,12 +45,13 @@ $conn->close();
         <link rel="stylesheet" href="../../style/index.css">
         <link rel="stylesheet" href="../../style/itemcategory.css">
         <link rel="stylesheet" href="../../style/discount.css">
+        <link rel="stylesheet" href="../../style/receipt.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <script src="../../script/ver2.js" defer></script>
         <script src="../../script/sortingCategory.js"></script>
-        <script src="../../script/cart.js"></script>
         <script src="../../script/discount.js"></script>
         <script src="../../script/search.js"></script>
+        <script src="../../script/receipt.js"></script>
     </head>
     <body>
         <div class="body_container">
@@ -138,9 +140,13 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                     <div class="center-bar-body-main-container">
                         <?php if (!empty($products)): ?>
                             <?php foreach ($products as $product): ?>
-                            <div class="item-card" category="<?php echo htmlspecialchars($product['category_name']); ?>" id="<?php echo $product['product_id']; ?>">
+                            <div class="item-card" category="<?php echo htmlspecialchars($product['category_name']); ?>" id="<?php echo $product['product_id']; ?>" data-stock="<?php echo (int)$product['stock_level']; ?>">
                                 <div class="item-image"></div>
                                 <div class="item-details">
+                                    <div class="item-onstocks">
+                                        <div class="item-onstocks-label">Stock: </div>
+                                        <div class="item-onstocks-quantity"><?php echo (int)$product['stock_level']; ?></div>
+                                    </div>
                                     <div class="item-name"><?php echo htmlspecialchars($product['product_name']); ?></div>
                                     <div class="item-price">₱<?php echo number_format($product['price'], 2); ?></div>
                                     <div class="div_button-container">
@@ -297,6 +303,20 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                             <button type="button" class="cancel" onclick="toggleDiscount()">Cancel</button>
                             <button type="button" class="accept">Ok</button><!--accept will be the one to set the discount to the cart-->
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="discount_body" id="receipt" style="display:none;">
+            <div class="discount_container">
+                <div class="discount_sidebar">
+                    <div class="discount_header">
+                            <div class="cart-top-header-label">Online Receipt</div>
+                    </div>
+                    <div class="d_line"></div>  
+                    <div class="receipt-contents">
+                        <p></p>
+                        <button type="button" class="cancel" onclick="closeReceipt()">Close Receipt</button>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,14 @@
+===============================
+Order_id: {Order_id}
+Product:
+{quantity} - {product.name}
+//other products if more than one....
+
+---------------------------
+sub-total: {sub-total}
+Discount: {Discount} // if there's one
+Tax: {0.12}
+Total : {total price}
+type: {payment_type}
+Pls Proceed to the Cashier!
+===============================

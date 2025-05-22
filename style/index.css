@@ -290,7 +290,23 @@ body {
                 flex-direction: column;
                 gap: 5px;
                 align-items: center;
+                position: relative;
             }
+                .item-onstocks{
+                    position: absolute;
+                    font-size: small;
+                    right: -5px;
+                    top: -20px;
+                    color: #0A401E;
+                    background-color: #F2F2F2;
+                    padding: 5px;
+                    font-weight: bold;
+                    border-radius: 5px;
+                    display: flex;
+                }
+                .item-name{
+                    z-index: 2;
+                }
             .div_button-container{
                 user-select: none;
                 width: 90%;

@@ -35,9 +35,10 @@ $conn->close();
         <title>ToMart</title>
         <link rel="icon" href="../../style/ToMart_Logo.png" type="image/x-icon">
         <link rel="stylesheet" href="../../style/index.css">
-
+        <link rel="stylesheet" href="../../style/order.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <script src="../../script/ver2.js" defer></script>
+        <script src="../../script/order.js" defer></script>
     </head>
     <body>
         <div class="body_container">
@@ -72,26 +73,12 @@ $conn->close();
                     <?php if (empty($orders)): ?>
                         <p>No orders found.</p>
                     <?php else: ?>
-                        <table style="width:100%;border-collapse:collapse;">
-                            <thead>
-                                <tr>
-                                    <th style="border:1px solid #ccc;padding:4px;">Order ID</th>
-                                    <th style="border:1px solid #ccc;padding:4px;">Date</th>
-                                    <th style="border:1px solid #ccc;padding:4px;">Status</th>
-                                    <th style="border:1px solid #ccc;padding:4px;">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($orders as $order): ?>
-                                <tr>
-                                    <td style="border:1px solid #ccc;padding:4px;">#<?php echo htmlspecialchars($order['order_id']); ?></td>
-                                    <td style="border:1px solid #ccc;padding:4px;"><?php echo htmlspecialchars($order['order_date']); ?></td>
-                                    <td style="border:1px solid #ccc;padding:4px;"><?php echo htmlspecialchars($order['status']); ?></td>
-                                    <td style="border:1px solid #ccc;padding:4px;">₱<?php echo number_format($order['total'], 2); ?></td>
-                                </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                     <div class="order-box" id="{order_id}">
+                        <div class="main-box">
+                            <div class="order-image"></div>
+                            <div class="contents"></div>
+                        </div>
+                     </div>
                     <?php endif; ?>
                 </div>
             </div>

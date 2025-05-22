@@ -2,13 +2,9 @@ QUEST:
 
 ACTIVE:
 
-Name: Place Order Bug 
+Name:  receipt ui design
 DETAILS:
-        file: /customer/page1.php
-        Console Report:
-                receipt.js:82 Order failed (exception): SyntaxError: Unexpected token '<', "<br />
-                <b>"... is not valid JSON
-                (anonymous)	@	receipt.js:82
+        pangit yung ui
 
 NAME: Account connection
 DETAILS:

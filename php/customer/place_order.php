@@ -1,7 +1,29 @@
 <?php
+// Debug: Show all errors as JSON (remove in production)
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Always return JSON, even on fatal error
+register_shutdown_function(function() {
+    $error = error_get_last();
+    if ($error && in_array($error['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
+        if (!headers_sent()) {
+            header('Content-Type: application/json');
+        }
+        echo json_encode(['error' => 'Fatal server error', 'details' => $error['message']]);
+    }
+});
+
+header('Content-Type: application/json');
 session_start();
 include '../import/database.php';
-header('Content-Type: application/json');
+
+// Debug: Check DB variables
+if (!isset($servername, $username, $password, $dbname)) {
+    echo json_encode(['error' => 'Database config missing']);
+    exit;
+}
 
 // Only allow POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -11,9 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // Get POST data
-$data = json_decode(file_get_contents('php://input'), true);
+$raw_input = file_get_contents('php://input');
+$data = json_decode($raw_input, true);
 if (!$data) {
-    echo json_encode(['error' => 'Invalid input']);
+    echo json_encode([
+        'error' => 'Invalid input',
+        'raw_input' => $raw_input
+    ]);
     exit;
 }
 
@@ -67,11 +93,18 @@ $stmt->close();
 
 
 foreach ($cart as $item) {
-    $product_id = $item['product_id'];
-    $quantity = $item['quantity'];
-    $unit_price = $item['unit_price'];
-    $item_total = $item['total'];
-    if ($discount_id) {
+    $product_id = $item['product_id'] ?? null;
+    $quantity = $item['quantity'] ?? null;
+    $unit_price = $item['unit_price'] ?? null;
+    $item_total = $item['total'] ?? null;
+
+    // Validate required fields
+    if (!is_numeric($product_id) || !is_numeric($quantity) || !is_numeric($unit_price) || !is_numeric($item_total)) {
+        error_log('Order item skipped due to invalid data: ' . json_encode($item));
+        continue; // Skip this item
+    }
+
+    if ($discount_id && $discount_id !== '' && $discount_id !== null) {
         $stmt = $conn->prepare("INSERT INTO order_item (order_id, product_id, discount_id, total_ammount, quantity, unit_price) VALUES (?, ?, ?, ?, ?, ?)");
         if ($stmt) {
             $stmt->bind_param('iiidid', $order_id, $product_id, $discount_id, $item_total, $quantity, $unit_price);
@@ -83,7 +116,6 @@ foreach ($cart as $item) {
             error_log('Order item prepare failed: ' . $conn->error);
         }
     } else {
-        // Use NULL for discount_id by omitting it from the bind_param and using the correct types
         $stmt = $conn->prepare("INSERT INTO order_item (order_id, product_id, total_ammount, quantity, unit_price) VALUES (?, ?, ?, ?, ?)");
         if ($stmt) {
             $stmt->bind_param('iidid', $order_id, $product_id, $item_total, $quantity, $unit_price);

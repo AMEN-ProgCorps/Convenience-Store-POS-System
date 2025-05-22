@@ -69,7 +69,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     total
                 })
             });
-            const data = await res.json();
+            const text = await res.text();
+            let data;
+            try {
+                data = JSON.parse(text);
+            } catch (jsonErr) {
+                console.error('Server did not return valid JSON:', text);
+                alert('Order failed! (Invalid server response)');
+                return;
+            }
             if (!data.success) {
                 alert(data.error || 'Order failed!');
                 console.error('Order failed:', data);
@@ -90,7 +98,9 @@ function showReceipt(receipt) {
     receiptText += `Order_id: ${receipt.order_id}\n`;
     receiptText += 'Product:\n';
     receipt.cart.forEach(item => {
-        receiptText += `${item.quantity} - ${item.name}\n`;
+        if (item.name && item.name.trim() !== '' && item.quantity && item.quantity > 0) {
+            receiptText += `${item.quantity} - ${item.name}\n`;
+        }
     });
     receiptText += '\n---------------------------\n';
     receiptText += `sub-total: ${receipt.sub_total}\n`;

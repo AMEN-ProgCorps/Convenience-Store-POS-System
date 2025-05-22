@@ -2,6 +2,14 @@ QUEST:
 
 ACTIVE:
 
+Name: Place Order Bug 
+DETAILS:
+        file: /customer/page1.php
+        Console Report:
+                receipt.js:82 Order failed (exception): SyntaxError: Unexpected token '<', "<br />
+                <b>"... is not valid JSON
+                (anonymous)	@	receipt.js:82
+
 NAME: Account connection
 DETAILS:
         all pages dont have account bind

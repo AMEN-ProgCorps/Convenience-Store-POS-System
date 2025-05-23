@@ -2,9 +2,12 @@ QUEST:
 
 URGENT:
 
-NAME: 
+NAME: Filter bug
 DETAILS:
-
+        Filters bugging in My Orders tabs
+        Files Affected:
+                ~/customer/page2.php
+                /scipt/order.js
 
 NOT-URGENT:
 

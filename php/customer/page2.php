@@ -69,28 +69,88 @@ $conn->close();
             </div>
             <div class="center-bar"><!--Main bar for for stuffs-->
                 <div class="content-container active order-container"><!--My Orders content-->
-                    <h2>My Orders</h2>
-                    <?php if (empty($orders)): ?>
-                        <p>No orders found.</p>
-                    <?php else: ?>
-                     <div class="order-box" id="{order_id}">
-                        <div class="main-box">
-                            <!--Clones if there's more than one products in a order_id-->
-                            <div class="order-item" product="product_id"><!--items will shows here base on the order_item table-->
-                                <div class="order-image"></div>
-                                <div class="contents">
-                                    <div class="contents-label">{Product name}</div>
-                                    <div class="contents-quantity">x{quantity}</div>
-                                </div>
-                                <div class="order-price">P{total_price}</div>
+                    <div class="order-container">
+                        <div class="order-header">
+                            <div class="order-header-label">My Orders <i class="fa-solid fa-circle-check"></i></div>
+                            <div class="order-header-filter">
+                                <p>Order by :</p> 
+                                <div class="type active" onclick="orderArrangement('Highest')">▲</div>
+                                <div class="type" onclick="orderArrangement('Lowest')">▼</div>
+                                <p> Type : </p>
+                                <div class="options active" onclick="orderFilter('Date')">Date</div>
+                                <div class="options" onclick="orderFilter('Quantity')">Quantity</div>
+                                <div class="options" onclick="orderFilter('Ammount')">Amount</div>
+                                <div class="options" onclick="orderFilter('Status')">Status</div>
                             </div>
                         </div>
-                        <div class="order-footer">
-                            <div class="ampler" onclick='toggleOrderItem()'>(View/Hide) Item/s</div>
-                            <div class="order_totalis">Total {no. of items in with the same order_id} items/s: {orders.total_ammount}</div>
-                        </div>
-                     </div>
-                    <?php endif; ?>
+                        <?php if (empty($orders)): ?>
+                            <p>No orders found.</p>
+                        <?php else: ?>
+                            <?php
+                            include '../import/database.php';
+                            $conn = new mysqli($servername, $username, $password, $dbname);
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
+                            }
+                            foreach ($orders as $order):
+                                $order_id = $order['order_id'];
+                                $items = [];
+                                $sql_items = "SELECT oi.*, p.name as product_name FROM order_item oi JOIN products p ON oi.product_id = p.product_id WHERE oi.order_id = '$order_id'";
+                                $result_items = $conn->query($sql_items);
+                                $total_amount = 0;
+                                $total_items = 0;
+                                if ($result_items && $result_items->num_rows > 0) {
+                                    while ($item = $result_items->fetch_assoc()) {
+                                        $items[] = $item;
+                                        $total_amount += $item['total_ammount'];
+                                        $total_items += $item['quantity'];
+                                    }
+                                }
+                            ?>
+                            <div class="order-box" id="order_<?php echo $order_id; ?>">
+                                <div class="main-box">
+                                    <div class="date-purchased">Date Purchased: <?php echo htmlspecialchars($order['order_date']); ?></div>
+                                    <div class="discount-used">
+                                        Discount Applied: 
+                                        <?php
+                                            // Calculate discount if available
+                                            $discount_applied = 0;
+                                            if (!empty($order['discount_id'])) {
+                                                // Get discount percentage from DB
+                                                $discount_sql = "SELECT discount_percentage FROM discounts WHERE discount_id = '" . $order['discount_id'] . "'";
+                                                $discount_result = $conn->query($discount_sql);
+                                                if ($discount_result && $discount_result->num_rows > 0) {
+                                                    $discount_row = $discount_result->fetch_assoc();
+                                                    $discount_applied = $order['total_amount'] * ($discount_row['discount_percentage'] / 100);
+                                                }
+                                            }
+                                            echo '-P ' . number_format($discount_applied, 2);
+                                        ?>
+                                    </div>
+                                    <div class="order-status">Status: <?php echo htmlspecialchars($order['order_status']); ?></div>
+                                    <?php foreach ($items as $item): ?>
+                                    <div class="order-item" product="<?php echo htmlspecialchars($item['product_id']); ?>">
+                                        <div class="order-image"></div>
+                                        <div class="contents">
+                                            <div class="contents-label"><?php echo htmlspecialchars($item['product_name']); ?></div>
+                                            <div class="contents-quantity">x<?php echo (int)$item['quantity']; ?></div>
+                                        </div>
+                                        <div class="order-price">P<?php echo number_format($item['total_ammount'], 2); ?></div>
+                                    </div>
+                                    <?php endforeach; ?>
+                                </div>
+                                <div class="order-footer">
+                                    <?php if (count($items) > 1): ?>
+                                        <div class="ampler" onclick='toggleOrderItem()'>View Item/s ▼</div>
+                                    <?php else: ?>
+                                        <div class="placeholder">.</div>
+                                    <?php endif; ?>
+                                    <div class="order_totalis">Total <?php echo $total_items; ?> item/s: P<?php echo number_format($total_amount, 2); ?></div>
+                                </div>
+                            </div>
+                            <?php endforeach; $conn->close(); ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div> 

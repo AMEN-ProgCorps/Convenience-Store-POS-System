@@ -1,10 +1,96 @@
+.order-container {
+    display: flex;
+        flex-direction: column;
+        gap: 25px;
+}
+    .order-header{
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        height: auto;
+        width: 100%;
+        background-color: #f2f2f2;
+    }
+    .order-header-label{
+        width: 100%;
+        padding: 1% 5%;
+        font-size: 32px;
+        color: #0A401E;
+        font-weight: bold;
+        font-family: 'Inter';
+    }
+    .order-header-filter{
+        display: flex;
+            align-items: center;
+            gap: 10px;
+        padding: 1% 5%;
+    }
+        .order-header-filter .type{
+            user-select: none;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #0A401E;
+        }
+        .type.active{
+            color: #f2f2f2;
+            background-color: #0A401E;
+            border-color: #0A401E;
+        }
+        .order-header-filter .options{
+            cursor: pointer;
+            user-select: none;
+            padding: 5px;
+            border: 2px solid;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .options.active{
+            color: #f2f2f2;
+            background-color: #0A401E;
+            border-color: #0A401E;
+        }
+    
 .order-box {
     width: 90%;
     background-color: #f2f2f2;
-    padding: 20px;
+    padding: 10px;
     border-radius: 20px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    display: flex;  
+        flex-direction: column;
+        gap: 20px;
 }
+    .main-box{
+        position: relative;
+        display: flex;
+            flex-direction: column;
+            gap: 10px;
+    }
+        .date-purchased{
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-family: 'Inter';
+            font-size: large;
+            font-weight: bold;
+        }
+        .discount-used{
+            position: absolute;
+            bottom: -15px;
+            right: 0;
+            font-family: 'Inter';
+            font-weight: bold;
+        }
+        .order-status{
+            position: absolute;
+            background-color: #f2f2f2;
+            padding: 5px;
+            top: -30px;
+            border-radius: 5px;
+            left: 0;
+            font-family: 'Inter';
+            font-weight: bold;
+        }
     .order-item{
         display: grid;
             grid-template-columns: repeat(9, 1fr);
@@ -16,6 +102,7 @@
             grid-area: 1 / 1 / 2 / 2;
             width: 100%;
             aspect-ratio: 1/1;
+            border-radius: 10px;
             background-color: #BF4141;
         }
         .contents{
@@ -46,5 +133,9 @@
         }
 .order-footer{
     display: flex;
+        justify-content: space-between;
     width: 100%;  
 }
+    .order-footer .placeholder{
+        color: transparent;
+    }

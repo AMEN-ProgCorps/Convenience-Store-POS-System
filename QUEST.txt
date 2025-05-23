@@ -1,6 +1,6 @@
 QUEST:
 
-ACTIVE:
+URGENT:
 
 NAME: New table update
 DETAILS:
@@ -9,7 +9,10 @@ DETAILS:
                 - page1.php
                 - place_order.php
                 - receipt.js
-                
+
+
+NOT-URGENT:
+
 Name:  receipt ui design
 DETAILS:
         pangit yung ui
@@ -19,4 +22,7 @@ DETAILS:
         all pages dont have account bind
         directory:
                 -/customer/
-                -/employee/                
+                -/employee/      
+
+
+          

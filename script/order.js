@@ -1,6 +1,7 @@
 // --- Order Arrangement and Filter Functionality ---
 let currentOrderArrangement = 'Highest';
 let currentOrderFilter = 'Date';
+let selectedStatus = '';
 
 
 function orderArrangement(type) {
@@ -21,6 +22,28 @@ function orderFilter(type) {
     document.querySelectorAll('.order-header-filter .options').forEach(el => {
         el.classList.toggle('active', el.textContent.trim() === type);
     });
+    // If filtering by status, show status dropdown
+    const statusDropdown = document.getElementById('statusDropdown');
+    if (type === 'Status') {
+        if (!statusDropdown) {
+            const dropdown = document.createElement('select');
+            dropdown.id = 'statusDropdown';
+            dropdown.innerHTML = `
+                <option value="">All Statuses</option>
+                <option value="pending">Pending</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+            `;
+            dropdown.onchange = function() {
+                selectedStatus = this.value;
+                renderOrderBoxes();
+            };
+            document.querySelector('.order-header-filter').appendChild(dropdown);
+        }
+    } else if (statusDropdown) {
+        statusDropdown.remove();
+        selectedStatus = '';
+    }
     renderOrderBoxes();
 }
 
@@ -53,29 +76,48 @@ function renderOrderBoxes() {
     const header = container.querySelector('.order-header');
     const orderData = getOrderDataFromDOM();
 
-
-    // Arrangement: Highest/Lowest (by total amount)
-    if (currentOrderArrangement === 'Highest') {
-        orderData.sort((a, b) => b.totalAmount - a.totalAmount);
-    } else if (currentOrderArrangement === 'Lowest') {
-        orderData.sort((a, b) => a.totalAmount - b.totalAmount);
-    }
-    // Filter
+    // Sorting logic based on currentOrderFilter (subject) and currentOrderArrangement (direction)
+    let sorted = [...orderData];
     if (currentOrderFilter === 'Date') {
-        orderData.sort((a, b) => b.orderDate - a.orderDate);
+        // Sort by orderDate
+        if (currentOrderArrangement === 'Highest') {
+            // Latest to oldest (descending)
+            sorted.sort((a, b) => b.orderDate - a.orderDate);
+        } else {
+            // Oldest to latest (ascending)
+            sorted.sort((a, b) => a.orderDate - b.orderDate);
+        }
     } else if (currentOrderFilter === 'Quantity') {
-        orderData.sort((a, b) => b.totalQty - a.totalQty);
-    } else if (currentOrderFilter === 'Ammount') {
-        orderData.sort((a, b) => b.totalAmount - a.totalAmount);
+        // Sort by totalQty
+        if (currentOrderArrangement === 'Highest') {
+            sorted.sort((a, b) => b.totalQty - a.totalQty);
+        } else {
+            sorted.sort((a, b) => a.totalQty - b.totalQty);
+        }
+    } else if (currentOrderFilter === 'Amount') {
+        // Sort by totalAmount
+        if (currentOrderArrangement === 'Highest') {
+            sorted.sort((a, b) => b.totalAmount - a.totalAmount);
+        } else {
+            sorted.sort((a, b) => a.totalAmount - b.totalAmount);
+        }
     } else if (currentOrderFilter === 'Status') {
-        orderData.sort((a, b) => a.statusText.localeCompare(b.statusText));
+        // Sort by status: Highest = pending first, completed next; Lowest = completed first, pending last
+        const statusPriority = status => {
+            if (!status) return 99;
+            status = status.toLowerCase();
+            if (status === 'pending') return currentOrderArrangement === 'Highest' ? 0 : 1;
+            if (status === 'completed') return currentOrderArrangement === 'Highest' ? 1 : 0;
+            return 2;
+        };
+        sorted.sort((a, b) => statusPriority(a.statusText) - statusPriority(b.statusText));
     }
 
     // Remove all order-boxes
     container.querySelectorAll('.order-box').forEach(box => box.remove());
 
     // Re-append in new order
-    orderData.forEach(data => container.appendChild(data.box));
+    sorted.forEach(data => container.appendChild(data.box));
 
     // Re-append header if needed
     if (header && container.firstChild !== header) {

@@ -73,13 +73,14 @@ if (!$conn) {
     exit;
 }
 
-$stmt = $conn->prepare("INSERT INTO orders (customer_id, total_amount, payment_type, order_status) VALUES (?, ?, ?, 'pending')");
+// Insert order with discount_id moved to orders table
+$stmt = $conn->prepare("INSERT INTO orders (customer_id, total_amount, discount_id, payment_type, order_status) VALUES (?, ?, ?, ?, 'pending')");
 if (!$stmt) {
     echo json_encode(['error' => 'Order insert prepare failed', 'sqlerror' => $conn->error]);
     $conn->close();
     exit;
 }
-$stmt->bind_param('sds', $user_id, $total, $payment_type);
+$stmt->bind_param('sdss', $user_id, $total, $discount_id, $payment_type);
 if (!$stmt->execute()) {
     echo json_encode(['error' => 'Order insert failed', 'sqlerror' => $stmt->error]);
     $stmt->close();
@@ -89,9 +90,7 @@ if (!$stmt->execute()) {
 $order_id = $conn->insert_id;
 $stmt->close();
 
-// Insert order items
-
-
+// Insert order items (remove discount_id from order_item)
 foreach ($cart as $item) {
     $product_id = $item['product_id'] ?? null;
     $quantity = $item['quantity'] ?? null;
@@ -104,28 +103,15 @@ foreach ($cart as $item) {
         continue; // Skip this item
     }
 
-    if ($discount_id && $discount_id !== '' && $discount_id !== null) {
-        $stmt = $conn->prepare("INSERT INTO order_item (order_id, product_id, discount_id, total_ammount, quantity, unit_price) VALUES (?, ?, ?, ?, ?, ?)");
-        if ($stmt) {
-            $stmt->bind_param('iiidid', $order_id, $product_id, $discount_id, $item_total, $quantity, $unit_price);
-            if (!$stmt->execute()) {
-                error_log('Order item insert failed: ' . $stmt->error);
-            }
-            $stmt->close();
-        } else {
-            error_log('Order item prepare failed: ' . $conn->error);
+    $stmt = $conn->prepare("INSERT INTO order_item (order_id, product_id, total_ammount, quantity, unit_price) VALUES (?, ?, ?, ?, ?)");
+    if ($stmt) {
+        $stmt->bind_param('iidid', $order_id, $product_id, $item_total, $quantity, $unit_price);
+        if (!$stmt->execute()) {
+            error_log('Order item insert failed: ' . $stmt->error);
         }
+        $stmt->close();
     } else {
-        $stmt = $conn->prepare("INSERT INTO order_item (order_id, product_id, total_ammount, quantity, unit_price) VALUES (?, ?, ?, ?, ?)");
-        if ($stmt) {
-            $stmt->bind_param('iidid', $order_id, $product_id, $item_total, $quantity, $unit_price);
-            if (!$stmt->execute()) {
-                error_log('Order item insert failed (no discount): ' . $stmt->error);
-            }
-            $stmt->close();
-        } else {
-            error_log('Order item prepare failed (no discount): ' . $conn->error);
-        }
+        error_log('Order item prepare failed: ' . $conn->error);
     }
     // Update product stock
     $conn->query("UPDATE products SET stock_level = stock_level - " . intval($quantity) . " WHERE product_id = " . intval($product_id));

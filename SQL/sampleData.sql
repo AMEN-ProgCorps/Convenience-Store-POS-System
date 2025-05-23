@@ -23,4 +23,13 @@ INSERT INTO discounts (discount_id, valid_from, valid_till, description, discoun
 VALUES 
 (1, '2023-10-01', '2023-10-31', 'kiss muna', 10.00),
 (2, '2023-11-01', '2023-11-30', 'November Discount', 15.00),
-(3, '2023-12-01', '2023-12-31', 'December Discount', 20.00);
+(3, '2023-12-01', '2023-12-31', 'December Discount', 20.00),
+(4, '2025-01-01', '2025-01-31', 'New Year Discount', 25.00),
+(5, '2025-02-01', '2025-02-29', 'Valentine Discount', 30.00),
+(6, '2025-03-01', '2025-03-31', 'March Madness Discount', 35.00),
+(7, '2025-04-01', '2025-04-30', 'April Discount', 40.00),
+(8, '2025-05-01', '2025-05-31', 'May Discount', 45.00),
+(9, '2025-06-01', '2025-06-30', 'June Discount', 50.00),
+(10, '2025-07-01', '2025-07-31', 'July Discount', 55.00),
+(11, '2025-08-01', '2025-08-31', 'August Discount', 60.00),
+(12, '2025-09-01', '2025-09-30', 'September Discount', 65.00);

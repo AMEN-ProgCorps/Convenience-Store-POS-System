@@ -315,7 +315,9 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
                     </div>
                     <div class="d_line"></div>  
                     <div class="receipt-contents">
-                        <p></p>
+                        <p>
+                            
+                        </p>
                         <button type="button" class="cancel" onclick="closeReceipt()">Close Receipt</button>
                     </div>
                 </div>

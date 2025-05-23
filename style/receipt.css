@@ -1,0 +1,23 @@
+.receipt-contents p {
+  white-space: pre;
+
+}
+.receipt-contents {
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+.qrcode {
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    width: 100%;
+   
+   aspect-ratio: 2/1;
+}
+.qrcode img {
+  width: 100%;
+    height: auto;
+}

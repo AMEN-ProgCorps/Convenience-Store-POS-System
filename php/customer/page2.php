@@ -79,7 +79,7 @@ $conn->close();
                                 <p> Type : </p>
                                 <div class="options active" onclick="orderFilter('Date')">Date</div>
                                 <div class="options" onclick="orderFilter('Quantity')">Quantity</div>
-                                <div class="options" onclick="orderFilter('Ammount')">Amount</div>
+                                <div class="options" onclick="orderFilter('Amount')">Amount</div>
                                 <div class="options" onclick="orderFilter('Status')">Status</div>
                             </div>
                         </div>

@@ -1,6 +1,7 @@
 // --- Order Arrangement and Filter Functionality ---
 let currentOrderArrangement = 'Highest';
 let currentOrderFilter = 'Date';
+let selectedStatus = '';
 
 
 function orderArrangement(type) {
@@ -21,6 +22,28 @@ function orderFilter(type) {
     document.querySelectorAll('.order-header-filter .options').forEach(el => {
         el.classList.toggle('active', el.textContent.trim() === type);
     });
+    // If filtering by status, show status dropdown
+    const statusDropdown = document.getElementById('statusDropdown');
+    if (type === 'Status') {
+        if (!statusDropdown) {
+            const dropdown = document.createElement('select');
+            dropdown.id = 'statusDropdown';
+            dropdown.innerHTML = `
+                <option value="">All Statuses</option>
+                <option value="pending">Pending</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+            `;
+            dropdown.onchange = function() {
+                selectedStatus = this.value;
+                renderOrderBoxes();
+            };
+            document.querySelector('.order-header-filter').appendChild(dropdown);
+        }
+    } else if (statusDropdown) {
+        statusDropdown.remove();
+        selectedStatus = '';
+    }
     renderOrderBoxes();
 }
 
@@ -53,29 +76,44 @@ function renderOrderBoxes() {
     const header = container.querySelector('.order-header');
     const orderData = getOrderDataFromDOM();
 
+    // Filtering logic
+    let filtered = orderData;
+    if (currentOrderFilter === 'Date') {
+        // Show only today's orders
+        const today = new Date();
+        filtered = orderData.filter(o => {
+            return o.orderDate.getFullYear() === today.getFullYear() &&
+                   o.orderDate.getMonth() === today.getMonth() &&
+                   o.orderDate.getDate() === today.getDate();
+        });
+    } else if (currentOrderFilter === 'Quantity') {
+        // Show only orders above or equal to median quantity
+        const qtys = orderData.map(o => o.totalQty).sort((a, b) => a - b);
+        const median = qtys.length ? qtys[Math.floor(qtys.length / 2)] : 0;
+        filtered = orderData.filter(o => o.totalQty >= median);
+    } else if (currentOrderFilter === 'Amount') {
+        // Show only orders above or equal to median amount
+        const amts = orderData.map(o => o.totalAmount).sort((a, b) => a - b);
+        const median = amts.length ? amts[Math.floor(amts.length / 2)] : 0;
+        filtered = orderData.filter(o => o.totalAmount >= median);
+    } else if (currentOrderFilter === 'Status') {
+        if (selectedStatus) {
+            filtered = orderData.filter(o => o.statusText.toLowerCase() === selectedStatus.toLowerCase());
+        }
+    }
 
     // Arrangement: Highest/Lowest (by total amount)
     if (currentOrderArrangement === 'Highest') {
-        orderData.sort((a, b) => b.totalAmount - a.totalAmount);
+        filtered.sort((a, b) => b.totalAmount - a.totalAmount);
     } else if (currentOrderArrangement === 'Lowest') {
-        orderData.sort((a, b) => a.totalAmount - b.totalAmount);
-    }
-    // Filter
-    if (currentOrderFilter === 'Date') {
-        orderData.sort((a, b) => b.orderDate - a.orderDate);
-    } else if (currentOrderFilter === 'Quantity') {
-        orderData.sort((a, b) => b.totalQty - a.totalQty);
-    } else if (currentOrderFilter === 'Ammount') {
-        orderData.sort((a, b) => b.totalAmount - a.totalAmount);
-    } else if (currentOrderFilter === 'Status') {
-        orderData.sort((a, b) => a.statusText.localeCompare(b.statusText));
+        filtered.sort((a, b) => a.totalAmount - b.totalAmount);
     }
 
     // Remove all order-boxes
     container.querySelectorAll('.order-box').forEach(box => box.remove());
 
     // Re-append in new order
-    orderData.forEach(data => container.appendChild(data.box));
+    filtered.forEach(data => container.appendChild(data.box));
 
     // Re-append header if needed
     if (header && container.firstChild !== header) {

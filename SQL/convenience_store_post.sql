@@ -118,21 +118,21 @@ CREATE TABLE orders (
     customer_id VARCHAR(10),
     order_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     total_amount DECIMAL(10,5) NOT NULL,
+    discount_id INT,
     payment_type ENUM('cash','e-wallet') NOT NULL,
     order_status ENUM('pending', 'completed', 'cancelled') NOT NULL,
-    FOREIGN KEY (customer_id) REFERENCES customer_accounts(customer_id)
+    FOREIGN KEY (customer_id) REFERENCES customer_accounts(customer_id),
+    FOREIGN KEY (discount_id) REFERENCES discounts(discount_id)
 );
 
 -- Here for RECORDS on items that comes an go in customers usage
 CREATE TABLE order_item (
     order_id INT,
     product_id INT,
-    discount_id INT,
     total_ammount DECIMAL(10,5) NOT NULL,
     quantity INT NOT NULL,
     unit_price DECIMAL(10,5) NOT NULL,
     FOREIGN KEY (order_id) REFERENCES orders(order_id),
-    FOREIGN KEY (product_id) REFERENCES products(product_id),
-    FOREIGN KEY (discount_id) REFERENCES discounts(discount_id)
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
 

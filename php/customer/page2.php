@@ -75,9 +75,16 @@ $conn->close();
                     <?php else: ?>
                      <div class="order-box" id="{order_id}">
                         <div class="main-box">
-                            <div class="order-image"></div>
-                            <div class="contents"></div>
+                            <div class="order-item" product="product_id"><!--items will shows here base on the order_item table-->
+                                <div class="order-image"></div>
+                                <div class="contents">
+                                    <div class="contents-label">{Product name}</div>
+                                    <div class="contents-quantity">x{quantity}</div>
+                                </div>
+                                <div class="order-price">P{total_price}</div>
+                            </div>
                         </div>
+                        .footer
                      </div>
                     <?php endif; ?>
                 </div>

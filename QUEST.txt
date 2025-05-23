@@ -2,6 +2,14 @@ QUEST:
 
 ACTIVE:
 
+NAME: New table update
+DETAILS:
+        - order_table discount_id is moved to orders due to inaccuracy of products total price 
+        Files that will be affected:
+                - page1.php
+                - place_order.php
+                - receipt.js
+                
 Name:  receipt ui design
 DETAILS:
         pangit yung ui

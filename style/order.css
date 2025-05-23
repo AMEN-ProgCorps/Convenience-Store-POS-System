@@ -44,3 +44,7 @@
             font-size: medium;
             font-weight: bold;
         }
+.order-footer{
+    display: flex;
+    width: 100%;  
+}

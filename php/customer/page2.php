@@ -75,6 +75,7 @@ $conn->close();
                     <?php else: ?>
                      <div class="order-box" id="{order_id}">
                         <div class="main-box">
+                            <!--Clones if there's more than one products in a order_id-->
                             <div class="order-item" product="product_id"><!--items will shows here base on the order_item table-->
                                 <div class="order-image"></div>
                                 <div class="contents">
@@ -84,7 +85,10 @@ $conn->close();
                                 <div class="order-price">P{total_price}</div>
                             </div>
                         </div>
-                        .footer
+                        <div class="order-footer">
+                            <div class="ampler" onclick='toggleOrderItem()'>(View/Hide) Item/s</div>
+                            <div class="order_totalis">Total {no. of items in with the same order_id} items/s: {orders.total_ammount}</div>
+                        </div>
                      </div>
                     <?php endif; ?>
                 </div>

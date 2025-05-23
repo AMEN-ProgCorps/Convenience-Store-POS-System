@@ -2,12 +2,12 @@ QUEST:
 
 URGENT:
 
-NAME: Filter bug
+NAME: Filter ui
 DETAILS:
-        Filters bugging in My Orders tabs
+        Filter ui na pangit
         Files Affected:
                 ~/customer/page2.php
-                /scipt/order.js
+                /style/order.css
 
 NOT-URGENT:
 

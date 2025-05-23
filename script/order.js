@@ -76,44 +76,48 @@ function renderOrderBoxes() {
     const header = container.querySelector('.order-header');
     const orderData = getOrderDataFromDOM();
 
-    // Filtering logic
-    let filtered = orderData;
+    // Sorting logic based on currentOrderFilter (subject) and currentOrderArrangement (direction)
+    let sorted = [...orderData];
     if (currentOrderFilter === 'Date') {
-        // Show only today's orders
-        const today = new Date();
-        filtered = orderData.filter(o => {
-            return o.orderDate.getFullYear() === today.getFullYear() &&
-                   o.orderDate.getMonth() === today.getMonth() &&
-                   o.orderDate.getDate() === today.getDate();
-        });
-    } else if (currentOrderFilter === 'Quantity') {
-        // Show only orders above or equal to median quantity
-        const qtys = orderData.map(o => o.totalQty).sort((a, b) => a - b);
-        const median = qtys.length ? qtys[Math.floor(qtys.length / 2)] : 0;
-        filtered = orderData.filter(o => o.totalQty >= median);
-    } else if (currentOrderFilter === 'Amount') {
-        // Show only orders above or equal to median amount
-        const amts = orderData.map(o => o.totalAmount).sort((a, b) => a - b);
-        const median = amts.length ? amts[Math.floor(amts.length / 2)] : 0;
-        filtered = orderData.filter(o => o.totalAmount >= median);
-    } else if (currentOrderFilter === 'Status') {
-        if (selectedStatus) {
-            filtered = orderData.filter(o => o.statusText.toLowerCase() === selectedStatus.toLowerCase());
+        // Sort by orderDate
+        if (currentOrderArrangement === 'Highest') {
+            // Latest to oldest (descending)
+            sorted.sort((a, b) => b.orderDate - a.orderDate);
+        } else {
+            // Oldest to latest (ascending)
+            sorted.sort((a, b) => a.orderDate - b.orderDate);
         }
-    }
-
-    // Arrangement: Highest/Lowest (by total amount)
-    if (currentOrderArrangement === 'Highest') {
-        filtered.sort((a, b) => b.totalAmount - a.totalAmount);
-    } else if (currentOrderArrangement === 'Lowest') {
-        filtered.sort((a, b) => a.totalAmount - b.totalAmount);
+    } else if (currentOrderFilter === 'Quantity') {
+        // Sort by totalQty
+        if (currentOrderArrangement === 'Highest') {
+            sorted.sort((a, b) => b.totalQty - a.totalQty);
+        } else {
+            sorted.sort((a, b) => a.totalQty - b.totalQty);
+        }
+    } else if (currentOrderFilter === 'Amount') {
+        // Sort by totalAmount
+        if (currentOrderArrangement === 'Highest') {
+            sorted.sort((a, b) => b.totalAmount - a.totalAmount);
+        } else {
+            sorted.sort((a, b) => a.totalAmount - b.totalAmount);
+        }
+    } else if (currentOrderFilter === 'Status') {
+        // Sort by status: Highest = pending first, completed next; Lowest = completed first, pending last
+        const statusPriority = status => {
+            if (!status) return 99;
+            status = status.toLowerCase();
+            if (status === 'pending') return currentOrderArrangement === 'Highest' ? 0 : 1;
+            if (status === 'completed') return currentOrderArrangement === 'Highest' ? 1 : 0;
+            return 2;
+        };
+        sorted.sort((a, b) => statusPriority(a.statusText) - statusPriority(b.statusText));
     }
 
     // Remove all order-boxes
     container.querySelectorAll('.order-box').forEach(box => box.remove());
 
     // Re-append in new order
-    filtered.forEach(data => container.appendChild(data.box));
+    sorted.forEach(data => container.appendChild(data.box));
 
     // Re-append header if needed
     if (header && container.firstChild !== header) {

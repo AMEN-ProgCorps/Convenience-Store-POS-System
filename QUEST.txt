@@ -4,22 +4,56 @@ URGENT:
 
 NAME: Filter ui
 DETAILS:
-        Filter ui na pangit
+        Filter functions requireds to be inside order-container, 
+        because when function triggers order-box is placed outside the container
         Files Affected:
                 ~/customer/page2.php
-                /style/order.css
+                /script/order.js
+
+NAME: TogglePayment functions is not recorded in receipt
+DETAILS:
+        Payment Type is not recorded in the cart function 
+        Files Affected:
+                ~/customer/page1.php
+                ~/customer/place_order.php
+                /script/receipt.js
+
+NAME: Remove ui on Cart
+DETAILS:
+        no design is found on Remove   
+        connected quest: Remove Function on Cart
+
+NAME: Remove Function on Cart
+DETAILS:
+        Remove items on Cart is missing, 
+        Files Affected:
+        ~/customer/page1.php
+
+NAME: Remove ui on My Order
+DETAILS:
+        no design is found on Remove   
+        connected quest: Remove Function on My Order
+
+NAME: Remove Function on My order
+DETAILS:
+        Remove order in my order is missing due to design incomplete visibility
+        Files Affected:
+                ~/customer/page2.php   
+                /script/order.js
 
 NOT-URGENT:
 
-Name:  
+Name:  Logout bug on customer
 DETAILS:
-        
+        This bug is found when site is refereshed and added items, on which the user
+        cannot be logout and stuck on the customer interface
+        Files Affected:
+                ~/customer/page1.php (90% probable cause)
 
 NAME: Account connection
 DETAILS:
         all pages dont have account bind
         directory:
-                -/customer/
                 -/employee/      
 
 

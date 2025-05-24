@@ -116,6 +116,9 @@ body {
                         justify-content: center;
                     border-radius: 50%; /* Circular icon */
                 }
+                    .tab-icon i{
+                        font-size: larger;
+                    }
                     .tab-icon svg {
                         font-size: 100%;
                         color: transparent;

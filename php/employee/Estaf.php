@@ -22,26 +22,29 @@ session_start();
                     <div class="logo-label">ToMart</div> 
                 </div>
                 <div class="username-container">
-                        Hello! <?php echo isset($_SESSION['user_name']) ? htmlspecialchars($_SESSION['user_name']) : 'Customer'; ?>
+                        Hello! <?php echo isset($_SESSION['user_name']) ? htmlspecialchars($_SESSION['user_name']) : 'Employee'; ?>
+                        <?php if (isset($_SESSION['user_role'])): ?>
+                            <span style="font-size:0.9em;color:#0A401E;">(<?php echo htmlspecialchars($_SESSION['user_role']); ?>)</span>
+                        <?php endif; ?>
                 </div>
                 <div class="tab-container">
-                    <div class="items-tab tab" onclick="toggleMenu('Inventory')">
+                    <div class="items-tab tab" onclick="window.location.href='Einv.php'">
                         <div class="tab-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M160 448a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zM160 896a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32z"/></svg>
                         </div>
                         <div class="tab-label">Inventory</div>
                     </div>
-                    <div class="items-tab tab" onclick="toggleMenu('Search')">
+                    <div class="items-tab tab" onclick="window.location.href='Esear.php'">
                         <div class="tab-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M160 448a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zM160 896a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32z"/></svg>
                         </div>
                         <div class="tab-label">Search Items</div>
                     </div>
-                    <div class="order-tab tab" onclick="toggleMenu('Cashier')">
+                    <div class="order-tab tab" onclick="window.location.href='Ecash.php'">
                         <div class="tab-icon"><i class="fas fa-shopping-cart"></i></div>
                         <div class="tab-label">Cashier</div>
                     </div>
-                    <div class="items-tab tab" onclick="toggleMenu('Accounts')">
+                    <div class="items-tab tab" onclick="window.location.href='Eacc.php'">
                         <div class="tab-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M160 448a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zM160 896a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32z"/></svg>
                         </div>

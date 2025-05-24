@@ -35,8 +35,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     header("Location: customer/page1.php");
                     exit;
                 } elseif (strpos($user['id'], 'E') === 0) {
-                    header("Location: employee/page1.php");
-                    exit;
+                    // Redirect based on employee role
+                    if ($user['role'] === 'Manager') {
+                        header("Location: employee/Einv.php");
+                        exit;
+                    } elseif ($user['role'] === 'Cashier') {
+                        header("Location: employee/Ecash.php");
+                        exit;
+                    } elseif ($user['role'] === 'Admin') {
+                        header("Location: employee/Eacc.php");
+                        exit;
+                    } else {
+                        header("Location: employee/page1.php"); // fallback for unknown role
+                        exit;
+                    }
                 } else {
                     // fallback
                     header("Location: dashboard.php");

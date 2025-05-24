@@ -61,7 +61,7 @@ $conn->close();
                         <div class="tab-icon"><i class="fas fa-shopping-cart"></i></div>
                         <div class="tab-label">My Orders</div>
                     </div>
-                    <div class="logout-tab tab" onclick="window.location.href='?logout=1';">
+                    <div class="logout-tab tab" onclick="window.location.href='../access_portal.php?logout=1';">
                         <div class="tab-icon"><i class="fa-solid fa-circle-user"></i></div>
                         <div class="tab-label">Logout</div>
                     </div>

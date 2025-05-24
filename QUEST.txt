@@ -10,6 +10,9 @@ DETAILS:
                 ~/customer/page2.php
                 /script/order.js
 
+NOT-URGENT:
+
+
 NAME: TogglePayment functions is not recorded in receipt
 DETAILS:
         Payment Type is not recorded in the cart function 
@@ -40,21 +43,3 @@ DETAILS:
         Files Affected:
                 ~/customer/page2.php   
                 /script/order.js
-
-NOT-URGENT:
-
-Name:  Logout bug on customer
-DETAILS:
-        This bug is found when site is refereshed and added items, on which the user
-        cannot be logout and stuck on the customer interface
-        Files Affected:
-                ~/customer/page1.php (90% probable cause)
-
-NAME: Account connection
-DETAILS:
-        all pages dont have account bind
-        directory:
-                -/employee/      
-
-
-          

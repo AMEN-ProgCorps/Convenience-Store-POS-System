@@ -33,3 +33,9 @@ VALUES
 (10, '2025-07-01', '2025-07-31', 'July Discount', 55.00),
 (11, '2025-08-01', '2025-08-31', 'August Discount', 60.00),
 (12, '2025-09-01', '2025-09-30', 'September Discount', 65.00);
+
+-- Example insert (do NOT include employee_id)
+INSERT INTO employee_accounts (name, role, store_name, password)
+VALUES 
+('John_Doe', 'Cashier', 'Main Store', 'securepass'),
+('WalterWhite', 'Manager', 'Branch Store', 'Manigga');

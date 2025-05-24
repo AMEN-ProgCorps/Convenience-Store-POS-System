@@ -90,10 +90,10 @@ BEGIN
     SET NEW.employee_id = CONCAT('E', next_id);
 END$$
 DELIMITER ;
-
 -- Example insert (do NOT include employee_id)
 INSERT INTO employee_accounts (name, role, store_name, password)
-VALUES ('John Doe', 'Cashier', 'Main Store', 'securepass');
+VALUES 
+('Administrator', 'Admin', 'Main Store', 'admin');
 
 -- this one is view for all accounts that is recorded in the systems
 CREATE VIEW all_accounts AS

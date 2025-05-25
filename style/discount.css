@@ -61,12 +61,6 @@
                     justify-content: center;
                     align-items: center;
             }
-            .d_line{
-                --s: 15px;
-                height: 2px;
-                width: 90%;
-                background: radial-gradient(circle closest-side, #000000 98%, #0000) 0 0 / var(--s) 100%, linear-gradient(90deg, #000000 50%, #0000 0) calc(var(--s) / 2) 0 / calc(2 * var(--s)) 100%;
-            }
             .discount_box-container{
                 padding-top: 10px;
                 width: 100%;

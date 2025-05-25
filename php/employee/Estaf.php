@@ -28,6 +28,14 @@ session_start();
                         <?php endif; ?>
                 </div>
                 <div class="tab-container">
+                <?php
+                    $role = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : '';
+                    if ($role !== 'Admin' && $role !== 'Manager') {
+                        header('Location: ../access_portal.php');
+                        exit;
+                    }
+                ?>
+                <?php if ($role === 'Admin' || $role === 'Manager'): ?>
                     <div class="items-tab tab" onclick="window.location.href='Einv.php'">
                         <div class="tab-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M160 448a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zM160 896a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32z"/></svg>
@@ -44,19 +52,22 @@ session_start();
                         <div class="tab-icon"><i class="fas fa-shopping-cart"></i></div>
                         <div class="tab-label">Cashier</div>
                     </div>
+                    <?php if ($role === 'Admin'): ?>
                     <div class="items-tab tab" onclick="window.location.href='Eacc.php'">
                         <div class="tab-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M160 448a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zM160 896a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32z"/></svg>
                         </div>
                         <div class="tab-label">Accounts</div>
                     </div>
+                    <?php endif; ?>
                     <div class="items-tab tab active">
                         <div class="tab-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M160 448a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zM160 896a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32z"/></svg>
                         </div>
                         <div class="tab-label">Staff</div>
                     </div>
-                    <div class="logout-tab tab" onclick="window.location.href='?logout=1';">
+                <?php endif; ?>
+                    <div class="logout-tab tab" onclick="window.location.href='../access_portal.php?logout=1';">
                         <div class="tab-icon"><i class="fa-solid fa-circle-user"></i></div>
                         <div class="tab-label">Logout</div>
                     </div>

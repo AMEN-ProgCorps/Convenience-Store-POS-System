@@ -28,6 +28,13 @@ body {
     padding: 0;
     background-color: #D9D9D9;
 }
+
+            .d_line{
+                --s: 15px;
+                height: 2px;
+                width: 90%;
+                background: radial-gradient(circle closest-side, #000000 98%, #0000) 0 0 / var(--s) 100%, linear-gradient(90deg, #000000 50%, #0000 0) calc(var(--s) / 2) 0 / calc(2 * var(--s)) 100%;
+            }
 .body_container {
     display: flex;
     height: 100vh;

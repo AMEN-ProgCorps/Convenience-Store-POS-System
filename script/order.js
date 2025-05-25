@@ -71,7 +71,9 @@ function getOrderDataFromDOM() {
 }
 
 function renderOrderBoxes() {
-    const container = document.querySelector('.order-container');
+    // Use the most specific selector for the order-container that contains the order-boxes
+    // This is the inner .order-container, not the .content-container.active.order-container
+    const container = document.querySelector('.content-container.active.order-container .order-container') || document.querySelector('.order-container');
     if (!container) return;
     const header = container.querySelector('.order-header');
     const orderData = getOrderDataFromDOM();

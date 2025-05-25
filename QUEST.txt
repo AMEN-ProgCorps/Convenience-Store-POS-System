@@ -2,13 +2,9 @@ QUEST:
 
 URGENT:
 
-NAME: Filter ui
+NAME: 
 DETAILS:
-        Filter functions requireds to be inside order-container, 
-        because when function triggers order-box is placed outside the container
-        Files Affected:
-                ~/customer/page2.php
-                /script/order.js
+       
 
 NOT-URGENT:
 

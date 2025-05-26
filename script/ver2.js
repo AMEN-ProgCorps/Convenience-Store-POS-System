@@ -134,9 +134,22 @@ function removeCartToggle() {
                         </div>
                     </div>
                     <div class="cart-top-body-product-total_price">₱${(parseFloat(itemPrice.replace('₱', '')) * quantity).toFixed(2)}</div>
+                    <button class="cart-remove-btn">Remove</button>
                 `;
 
                 cartBody.appendChild(cartItem);
+
+                // Add remove button event
+                const removeBtn = cartItem.querySelector('.cart-remove-btn');
+                removeBtn.addEventListener('click', () => {
+                    cartItem.remove();
+                    // If cart is empty, show placeholder
+                    if (!cartBody.querySelector('.cart-top-body-product')) {
+                        const placeholder = document.createElement('p');
+                        placeholder.textContent = 'No item present';
+                        cartBody.appendChild(placeholder);
+                    }
+                });
             } else {
                 // Update the quantity and total price if the item already exists in the cart
                 const quantityElement = cartItem.querySelector('.cart-top-body-product-label-details-quantity');

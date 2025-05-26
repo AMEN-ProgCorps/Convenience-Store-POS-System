@@ -11,8 +11,10 @@ session_start();
         <title>ToMart</title>
         <link rel="icon" href="../../style/ToMart_Logo.png" type="image/x-icon">
         <link rel="stylesheet" href="../../style/index.css">
+        <link rel="stylesheet" href="../../style/Estaf.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <script src="../../script/lan.js" defer></script>
+        <script src="../../script/Estaf.js" defer></script>
     </head>
     <body>
         <div class="body_container">
@@ -38,7 +40,7 @@ session_start();
                 <?php if ($role === 'Admin' || $role === 'Manager'): ?>
                     <div class="items-tab tab" onclick="window.location.href='Einv.php'">
                         <div class="tab-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M160 448a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zM160 896a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32z"/></svg>
+                            <i class="fas fa-boxes"></i>
                         </div>
                         <div class="tab-label">Inventory</div>
                     </div>
@@ -49,20 +51,22 @@ session_start();
                         <div class="tab-label">Search Items</div>
                     </div>
                     <div class="order-tab tab" onclick="window.location.href='Ecash.php'">
-                        <div class="tab-icon"><i class="fas fa-shopping-cart"></i></div>
+                        <div class="tab-icon">
+                            <i class="fas fa-cash-register"></i>
+                        </div>
                         <div class="tab-label">Cashier</div>
                     </div>
                     <?php if ($role === 'Admin'): ?>
                     <div class="items-tab tab" onclick="window.location.href='Eacc.php'">
                         <div class="tab-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M160 448a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zM160 896a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32z"/></svg>
+                            <i class="fas fa-users"></i>
                         </div>
                         <div class="tab-label">Accounts</div>
                     </div>
                     <?php endif; ?>
                     <div class="items-tab tab active">
                         <div class="tab-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M160 448a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zM160 896a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32z"/></svg>
+                            <i class="fas fa-user-tie"></i>
                         </div>
                         <div class="tab-label">Staff</div>
                     </div>
@@ -74,11 +78,84 @@ session_start();
                 </div>
             </div>
             <div class="center-bar"><!--Main bar for for stuffs-->
+                <div class="staff-header">
+                    <div class="search-container">
+                        <input type="text" id="staff-search" placeholder="Search staff...">
+                        <button id="search-button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="filter-container">
+                        <div class="filter-toggle">
+                            <div class="filter-option active" data-role="all">All</div>
+                            <div class="filter-option" data-role="Cashier">Cashier</div>
+                            <div class="filter-option" data-role="Manager">Manager</div>
+                        </div>
+                        <button class="create-staff-btn">Create Staff Account</button>
+                    </div>
+                </div>
                 
+                <div class="staff-container">
+                    <?php
+                    // Fetch all employee accounts
+                    $sql = "SELECT * FROM employee_accounts WHERE role != 'Admin' ORDER BY employee_id";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->execute();
+                    
+                    while ($employee = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        echo '<div class="staff-box" data-role="' . htmlspecialchars($employee['role']) . '" onclick="showStaffForm(' . htmlspecialchars(json_encode($employee)) . ')">';
+                        echo '<div class="staff-id">' . htmlspecialchars($employee['employee_id']) . '</div>';
+                        echo '<div class="staff-name">' . htmlspecialchars($employee['name']) . '</div>';
+                        echo '<div class="staff-role">' . htmlspecialchars($employee['role']) . '</div>';
+                        echo '<div class="staff-store">' . htmlspecialchars($employee['store_name']) . '</div>';
+                        echo '</div>';
+                    }
+                    ?>
+                </div>
             </div>
-            <div class="cart-bar active"><!--Side bar for Cart-->
-           
-            </div> 
+            <div class="cart-bar"><!--Side bar for Staff Details-->
+                <div class="staff-form">
+                    <div class="form-header">
+                        <div class="form-title">Create New Staff</div>
+                        <button onclick="closeForm()" class="close-btn">×</button>
+                    </div>
+                    
+                    <form id="staff-form" onsubmit="saveStaff(event)">
+                        <div class="form-group">
+                            <label for="staff-name">Name</label>
+                            <input type="text" id="staff-name" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="role">Role</label>
+                            <select id="role" name="role" required>
+                                <option value="Cashier">Cashier</option>
+                                <?php if ($_SESSION['user_role'] === 'Admin'): ?>
+                                <option value="Manager">Manager</option>
+                                <?php endif; ?>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="store-name">Store Name</label>
+                            <input type="text" id="store-name" name="store_name" required>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="save-btn">Save</button>
+                            <button type="button" class="cancel-btn" onclick="closeForm()">Cancel</button>
+                            <button type="button" class="delete-btn" onclick="deleteStaff(document.getElementById('employee-id').value)" style="display: none;">Delete</button>
+                        </div>
+                        
+                        <input type="hidden" id="employee-id" name="id">
+                    </form>
+                </div>
+            </div>
         </div>
     </body>
 </html>

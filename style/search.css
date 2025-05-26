@@ -1,0 +1,117 @@
+.search-header {
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.search-container {
+    display: flex;
+    gap: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#searchInput {
+    flex: 1;
+    padding: 12px 20px;
+    border: 2px solid #0A401E;
+    border-radius: 25px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+#searchInput:focus {
+    border-color: #0A401E;
+    box-shadow: 0 0 5px rgba(10, 64, 30, 0.2);
+}
+
+#searchButton {
+    padding: 12px 25px;
+    background-color: #0A401E;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#searchButton:hover {
+    background-color: #0c5026;
+}
+
+.items-box-container {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 150px);
+}
+
+.item-box {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.item-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.item-id {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.item-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #0A401E;
+}
+
+.item-category {
+    font-size: 0.9em;
+    color: #666;
+    background-color: #f0f0f0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    align-self: flex-start;
+}
+
+.item-details {
+    display: flex;
+    justify-content: space-between;
+    color: #333;
+    margin-top: auto;
+}
+
+.item-quantity,
+.item-amount {
+    background-color: #f5f5f5;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+.item-amount {
+    color: #0A401E;
+    font-weight: bold;
+}
+
+.no-results,
+.error {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    color: #666;
+}

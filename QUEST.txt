@@ -46,11 +46,6 @@ DETAILS:
         File Afffected:
                 ~/employee/Eacc.php
 
-NAME: no actions inside (2)
-DETAILS:
-        Employee Search has no purpose yet, you can decide what to piut there
-        File Afffected:
-                ~/employee/Esear.php
 NAME: no actions inside (3)
 DETAILS:
         Employee Staff has no purpose yet, you can decide what to piut there

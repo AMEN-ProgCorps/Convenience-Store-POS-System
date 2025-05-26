@@ -80,11 +80,18 @@ session_start();
                 </div>
             </div>
             <div class="center-bar"><!--Main bar for for stuffs-->
-                
+                <div class="search-header">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search items...">
+                        <button type="button" id="searchButton">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="items-box-container">
+                    <!-- Items will be dynamically loaded here -->
+                </div>
             </div>
-            <div class="cart-bar active"><!--Side bar for Cart-->
-           
-            </div> 
         </div>
     </body>
 </html>

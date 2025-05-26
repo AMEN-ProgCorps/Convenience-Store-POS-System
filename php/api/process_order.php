@@ -14,6 +14,7 @@ try {
     $order_id = $data['order_id'] ?? null;
     $action = $data['action'] ?? null; // 'approve' or 'decline'
     $employee_id = $_SESSION['employee_id'] ?? null;
+
     if (!$order_id || !$action || !$employee_id) {
         throw new Exception('Missing required parameters');
     }

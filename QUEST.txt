@@ -28,32 +28,3 @@ DETAILS:
         Files Affected:
         ~/customer/page1.php
 
-NAME: Remove ui on My Order
-DETAILS:
-        no design is found on Remove   
-        connected quest: Remove Function on My Order
-
-NAME: Remove Function on My order
-DETAILS:
-        Remove order in my order is missing due to design incomplete visibility
-        Files Affected:
-                ~/customer/page2.php   
-                /script/order.js
-
-NAME: no actions inside (1)
-DETAILS:
-        Employee account has no purpose yet, you can decide what to piut there
-        File Afffected:
-                ~/employee/Eacc.php
-
-NAME: no actions inside (3)
-DETAILS:
-        Employee Staff has no purpose yet, you can decide what to piut there
-        File Afffected:
-                ~/employee/Estaf.php
-
-NAME: no actions inside (4)
-DETAILS:
-        Employee inventory has no purpose yet, you can decide what to piut there
-        File Afffected:
-                ~/employee/Einv.php

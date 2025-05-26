@@ -11,8 +11,10 @@ session_start();
         <title>ToMart</title>
         <link rel="icon" href="../../style/ToMart_Logo.png" type="image/x-icon">
         <link rel="stylesheet" href="../../style/index.css">
+        <link rel="stylesheet" href="../../style/search.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <script src="../../script/lan.js" defer></script>
+        <script src="../../script/Esearch.js" defer></script>
     </head>
     <body>
         <div class="body_container">

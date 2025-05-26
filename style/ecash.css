@@ -1,225 +1,329 @@
-.cashier-container{
+.cashier-container {
     padding: 5px;
     display: flex;
-        
-        flex-direction: column;
-        gap: 25px;
-} 
-    .cashier-header{
-        user-select: none;
-        background-color: #f2f2f2;
-        padding: 20px 30px;
-        display: flex;
-        border-radius: 20px;
-    }
-        .ctitle{            
-            font-size: xx-large;
-            font-family: 'inter';
-            font-weight: bolder;
-            color: #0A401E;
-        }
-    .cashier-body{
-        display: flex;
-            flex-direction: column;
-            gap: 20px;
-    }
-        .order-label{
-            user-select: none;
-            cursor: pointer;
-            font-size: large;
-            color: #0A401E;
-            background-color: #f2f2f2;
-            padding: 10px 20px;
-            font-weight: bold;
-            border-radius: 5px;
-        }
-            .order-label.active{
-                color: #f2f2f2;
-                background-color: #0A401E;
-            }
-        .order-list{
-            display: none;
-        }
-        .order-list.show{
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        .order-item{
-            position: relative;
-            display: flex;
-                gap: 10px;
-            background-color: #f2f2f2;
-            border-radius: 20px;
-            padding: 20px;
-        }
-            .order-item:hover .view_items{
-                display: flex;
-                width: 100%;
-                cursor: pointer;
-                transition: 5s;
-            }
-            .order-id-box{
-                font-size: large;
-                font-weight: 900;
-                font-family: 'inter';
-                border-right: solid 2px;
-                display: flex;
-                    justify-content: center;
-                    align-items: center;
-                padding: 10px;
-            }
-            .order-item-details{
-                display: flex;
-                    align-items: center;
-                    gap: 10px;
-            }
-                .oid{
-                    font-family: 'Courier New', Courier, monospace;
-                }
-                .oid span{
-                    font-weight: bold;
-                    color: #0A401E;
-                    font-family: 'Inter';
-                }
-            .view_items{
-                user-select: none;
-                position: absolute;
-                transition: 1s;
-                right: 0;
-                top: 0;
-                height: 100%;
-                width: 0;
-                overflow: hidden;
-                padding: 0 5%;
-                display: none;
-                    justify-content: flex-end;
-                    align-items: center;
-                font-weight: bold;
-                color: #f2f2f2;
-                font-size: xx-large;
-                background: linear-gradient(93deg,rgba(255, 255, 255, 0) 23%, rgba(3, 140, 62, 1) 70%);
-                cursor: pointer;
-                border-radius: 20px;
-            }
-.order-details-container{
+
+    flex-direction: column;
+    gap: 25px;
+}
+
+.cashier-header {
+    user-select: none;
+    background-color: #f2f2f2;
+    padding: 20px 30px;
+    display: flex;
+    border-radius: 20px;
+}
+
+.ctitle {
+    font-size: xx-large;
+    font-family: 'inter';
+    font-weight: bolder;
+    color: #0A401E;
+}
+
+.cashier-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.order-label {
+    user-select: none;
+    cursor: pointer;
+    font-size: large;
+    color: #0A401E;
+    background-color: #f2f2f2;
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.order-label.active {
+    color: #f2f2f2;
+    background-color: #0A401E;
+}
+
+.order-list {
+    display: none;
+}
+
+.order-list.show {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.order-item {
+    position: relative;
+    display: flex;
+    gap: 10px;
+    background-color: #f2f2f2;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.order-item:hover .view_items {
+    display: flex;
+    width: 100%;
+    cursor: pointer;
+    transition: 5s;
+}
+
+.order-id-box {
+    font-size: large;
+    font-weight: 900;
+    font-family: 'inter';
+    border-right: solid 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.order-item-details {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.oid {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.oid span {
+    font-weight: bold;
+    color: #0A401E;
+    font-family: 'Inter';
+}
+
+.view_items {
+    user-select: none;
+    position: absolute;
+    transition: 1s;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    overflow: hidden;
+    padding: 0 5%;
+    display: none;
+    justify-content: flex-end;
+    align-items: center;
+    font-weight: bold;
+    color: #f2f2f2;
+    font-size: xx-large;
+    background: linear-gradient(93deg, rgba(255, 255, 255, 0) 23%, rgba(3, 140, 62, 1) 70%);
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+.order-details-container {
     height: 100%;
     display: flex;
-        align-items: center;
-        flex-direction: column;
-        gap: 20px;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
 }
-    .order-details-container .cashier-header{
-        width: 70%;
-    }
-    .details-body{
-        flex-grow: 1;
-        width: 100%;
-        display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: repeat(12, 1fr);
-            grid-column-gap: 0px;
-            grid-row-gap: 0px;
-    }
-        .oi-body{
-            grid-area: 1 / 1 / 9 / 5;
-            overflow: scroll;
-            display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
-        }
-            .item-box{
-                position: relative;
-                background-color: #ffffff;
-                border-radius: 20px;
-                width: 80%;
-                padding: 10px;
-                display: flex;
-                    flex-direction: column;
-                    gap: 5px;
-                    justify-content: space-between;
-                    align-items: center;
-            }
-                .item_name{
-                    width: 100%;
-                    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-                    font-size: large;
-                    font-weight: bold;
-                }
-                .item_quantity{
-                    font-weight: bolder;
-                }
-                .remove-item{
-                    position: absolute;
-                        top: 50%;
-                        right: 5%;
-                }
-                .item_price{
-                    position: absolute;
-                        top: 0;
-                        right: 0;
-                    font-weight: bold;
-                }
-        .oi-id{
-            grid-area: 9 / 1 / 13 / 3;
-            display: flex;
-                justify-content: center;
-                align-items: center;
-        }
-            .oi-id-label{
-                display: flex;
-                    justify-content: center;
-                    align-items: center;
-                aspect-ratio: 1/1;
-                width: 80%;
-                font-family: 'inter';
-                font-weight: bolder;
-                font-size: xx-large;
-                border-radius: 20px;
-                padding: 5px;
-                color: #f2f2f2;
-                background-color: #038C3E;
-            }
-        .oi-total{
-            grid-area: 9 / 3 / 10 / 5;
-            display: flex;
-                justify-content: space-around;
-                align-items: center;
-        }
-            .oi-total-label{
-                font-family: 'inter';
-                font-weight: bolder;
-                color: #0A401E;
-            }
-            .oi-total-label span{
-                font-weight: normal;
-            }
-        .oi-payment{
-            grid-area: 10 / 3 / 11 / 5;
-        }
-        .oi-button{
-            grid-area: 11 / 3 / 13 / 5;
-            display: flex;
-                justify-content: space-around;
-                align-items: center;
-        }
-            .oi-button button{
-                padding: 10px 20px;
-                font-family: 'inter';
-                font-weight: bolder;
-                color: #f2f2f2;
-                border-radius: 20px;
-                cursor: pointer;
-            }
-            .oi-button button:hover{
-                background-color: #f2f2f2;
-                color: black;
-                transition: 0.5s;
-            }
-                .approve{
-                    background-color: #038C3E;
-                }
-                .cancel{
-                    background-color: #BF4141;
-                }
+
+.order-details-container .cashier-header {
+    width: 70%;
+}
+
+.details-body {
+    flex-grow: 1;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.oi-body {
+    grid-area: 1 / 1 / 9 / 5;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.item-box {
+    position: relative;
+    background-color: #ffffff;
+    border-radius: 20px;
+    width: 80%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item_name {
+    width: 100%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: large;
+    font-weight: bold;
+}
+
+.item_quantity {
+    font-weight: bolder;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.item_quantity button {
+    background-color: #038C3E;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item_quantity button:hover {
+    background-color: #0A401E;
+}
+
+.item_quantity label {
+    min-width: 30px;
+    text-align: center;
+}
+
+.remove-item {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #BF4141;
+    font-size: 1.2em;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.remove-item:hover {
+    background-color: #BF4141;
+    color: white;
+}
+
+.remove-item i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item_price {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-weight: bold;
+}
+
+.oi-id {
+    grid-area: 9 / 1 / 13 / 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.oi-id-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1/1;
+    width: 80%;
+    font-family: 'inter';
+    font-weight: bolder;
+    font-size: xx-large;
+    border-radius: 20px;
+    padding: 5px;
+    color: #f2f2f2;
+    background-color: #038C3E;
+}
+
+.oi-total {
+    grid-area: 9 / 3 / 10 / 5;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.oi-total-label {
+    font-family: 'inter';
+    font-weight: bolder;
+    color: #0A401E;
+}
+
+.oi-total-label span {
+    font-weight: normal;
+}
+
+.oi-payment {
+    grid-area: 10 / 3 / 11 / 5;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0 20px;
+}
+
+.oi-payment label {
+    font-family: 'inter';
+    font-weight: bold;
+    color: #0A401E;
+}
+
+.oi-payment input {
+    padding: 8px;
+    border: 2px solid #038C3E;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+}
+
+.oi-payment input:focus {
+    border-color: #0A401E;
+}
+
+.oi-payment input:invalid {
+    border-color: #BF4141;
+}
+
+.oi-button {
+    grid-area: 11 / 3 / 13 / 5;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.oi-button button {
+    padding: 10px 20px;
+    font-family: 'inter';
+    font-weight: bolder;
+    color: #f2f2f2;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.oi-button button:hover {
+    background-color: #f2f2f2;
+    color: black;
+    transition: 0.5s;
+}
+
+.approve {
+    background-color: #038C3E;
+}
+
+.cancel {
+    background-color: #BF4141;
+}

@@ -19,10 +19,10 @@ function toggleChoice(target) {
             Array.from(register).forEach(item => item.classList.add("active_show"));
         }, 500); // Match the CSS transition duration
     } else {
-        if(status[0].classList.contains("show_status")){
+        if (status[0].classList.contains("show_status")) {
             Checkstatus();
         }
-        if(recaptcha[0].classList.contains("show_recaptcha")){
+        if (recaptcha[0].classList.contains("show_recaptcha")) {
             BotChecker();
         }
         setTimeout(() => {
@@ -39,7 +39,7 @@ function toggleChoice(target) {
                 Array.from(register).forEach(item => item.classList.remove("deactive_show"));
                 Array.from(choices).forEach(choice => choice.classList.add("active_show"));
             }, 500); // Match the CSS transition duration
-    
+
             // Clear input fields in login and register containers
             Array.from(login).forEach(item => {
                 const inputs = item.querySelectorAll("input");
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-function BotChecker(){
+function BotChecker() {
     const recaptcha = document.getElementsByClassName("recaptcha_container");
     if (!recaptcha[0].classList.contains("show_recaptcha")) {
         Array.from(recaptcha).forEach(item => item.classList.add("show_recaptcha"));
@@ -90,6 +90,6 @@ function BotChecker(){
 function onClick(e) {
     e.preventDefault();
     grecaptcha.enterprise.ready(async () => {
-      const token = await grecaptcha.enterprise.execute('6LeD9xcrAAAAABd3Q1NbdwgV0iF4Adpj1NNzFlC1', {action: 'LOGIN'});
+        const token = await grecaptcha.enterprise.execute('6LeD9xcrAAAAABd3Q1NbdwgV0iF4Adpj1NNzFlC1', { action: 'LOGIN' });
     });
-  }
+}

@@ -106,75 +106,75 @@ session_start();
                         </div>
                     </div>
                     <div class="cashier-body">
-<?php
-// Fetch orders for display
-$pending_orders = [];
-$completed_orders = [];
-$cancelled_orders = [];
-$sql = "SELECT * FROM orders ORDER BY order_date DESC";
-$result = $conn->query($sql);
-if ($result) {
-    while ($row = $result->fetch_assoc()) {
-        switch ($row['order_status']) {
-            case 'pending':
-                $pending_orders[] = $row;
-                break;
-            case 'completed':
-                $completed_orders[] = $row;
-                break;
-            case 'cancelled':
-                $cancelled_orders[] = $row;
-                break;
-        }
-    }
-}
-?>
-<div class="order-label active" onclick="showOrders('pending',this)">Pending</div>
-<div class="order-list show" id="pending_orders">
-<?php foreach ($pending_orders as $order): ?>
-    <div class="order-item" order="<?= htmlspecialchars($order['order_id']) ?>">
-        <div class="order-id-box"><?= htmlspecialchars($order['order_id']) ?></div>
-        <div class="order-item-details">
-            <div class="oid">Customer: <span><?= htmlspecialchars($order['customer_id']) ?></span></div>
-            <div class="oid">Total Amount: <span><?= htmlspecialchars($order['total_amount']) ?></span></div>
-            <div class="oid">Payment: <span><?= htmlspecialchars($order['payment_type']) ?></span></div>
-        </div>
-        <div class="view_items" onclick="itemGoes('<?= htmlspecialchars($order['order_id']) ?>')">VIEW DETAILS →</div>
-    </div>
-<?php endforeach; ?>
-</div>
-<div class="order-label" onclick="showOrders('complete',this)">Completed</div>
-<div class="order-list" id="complete_orders">
-<?php foreach ($completed_orders as $order): ?>
-    <div class="order-item" order="<?= htmlspecialchars($order['order_id']) ?>">
-        <div class="order-id-box"><?= htmlspecialchars($order['order_id']) ?></div>
-        <div class="order-item-details">
-            <div class="oid">Customer: <span><?= htmlspecialchars($order['customer_id']) ?></span></div>
-            <div class="oid">Total Amount: <span><?= htmlspecialchars($order['total_amount']) ?></span></div>
-            <div class="oid">Payment: <span><?= htmlspecialchars($order['payment_type']) ?></span></div>
-        </div>
-        <div class="view_items" onclick="checkItem('<?= htmlspecialchars($order['order_id']) ?>')">VIEW DETAILS →</div>
-    </div>
-<?php endforeach; ?>
-</div>
-<div class="order-label" onclick="showOrders('cancelled',this)">Cancelled</div>
-<div class="order-list" id="cancelled_orders">
-<?php foreach ($cancelled_orders as $order): ?>
-    <div class="order-item" order="<?= htmlspecialchars($order['order_id']) ?>">
-        <div class="order-id-box"><?= htmlspecialchars($order['order_id']) ?></div>
-        <div class="order-item-details">
-            <div class="oid">Customer: <span><?= htmlspecialchars($order['customer_id']) ?></span></div>
-            <div class="oid">Total Amount: <span><?= htmlspecialchars($order['total_amount']) ?></span></div>
-            <div class="oid">Payment: <span><?= htmlspecialchars($order['payment_type']) ?></span></div>
-        </div>
-        <div class="view_items" onclick="checkItem('<?= htmlspecialchars($order['order_id']) ?>')">VIEW DETAILS →</div>
-    </div>
-<?php endforeach; ?>
-</div>
+                        <?php
+                        // Fetch orders for display
+                        $pending_orders = [];
+                        $completed_orders = [];
+                        $cancelled_orders = [];
+                        $sql = "SELECT * FROM orders ORDER BY order_date DESC";
+                        $result = $conn->query($sql);
+                        if ($result) {
+                            while ($row = $result->fetch_assoc()) {
+                                switch ($row['order_status']) {
+                                    case 'pending':
+                                        $pending_orders[] = $row;
+                                        break;
+                                    case 'completed':
+                                        $completed_orders[] = $row;
+                                        break;
+                                    case 'cancelled':
+                                        $cancelled_orders[] = $row;
+                                        break;
+                                }
+                            }
+                        }
+                        ?>
+                        <div class="order-label active" onclick="showOrders('pending',this)">Pending</div>
+                        <div class="order-list show" id="pending_orders">
+                        <?php foreach ($pending_orders as $order): ?>
+                            <div class="order-item" order="<?= htmlspecialchars($order['order_id']) ?>">
+                                <div class="order-id-box"><?= htmlspecialchars($order['order_id']) ?></div>
+                                <div class="order-item-details">
+                                    <div class="oid">Customer: <span><?= htmlspecialchars($order['customer_id']) ?></span></div>
+                                    <div class="oid">Total Amount: <span><?= htmlspecialchars($order['total_amount']) ?></span></div>
+                                    <div class="oid">Payment: <span><?= htmlspecialchars($order['payment_type']) ?></span></div>
+                                </div>
+                                <div class="view_items" onclick="itemGoes('<?= htmlspecialchars($order['order_id']) ?>')">VIEW DETAILS →</div>
+                            </div>
+                        <?php endforeach; ?>
+                        </div>
+                        <div class="order-label" onclick="showOrders('complete',this)">Completed</div>
+                        <div class="order-list" id="complete_orders">
+                        <?php foreach ($completed_orders as $order): ?>
+                            <div class="order-item" order="<?= htmlspecialchars($order['order_id']) ?>">
+                                <div class="order-id-box"><?= htmlspecialchars($order['order_id']) ?></div>
+                                <div class="order-item-details">
+                                    <div class="oid">Customer: <span><?= htmlspecialchars($order['customer_id']) ?></span></div>
+                                    <div class="oid">Total Amount: <span><?= htmlspecialchars($order['total_amount']) ?></span></div>
+                                    <div class="oid">Payment: <span><?= htmlspecialchars($order['payment_type']) ?></span></div>
+                                </div>
+                                <div class="view_items" onclick="checkItem('<?= htmlspecialchars($order['order_id']) ?>')">VIEW DETAILS →</div>
+                            </div>
+                        <?php endforeach; ?>
+                        </div>
+                        <div class="order-label" onclick="showOrders('cancelled',this)">Cancelled</div>
+                        <div class="order-list" id="cancelled_orders">
+                        <?php foreach ($cancelled_orders as $order): ?>
+                            <div class="order-item" order="<?= htmlspecialchars($order['order_id']) ?>">
+                                <div class="order-id-box"><?= htmlspecialchars($order['order_id']) ?></div>
+                                <div class="order-item-details">
+                                    <div class="oid">Customer: <span><?= htmlspecialchars($order['customer_id']) ?></span></div>
+                                    <div class="oid">Total Amount: <span><?= htmlspecialchars($order['total_amount']) ?></span></div>
+                                    <div class="oid">Payment: <span><?= htmlspecialchars($order['payment_type']) ?></span></div>
+                                </div>
+                                <div class="view_items" onclick="checkItem('<?= htmlspecialchars($order['order_id']) ?>')">VIEW DETAILS →</div>
+                            </div>
+                        <?php endforeach; ?>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="cart-bar active"><!--Side bar for Cart-->
+            <div class="cart-bar"><!--Side bar for Cart-->
                 <div class="order-details-container">
                     <div class="cashier-header">
                         <div class="ctitle">
@@ -184,38 +184,19 @@ if ($result) {
                     <div class="d_line"></div>  
                     <div class="details-body">
                         <div class="oi-body">
-                            <div class="item-box" id="{product_id}">
-                                <div class="item_name">ID: <span>{product_id}</span> - <span>{product.name}</span></div>
-                                <div class="itemb-lock">
-                                    <div class="item_quantity">
-                                        <label for="">Quantity:</label>
-                                        <button>-</button><!-- Decrease quantity button -->
-                                        <label>{quantity}</label>
-                                        <button>+</button><!-- Increase quantity button -->
-                                    </div>
-                                </div>
-                                <div class="item_price">P({amount}*{quantity})</div>
-                                <div class="remove-item">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                </div>
-                            </div>
+                            <!-- Order items will be dynamically inserted here -->
                         </div>
                         <div class="oi-id">
-                            <div class="oi-id-label">{Order_id}</div>
+                            <div class="oi-id-label"></div>
                         </div>
                         <div class="oi-total">
-                            <div class="oi-total-label">Total Amount: <span> {amount}</span></div>
+                            <div class="oi-total-label">Total Amount: <span>0.00</span></div>
                         </div>
                         <div class="oi-payment">
-                            <!--when payment is cash this will show up-->
-                            <label for=""> Cash Payment</label>
-                            <input type="text"></input>
-                            <!--when payment is card or ewallet-->
-                            <label>E-Wallet</label>
+                            <!-- Payment details will be dynamically inserted here -->
                         </div>
                         <div class="oi-button">
-                            <button class="cancel">DECLINE</button>
-                            <button class="approve">APPROVE</button>
+                            <!-- Buttons will be dynamically inserted here -->
                         </div>
                     </div>
                 </div>

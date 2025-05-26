@@ -18,7 +18,7 @@ $original_quantities = $data['original_quantities'];
 $removed_items = $data['removed_items'] ?? [];
 
 // Start transaction
-$conn->begin_transaction();
+$conn->beginTransaction();
 
 try {
     // First handle removed items
@@ -27,20 +27,15 @@ try {
         
         // Get the original quantity before deleting
         $stmt = $conn->prepare("SELECT quantity FROM order_item WHERE order_id = ? AND product_id = ?");
-        $stmt->bind_param("ii", $order_id, $product_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
+        $stmt->execute([$order_id, $product_id]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $original_quantity = $row['quantity'];
-        $stmt->close();
         
         // Delete the order item
         $stmt = $conn->prepare("DELETE FROM order_item WHERE order_id = ? AND product_id = ?");
-        $stmt->bind_param("ii", $order_id, $product_id);
-        if (!$stmt->execute()) {
+        if (!$stmt->execute([$order_id, $product_id])) {
             throw new Exception("Failed to remove order item");
         }
-        $stmt->close();
     }
 
     // Update remaining quantities
@@ -56,23 +51,18 @@ try {
 
         // Get current unit price from order_item
         $stmt = $conn->prepare("SELECT unit_price FROM order_item WHERE order_id = ? AND product_id = ?");
-        $stmt->bind_param("ii", $order_id, $product_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
+        $stmt->execute([$order_id, $product_id]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $unit_price = $row['unit_price'];
-        $stmt->close();
 
         // Calculate new total amount
         $new_total = $unit_price * $new_quantity;
 
         // Update order_item
         $stmt = $conn->prepare("UPDATE order_item SET quantity = ?, total_ammount = ? WHERE order_id = ? AND product_id = ?");
-        $stmt->bind_param("idii", $new_quantity, $new_total, $order_id, $product_id);
-        if (!$stmt->execute()) {
+        if (!$stmt->execute([$new_quantity, $new_total, $order_id, $product_id])) {
             throw new Exception("Failed to update order item");
         }
-        $stmt->close();
 
         // Calculate stock adjustment
         $quantity_difference = $new_quantity - $original_quantity;
@@ -80,21 +70,17 @@ try {
         // Update product stock
         if ($quantity_difference != 0) {
             $stmt = $conn->prepare("UPDATE products SET stock_level = stock_level - ? WHERE product_id = ?");
-            $stmt->bind_param("ii", $quantity_difference, $product_id);
-            if (!$stmt->execute()) {
+            if (!$stmt->execute([$quantity_difference, $product_id])) {
                 throw new Exception("Failed to update product stock");
             }
-            $stmt->close();
         }
     }
 
     // Update total amount in orders table
     $stmt = $conn->prepare("UPDATE orders SET total_amount = (SELECT SUM(total_ammount) FROM order_item WHERE order_id = ?) WHERE order_id = ?");
-    $stmt->bind_param("ii", $order_id, $order_id);
-    if (!$stmt->execute()) {
+    if (!$stmt->execute([$order_id, $order_id])) {
         throw new Exception("Failed to update order total");
     }
-    $stmt->close();
 
     // Commit transaction
     $conn->commit();
@@ -102,9 +88,7 @@ try {
 
 } catch (Exception $e) {
     // Rollback on error
-    $conn->rollback();
+    $conn->rollBack();
     echo json_encode(['error' => $e->getMessage()]);
 }
-
-$conn->close();
 ?> 

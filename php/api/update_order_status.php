@@ -24,18 +24,12 @@ if (!in_array($status, ['completed', 'cancelled'])) {
 try {
     // Update order status
     $stmt = $conn->prepare("UPDATE orders SET order_status = ? WHERE order_id = ?");
-    $stmt->bind_param("si", $status, $order_id);
-    
-    if ($stmt->execute()) {
-        echo json_encode(['success' => true]);
-    } else {
+    if (!$stmt->execute([$status, $order_id])) {
         throw new Exception("Failed to update order status");
     }
+    echo json_encode(['success' => true]);
     
-    $stmt->close();
 } catch (Exception $e) {
     echo json_encode(['error' => $e->getMessage()]);
 }
-
-$conn->close();
-?>
+?> 

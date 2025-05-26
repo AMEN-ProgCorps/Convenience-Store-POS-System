@@ -1,9 +1,9 @@
 // Place Order functionality and receipt display
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const placeOrderBtn = document.querySelector('.order-button');
     if (!placeOrderBtn) return;
 
-    placeOrderBtn.addEventListener('click', async function(e) {
+    placeOrderBtn.addEventListener('click', async function (e) {
         e.preventDefault();
         // Gather cart items
         const cartItems = Array.from(document.querySelectorAll('.cart-top-body .cart-top-body-product'));
@@ -32,18 +32,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Get pricing
-        const subTotal = parseFloat((document.querySelector('.t2.total-box-label-price')?.textContent||'0').replace(/[^\d.\-]/g, '')) || 0;
-        const discountAmount = parseFloat((document.querySelector('.t4.total-box-label-price')?.textContent||'0').replace(/[^\d.\-]/g, '')) || 0;
-        const tax = parseFloat((document.querySelector('.t6.total-box-label-price')?.textContent||'0').replace(/[^\d.\-]/g, '')) || 0;
-        const total = parseFloat((document.querySelector('.out7 .total-box-label-price')?.textContent||'0').replace(/[^\d.\-]/g, '')) || 0;
+        const subTotal = parseFloat((document.querySelector('.t2.total-box-label-price')?.textContent || '0').replace(/[^\d.\-]/g, '')) || 0;
+        const discountAmount = parseFloat((document.querySelector('.t4.total-box-label-price')?.textContent || '0').replace(/[^\d.\-]/g, '')) || 0;
+        const tax = parseFloat((document.querySelector('.t6.total-box-label-price')?.textContent || '0').replace(/[^\d.\-]/g, '')) || 0;
+        const total = parseFloat((document.querySelector('.out7 .total-box-label-price')?.textContent || '0').replace(/[^\d.\-]/g, '')) || 0;
 
         // Prepare cart data
         const cart = cartItems.map(item => {
             const productId = item.getAttribute('data-id') || item.id;
             const name = item.querySelector('.cart-top-body-product-label-name')?.textContent || '';
             const quantity = parseInt(item.querySelector('.cart-top-body-product-label-details-quantity')?.textContent || '0');
-            const unitPrice = parseFloat((item.querySelector('.cart-top-body-product-label-details-price')?.textContent||'0').replace(/[^\d.\-]/g, ''));
-            const total = parseFloat((item.querySelector('.cart-top-body-product-total_price')?.textContent||'0').replace(/[^\d.\-]/g, ''));
+            const unitPrice = parseFloat((item.querySelector('.cart-top-body-product-label-details-price')?.textContent || '0').replace(/[^\d.\-]/g, ''));
+            const total = parseFloat((item.querySelector('.cart-top-body-product-total_price')?.textContent || '0').replace(/[^\d.\-]/g, ''));
             return {
                 product_id: parseInt(productId),
                 name,
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Send order to backend
         try {
-            const res = await fetch('place_order.php', {
+            const res = await fetch('../../php/api/place_order.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

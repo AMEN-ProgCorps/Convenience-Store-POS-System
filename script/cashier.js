@@ -8,7 +8,7 @@ function showOrders(label, labelbtn) {
 }
 
 function itemGoes(order_id) {
-    fetch(`../../php/employee/get_order_items.php?order_id=${order_id}`)
+    fetch(`../../php/api/get_order_items.php?order_id=${order_id}`)
         .then(res => res.json())
         .then(data => {
             if (data.error) {
@@ -163,7 +163,7 @@ function updateOrderStatus(orderId, action) {
         // If quantities were modified or items were removed, update the database
         if (Object.keys(modifiedQuantities).length > 0 || removedItems.size > 0) {
             // First update product quantities and removed items
-            fetch('../../php/employee/update_quantities.php', {
+            fetch('../../php/api/update_quantities.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -199,7 +199,7 @@ function updateOrderStatus(orderId, action) {
 }
 
 function completeOrderUpdate(orderId, status) {
-    fetch('../../php/employee/update_order_status.php', {
+    fetch('../../php/api/update_order_status.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -230,7 +230,7 @@ function completeOrderUpdate(orderId, status) {
 }
 
 function checkItem(order_id) {
-    fetch(`../../php/employee/get_order_items.php?order_id=${order_id}`)
+    fetch(`../../php/api/get_order_items.php?order_id=${order_id}`)
         .then(res => res.json())
         .then(data => {
             if (data.error) {

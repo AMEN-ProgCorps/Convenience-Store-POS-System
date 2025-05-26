@@ -1,0 +1,233 @@
+.center-bar {
+    padding: 20px;
+}
+
+/* Header Styles */
+.account-header {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.search-container {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.search-container input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.search-container button {
+    padding: 10px 20px;
+    background-color: #0A401E;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.search-container button:hover {
+    background-color: #0c5026;
+}
+
+/* Filter Styles */
+.filter-container {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    user-select: none;
+}
+
+.filter-toggle {
+    display: flex;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.filter-option {
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.filter-option.active {
+    background-color: #0A401E;
+    color: white;
+}
+
+.create-account-btn {
+    margin-left: auto;
+    padding: 10px 20px;
+    background-color: #0A401E;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.create-account-btn:hover {
+    background-color: #0c5026;
+}
+
+/* Account Container Styles */
+.account-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.account-box {
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    user-select: none;
+}
+
+.account-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.account-id {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.account-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.account-role {
+    font-size: 14px;
+    color: #0A401E;
+}
+
+/* Cart Bar Styles */
+.cart-bar {
+    padding: 20px;
+}
+
+.account-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    user-select: none;
+}
+
+.form-title {
+    font-size: 20px;
+    font-weight: bold;
+    user-select: none;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    user-select: none;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.form-actions button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.save-btn {
+    background-color: #0A401E;
+    color: white;
+}
+
+.cancel-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Account Type Toggle */
+.account-type-toggle {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.account-type-toggle.editing {
+    display: none;
+}
+
+.type-option {
+    padding: 8px 15px;
+    border: 1px solid #0A401E;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.type-option.active {
+    background-color: #0A401E;
+    color: white;
+}
+
+/* Close button */
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0 8px;
+    user-select: none;
+}

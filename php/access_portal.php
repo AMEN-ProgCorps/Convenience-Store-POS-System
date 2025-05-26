@@ -3,12 +3,8 @@ session_start();
 
 include 'import/database.php';
 
-$conn = new mysqli($servername, $username, $password, $dbname);
 // Set headers if needed
 header('Content-Type: text/html; charset=UTF-8');
-if($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 $error_message = ""; // Initialize error message
 
@@ -16,76 +12,76 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'];
 
     if ($action === 'login') {
-        $username = $conn->real_escape_string($_POST['log_username']);
+        $username = $_POST['log_username'];
         $password = $_POST['log_password'];
 
         // Search all_accounts view for username (name) and password
-        $sql = "SELECT * FROM all_accounts WHERE name = '$username'";
-        $result = $conn->query($sql);
+        $stmt = $conn->prepare("SELECT * FROM all_accounts WHERE name = ?");
+        $stmt->execute([$username]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($result && $result->num_rows > 0) {
-            $user = $result->fetch_assoc();
-            // Passwords are stored as plain text in all_accounts, so compare directly
-            if ($password === $user['password']) {
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_name'] = $user['name'];
-                $_SESSION['user_role'] = $user['role'];
-                // Redirect based on id prefix
-                if (strpos($user['id'], 'C') === 0) {
-                    header("Location: customer/page1.php");
+        if ($user && $password === $user['password']) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['user_role'] = $user['role'];
+            // Redirect based on id prefix
+            if (strpos($user['id'], 'C') === 0) {
+                header("Location: customer/page1.php");
+                exit;
+            } elseif (strpos($user['id'], 'E') === 0) {
+                // Redirect based on employee role
+                if ($user['role'] === 'Manager') {
+                    header("Location: employee/Einv.php");
                     exit;
-                } elseif (strpos($user['id'], 'E') === 0) {
-                    // Redirect based on employee role
-                    if ($user['role'] === 'Manager') {
-                        header("Location: employee/Einv.php");
-                        exit;
-                    } elseif ($user['role'] === 'Cashier') {
-                        header("Location: employee/Ecash.php");
-                        exit;
-                    } elseif ($user['role'] === 'Admin') {
-                        header("Location: employee/Eacc.php");
-                        exit;
-                    } else {
-                        header("Location: employee/page1.php"); // fallback for unknown role
-                        exit;
-                    }
+                } elseif ($user['role'] === 'Cashier') {
+                    header("Location: employee/Ecash.php");
+                    exit;
+                } elseif ($user['role'] === 'Admin') {
+                    header("Location: employee/Eacc.php");
+                    exit;
                 } else {
-                    // fallback
-                    header("Location: dashboard.php");
+                    header("Location: employee/page1.php"); // fallback for unknown role
                     exit;
                 }
             } else {
-                $error_message = "Invalid username or password.";
+                // fallback
+                header("Location: dashboard.php");
+                exit;
             }
         } else {
             $error_message = "Invalid username or password.";
         }
     } elseif ($action === 'register') {
-        $username = $conn->real_escape_string($_POST['reg_username']);
-        $email = $conn->real_escape_string($_POST['reg_email']);
-        $phone = isset($_POST['reg_phone']) ? $conn->real_escape_string($_POST['reg_phone']) : '';
+        $username = $_POST['reg_username'];
+        $email = $_POST['reg_email'];
+        $phone = isset($_POST['reg_phone']) ? $_POST['reg_phone'] : '';
         $password = $_POST['reg_password'];
         $confirm_password = $_POST['reg_confirm_password'];
 
         if ($password !== $confirm_password) {
             $error_message = "Passwords do not match.";
         } else {
-            // Store password as plain text to match all_accounts view (for demo, not secure)
-            $sql = "INSERT INTO customer_accounts (name, password, email, phone_number) VALUES ('$username', '$password', '$email', '$phone')";
-            if ($conn->query($sql) === TRUE) {
-                echo "<script>console.log('Registration complete');</script>";
-                header("Location: access_portal.php");
-                exit;
-            } else {
+            try {
+                // Store password as plain text to match all_accounts view (for demo, not secure)
+                $stmt = $conn->prepare("INSERT INTO customer_accounts (name, password, email, phone_number) VALUES (?, ?, ?, ?)");
+                if ($stmt->execute([$username, $password, $email, $phone])) {
+                    echo "<script>console.log('Registration complete');</script>";
+                    header("Location: access_portal.php");
+                    exit;
+                } else {
+                    $error_message = "Error: Unable to register. Please try again later.";
+                }
+            } catch (PDOException $e) {
                 $error_message = "Error: Unable to register. Please try again later.";
             }
         }
     } elseif ($action === 'guest') {
         // Login as guest_account (C101)
-        $sql = "SELECT * FROM all_accounts WHERE id = 'C101' AND name = 'guest_account' AND password = 'password123'";
-        $result = $conn->query($sql);
-        if ($result && $result->num_rows > 0) {
-            $user = $result->fetch_assoc();
+        $stmt = $conn->prepare("SELECT * FROM all_accounts WHERE id = 'C101' AND name = 'guest_account' AND password = 'password123'");
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($user) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
             $_SESSION['user_role'] = $user['role'];

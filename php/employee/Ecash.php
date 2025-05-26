@@ -38,7 +38,7 @@ session_start();
                     </div>
                     <div class="items-tab tab" onclick="window.location.href='Esear.php'">
                         <div class="tab-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M160 448a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zM160 896a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32z"/></svg>
+                            <i class="fas fa-search"></i>
                         </div>
                         <div class="tab-label">Search Items</div>
                     </div>
@@ -51,7 +51,7 @@ session_start();
                     </div>
                     <div class="items-tab tab" onclick="window.location.href='Esear.php'">
                         <div class="tab-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M160 448a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zM160 896a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32z"/></svg>
+                            <i class="fas fa-search"></i>
                         </div>
                         <div class="tab-label">Search Items</div>
                     </div>
@@ -71,7 +71,7 @@ session_start();
                     </div>
                     <div class="items-tab tab" onclick="window.location.href='Esear.php'">
                         <div class="tab-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M160 448a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V160.064a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32V416a32 32 0 0 1-32 32zM160 896a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32zm448 0a32 32 0 0 1-32-32V608a32 32 0 0 1 32-32h255.936a32 32 0 0 1 32 32v256a32 32 0 0 1-32 32z"/></svg>
+                            <i class="fas fa-search"></i>
                         </div>
                         <div class="tab-label">Search Items</div>
                     </div>
@@ -112,20 +112,20 @@ session_start();
                         $completed_orders = [];
                         $cancelled_orders = [];
                         $sql = "SELECT * FROM orders ORDER BY order_date DESC";
-                        $result = $conn->query($sql);
-                        if ($result) {
-                            while ($row = $result->fetch_assoc()) {
-                                switch ($row['order_status']) {
-                                    case 'pending':
-                                        $pending_orders[] = $row;
-                                        break;
-                                    case 'completed':
-                                        $completed_orders[] = $row;
-                                        break;
-                                    case 'cancelled':
-                                        $cancelled_orders[] = $row;
-                                        break;
-                                }
+                        $stmt = $conn->prepare($sql);
+                        $stmt->execute();
+                        
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            switch ($row['order_status']) {
+                                case 'pending':
+                                    $pending_orders[] = $row;
+                                    break;
+                                case 'completed':
+                                    $completed_orders[] = $row;
+                                    break;
+                                case 'cancelled':
+                                    $cancelled_orders[] = $row;
+                                    break;
                             }
                         }
                         ?>

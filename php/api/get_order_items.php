@@ -25,18 +25,15 @@ $sql = "SELECT
 try {
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
-        throw new Exception("Prepare failed: " . $conn->error);
+        throw new Exception("Failed to prepare statement");
     }
 
-    $stmt->bind_param("i", $order_id);
-    if (!$stmt->execute()) {
-        throw new Exception("Execute failed: " . $stmt->error);
+    if (!$stmt->execute([$order_id])) {
+        throw new Exception("Failed to execute statement");
     }
 
-    $result = $stmt->get_result();
     $items = [];
-    
-    while ($row = $result->fetch_assoc()) {
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         // Format numbers to ensure proper JSON encoding
         $row['price'] = floatval($row['price']);
         $row['quantity'] = intval($row['quantity']);
@@ -48,9 +45,5 @@ try {
 
 } catch (Exception $e) {
     echo json_encode(['error' => $e->getMessage()]);
-} finally {
-    if (isset($stmt)) {
-        $stmt->close();
-    }
 }
-?>
+?> 

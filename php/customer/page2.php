@@ -9,22 +9,17 @@ if (!isset($_SESSION['user_id']) || strpos($_SESSION['user_id'], 'C') !== 0) {
     exit;
 }
 
-// Example: Fetch orders for this customer
-$orders = [];
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+try {
+    // Example: Fetch orders for this customer
+    $orders = [];
+    $customer_id = $_SESSION['user_id'];
+    $stmt = $conn->prepare("SELECT * FROM orders WHERE customer_id = ? ORDER BY order_date DESC");
+    $stmt->execute([$customer_id]);
+    $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    error_log("Database Error: " . $e->getMessage());
+    $orders = [];
 }
-// Replace with your actual orders table and fields
-$customer_id = $conn->real_escape_string($_SESSION['user_id']);
-$sql = "SELECT * FROM orders WHERE customer_id = '$customer_id' ORDER BY order_date DESC";
-$result = $conn->query($sql);
-if ($result && $result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $orders[] = $row;
-    }
-}
-$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -87,25 +82,25 @@ $conn->close();
                             <p>No orders found.</p>
                         <?php else: ?>
                             <?php
-                            include '../import/database.php';
-                            $conn = new mysqli($servername, $username, $password, $dbname);
-                            if ($conn->connect_error) {
-                                die("Connection failed: " . $conn->connect_error);
-                            }
-                            foreach ($orders as $order):
-                                $order_id = $order['order_id'];
-                                $items = [];
-                                $sql_items = "SELECT oi.*, p.name as product_name FROM order_item oi JOIN products p ON oi.product_id = p.product_id WHERE oi.order_id = '$order_id'";
-                                $result_items = $conn->query($sql_items);
-                                $total_amount = 0;
-                                $total_items = 0;
-                                if ($result_items && $result_items->num_rows > 0) {
-                                    while ($item = $result_items->fetch_assoc()) {
-                                        $items[] = $item;
+                            try {
+                                foreach ($orders as $order):
+                                    $order_id = $order['order_id'];
+                                    $items = [];
+                                    
+                                    // Get order items
+                                    $stmt = $conn->prepare("SELECT oi.*, p.name as product_name 
+                                                          FROM order_item oi 
+                                                          JOIN products p ON oi.product_id = p.product_id 
+                                                          WHERE oi.order_id = ?");
+                                    $stmt->execute([$order_id]);
+                                    $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                    
+                                    $total_amount = 0;
+                                    $total_items = 0;
+                                    foreach ($items as $item) {
                                         $total_amount += $item['total_ammount'];
                                         $total_items += $item['quantity'];
                                     }
-                                }
                             ?>
                             <div class="order-box" id="order_<?php echo $order_id; ?>">
                                 <div class="main-box">
@@ -117,10 +112,9 @@ $conn->close();
                                             $discount_applied = 0;
                                             if (!empty($order['discount_id'])) {
                                                 // Get discount percentage from DB
-                                                $discount_sql = "SELECT discount_percentage FROM discounts WHERE discount_id = '" . $order['discount_id'] . "'";
-                                                $discount_result = $conn->query($discount_sql);
-                                                if ($discount_result && $discount_result->num_rows > 0) {
-                                                    $discount_row = $discount_result->fetch_assoc();
+                                                $stmt = $conn->prepare("SELECT discount_percentage FROM discounts WHERE discount_id = ?");
+                                                $stmt->execute([$order['discount_id']]);
+                                                if ($discount_row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                                     $discount_applied = $order['total_amount'] * ($discount_row['discount_percentage'] / 100);
                                                 }
                                             }
@@ -148,7 +142,13 @@ $conn->close();
                                     <div class="order_totalis">Total <?php echo $total_items; ?> item/s: P<?php echo number_format($total_amount, 2); ?></div>
                                 </div>
                             </div>
-                            <?php endforeach; $conn->close(); ?>
+                            <?php 
+                                endforeach;
+                            } catch (PDOException $e) {
+                                error_log("Database Error: " . $e->getMessage());
+                                echo "<p>Error loading order details.</p>";
+                            }
+                            ?>
                         <?php endif; ?>
                     </div>
                 </div>

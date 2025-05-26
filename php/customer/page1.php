@@ -2,37 +2,31 @@
 session_start();
 include '../import/database.php';
 
-$categoriesWithCounts =[];
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+$categoriesWithCounts = [];
 
-// Fetch categories with item counts
-$sql = "SELECT c.name AS category_name, COUNT(p.product_id) AS item_count 
-        FROM categories c 
-        LEFT JOIN products p ON c.category_id = p.category_id 
-        GROUP BY c.category_id";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $categoriesWithCounts[] = $row;
-    }
-}
+try {
+    // Fetch categories with item counts
+    $sql = "SELECT c.name AS category_name, COUNT(p.product_id) AS item_count 
+            FROM categories c 
+            LEFT JOIN products p ON c.category_id = p.category_id 
+            GROUP BY c.category_id";
+    $stmt = $conn->query($sql);
+    $categoriesWithCounts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Fetch products
-$products = [];
-// Fetch products with stock_level
-$sql = "SELECT p.product_id, p.name AS product_name, p.price, p.stock_level, c.name AS category_name 
-        FROM products p 
-        JOIN categories c ON p.category_id = c.category_id";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $products[] = $row;
-    }
+    // Fetch products
+    $products = [];
+    // Fetch products with stock_level
+    $sql = "SELECT p.product_id, p.name AS product_name, p.price, p.stock_level, c.name AS category_name 
+            FROM products p 
+            JOIN categories c ON p.category_id = c.category_id";
+    $stmt = $conn->query($sql);
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    error_log("Database Error: " . $e->getMessage());
+    $categoriesWithCounts = [];
+    $products = [];
 }
-$conn->close();
 ?>
 
 <!DOCTYPE html>

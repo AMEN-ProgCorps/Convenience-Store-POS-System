@@ -81,18 +81,22 @@ session_start();
                         </div>
                         <div class="tab-label">Cashier</div>
                     </div>
-                    <div class="items-tab tab" onclick="window.location.href='Eacc.php'">
-                        <div class="tab-icon">
-                            <i class="fas fa-users"></i>
+                    <?php if ($role === 'Admin'): ?>
+                        <div class="items-tab tab" onclick="window.location.href='Eacc.php'">
+                            <div class="tab-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="tab-label">Accounts</div>
                         </div>
-                        <div class="tab-label">Accounts</div>
-                    </div>
-                    <div class="items-tab tab" onclick="window.location.href='Estaf.php'">
-                        <div class="tab-icon">
-                            <i class="fas fa-user-tie"></i>
+                    <?php endif; ?>
+                    <?php if ($role === 'Manager'): ?>
+                        <div class="items-tab tab" onclick="window.location.href='Estaf.php'">
+                            <div class="tab-icon">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="tab-label">Staff</div>
                         </div>
-                        <div class="tab-label">Staff</div>
-                    </div>
+                    <?php endif; ?>
                 <?php endif; ?>
                     <div class="logout-tab tab" onclick="window.location.href='../access_portal.php?logout=1';">
                         <div class="tab-icon"><i class="fa-solid fa-circle-user"></i></div>

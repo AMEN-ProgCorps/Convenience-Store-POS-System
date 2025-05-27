@@ -273,72 +273,55 @@ function loadProductDetails(productId) {
 
 function handleProductSubmit(event, type) {
     event.preventDefault();
-    const form = event.target;
+
+    const form = type === 'new' ? document.getElementById('add-product-form') : document.getElementById('update-product-form');
     const formData = new FormData(form);
+    formData.append('type', type);
 
-    // Reset messages
-    const errorElement = type === 'new' ? 'product-error' : 'update-error';
-    const successElement = type === 'new' ? 'product-success' : 'update-success';
-    document.getElementById(errorElement).style.display = 'none';
-    document.getElementById(successElement).style.display = 'none';
+    const errorElement = type === 'new' ? document.getElementById('product-error') : document.getElementById('update-error');
+    const successElement = type === 'new' ? document.getElementById('product-success') : document.getElementById('update-success');
 
-    const endpoint = type === 'new' ? 'add_product.php' : 'update_product_stock.php';
-
-    fetch('../../php/api/' + endpoint, {
+    fetch('../../php/api/update_inventory_records.php', {
         method: 'POST',
         body: formData
     })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                document.getElementById(successElement).textContent =
-                    type === 'new' ? 'Product added successfully!' : 'Stock updated successfully!';
-                document.getElementById(successElement).style.display = 'block';
+                successElement.textContent = data.message;
+                errorElement.textContent = '';
                 form.reset();
 
-                // Clear the current stock display if it's an update
-                if (type === 'existing') {
-                    document.getElementById('current-stock').value = '';
-                }
-
-                // Refresh all data
+                // Refresh the data without page reload
                 loadInventoryStats();
+                loadInventoryCharts();
                 loadInventoryRecords();
-                loadExistingProducts();
+                loadExistingProducts(); // Refresh product list in update form
 
-                // Force immediate refresh of records
+                // Clear success message after 3 seconds
                 setTimeout(() => {
-                    loadInventoryRecords();
-                }, 100);
+                    successElement.textContent = '';
+                }, 3000);
             } else {
-                document.getElementById(errorElement).textContent = data.error || 'Error processing request';
-                document.getElementById(errorElement).style.display = 'block';
+                errorElement.textContent = data.message;
+                successElement.textContent = '';
             }
         })
         .catch(error => {
-            document.getElementById(errorElement).textContent = 'Error processing request';
-            document.getElementById(errorElement).style.display = 'block';
+            errorElement.textContent = 'An error occurred. Please try again.';
+            successElement.textContent = '';
+            console.error('Error:', error);
         });
 }
 
 function handleDiscountSubmit(event) {
     event.preventDefault();
-    const form = event.target;
+
+    const form = document.getElementById('add-discount-form');
     const formData = new FormData(form);
 
-    // Reset messages
-    document.getElementById('discount-error').style.display = 'none';
-    document.getElementById('discount-success').style.display = 'none';
-
-    // Validate dates
-    const validFrom = new Date(formData.get('valid_from'));
-    const validTill = new Date(formData.get('valid_till'));
-
-    if (validTill <= validFrom) {
-        document.getElementById('discount-error').textContent = 'End date must be after start date';
-        document.getElementById('discount-error').style.display = 'block';
-        return;
-    }
+    const errorElement = document.getElementById('discount-error');
+    const successElement = document.getElementById('discount-success');
 
     fetch('../../php/api/add_discount.php', {
         method: 'POST',
@@ -347,17 +330,26 @@ function handleDiscountSubmit(event) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                document.getElementById('discount-success').textContent = 'Discount added successfully!';
-                document.getElementById('discount-success').style.display = 'block';
+                successElement.textContent = data.message;
+                errorElement.textContent = '';
                 form.reset();
+
+                // Refresh relevant data
+                loadInventoryStats();
+
+                // Clear success message after 3 seconds
+                setTimeout(() => {
+                    successElement.textContent = '';
+                }, 3000);
             } else {
-                document.getElementById('discount-error').textContent = data.error || 'Error adding discount';
-                document.getElementById('discount-error').style.display = 'block';
+                errorElement.textContent = data.message;
+                successElement.textContent = '';
             }
         })
         .catch(error => {
-            document.getElementById('discount-error').textContent = 'Error adding discount';
-            document.getElementById('discount-error').style.display = 'block';
+            errorElement.textContent = 'An error occurred. Please try again.';
+            successElement.textContent = '';
+            console.error('Error:', error);
         });
 }
 
@@ -370,12 +362,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function handleCategorySubmit(event) {
     event.preventDefault();
-    const form = event.target;
+
+    const form = document.getElementById('add-category-form');
     const formData = new FormData(form);
 
-    // Reset messages
-    document.getElementById('category-error').style.display = 'none';
-    document.getElementById('category-success').style.display = 'none';
+    const errorElement = document.getElementById('category-error');
+    const successElement = document.getElementById('category-success');
 
     fetch('../../php/api/add_category.php', {
         method: 'POST',
@@ -384,45 +376,54 @@ function handleCategorySubmit(event) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                document.getElementById('category-success').textContent = 'Category added successfully!';
-                document.getElementById('category-success').style.display = 'block';
+                successElement.textContent = data.message;
+                errorElement.textContent = '';
                 form.reset();
 
-                // Refresh the categories list
+                // Refresh categories in all dropdowns
                 refreshCategories();
+
+                // Clear success message after 3 seconds
+                setTimeout(() => {
+                    successElement.textContent = '';
+                }, 3000);
             } else {
-                document.getElementById('category-error').textContent = data.error || 'Error adding category';
-                document.getElementById('category-error').style.display = 'block';
+                errorElement.textContent = data.message;
+                successElement.textContent = '';
             }
         })
         .catch(error => {
-            document.getElementById('category-error').textContent = 'Error adding category';
-            document.getElementById('category-error').style.display = 'block';
+            errorElement.textContent = 'An error occurred. Please try again.';
+            successElement.textContent = '';
+            console.error('Error:', error);
         });
 }
 
 function deleteCategory(categoryId) {
-    if (confirm('Are you sure you want to delete this category? This will affect all products in this category.')) {
-        fetch('../../php/api/delete_category.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ category_id: categoryId })
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Refresh the categories list
-                    refreshCategories();
-                } else {
-                    alert(data.error || 'Error deleting category');
-                }
-            })
-            .catch(error => {
-                alert('Error deleting category');
-            });
+    if (!confirm('Are you sure you want to delete this category?')) {
+        return;
     }
+
+    fetch('../../php/api/delete_category.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ category_id: categoryId })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Refresh categories without page reload
+                refreshCategories();
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            alert('An error occurred. Please try again.');
+            console.error('Error:', error);
+        });
 }
 
 function refreshCategories() {

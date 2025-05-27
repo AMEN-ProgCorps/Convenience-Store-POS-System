@@ -16,11 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $password = $_POST['log_password'];
 
         // Search all_accounts view for username (name) and password
-        $stmt = $conn->prepare("SELECT * FROM all_accounts WHERE name = ?");
-        $stmt->execute([$username]);
+        $stmt = $conn->prepare("SELECT * FROM all_accounts WHERE name = ? AND password = ?");
+        $stmt->execute([$username, $password]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user && $password === $user['password']) {
+        if ($user) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
             $_SESSION['user_role'] = $user['role'];
@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error_message = "Passwords do not match.";
         } else {
             try {
-                // Store password as plain text to match all_accounts view (for demo, not secure)
+                // Store password as plain text
                 $stmt = $conn->prepare("INSERT INTO customer_accounts (name, password, email, phone_number) VALUES (?, ?, ?, ?)");
                 if ($stmt->execute([$username, $password, $email, $phone])) {
                     echo "<script>console.log('Registration complete');</script>";

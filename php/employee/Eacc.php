@@ -1,6 +1,13 @@
 <?php
 include '../import/database.php';
 session_start();
+
+// Strict access control - Only Admin can access this page
+$role = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : '';
+if ($role !== 'Admin') {
+    header('Location: ../access_portal.php');
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -30,8 +37,6 @@ session_start();
                         <?php endif; ?>
                 </div>
                 <div class="tab-container">
-                <?php $role = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : ''; ?>
-                <?php if ($role === 'Admin'): ?>
                     <div class="items-tab tab" onclick="window.location.href='Einv.php'">
                         <div class="tab-icon">
                             <i class="fas fa-boxes"></i>
@@ -56,19 +61,6 @@ session_start();
                         </div>
                         <div class="tab-label">Accounts</div>
                     </div>
-                    <div class="items-tab tab" onclick="window.location.href='Estaf.php'">
-                        <div class="tab-icon">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <div class="tab-label">Staff</div>
-                    </div>
-                <?php else: ?>
-                    <!-- Not admin: bounce to previous page or access_portal.php -->
-                    <?php
-                        header('Location: ../access_portal.php');
-                        exit;
-                    ?>
-                <?php endif; ?>
                     <div class="logout-tab tab" onclick="window.location.href='../access_portal.php?logout=1';">
                         <div class="tab-icon"><i class="fa-solid fa-circle-user"></i></div>
                         <div class="tab-label">Logout</div>

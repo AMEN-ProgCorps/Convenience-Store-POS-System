@@ -32,12 +32,11 @@ session_start();
                 <div class="tab-container">
                 <?php
                     $role = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : '';
-                    if ($role !== 'Admin' && $role !== 'Manager') {
+                    if ($role !== 'Manager') {
                         header('Location: ../access_portal.php');
                         exit;
                     }
                 ?>
-                <?php if ($role === 'Admin' || $role === 'Manager'): ?>
                     <div class="items-tab tab" onclick="window.location.href='Einv.php'">
                         <div class="tab-icon">
                             <i class="fas fa-boxes"></i>
@@ -56,21 +55,12 @@ session_start();
                         </div>
                         <div class="tab-label">Cashier</div>
                     </div>
-                    <?php if ($role === 'Admin'): ?>
-                    <div class="items-tab tab" onclick="window.location.href='Eacc.php'">
-                        <div class="tab-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="tab-label">Accounts</div>
-                    </div>
-                    <?php endif; ?>
                     <div class="items-tab tab active">
                         <div class="tab-icon">
                             <i class="fas fa-user-tie"></i>
                         </div>
                         <div class="tab-label">Staff</div>
                     </div>
-                <?php endif; ?>
                     <div class="logout-tab tab" onclick="window.location.href='../access_portal.php?logout=1';">
                         <div class="tab-icon"><i class="fa-solid fa-circle-user"></i></div>
                         <div class="tab-label">Logout</div>
@@ -89,7 +79,6 @@ session_start();
                         <div class="filter-toggle">
                             <div class="filter-option active" data-role="all">All</div>
                             <div class="filter-option" data-role="Cashier">Cashier</div>
-                            <div class="filter-option" data-role="Manager">Manager</div>
                         </div>
                         <button class="create-staff-btn">Create Staff Account</button>
                     </div>
@@ -97,8 +86,8 @@ session_start();
                 
                 <div class="staff-container">
                     <?php
-                    // Fetch all employee accounts
-                    $sql = "SELECT * FROM employee_accounts WHERE role != 'Admin' ORDER BY employee_id";
+                    // Fetch all employee accounts except Admin and Manager
+                    $sql = "SELECT * FROM employee_accounts WHERE role = 'Cashier' ORDER BY employee_id";
                     $stmt = $conn->prepare($sql);
                     $stmt->execute();
                     
@@ -135,9 +124,6 @@ session_start();
                             <label for="role">Role</label>
                             <select id="role" name="role" required>
                                 <option value="Cashier">Cashier</option>
-                                <?php if ($_SESSION['user_role'] === 'Admin'): ?>
-                                <option value="Manager">Manager</option>
-                                <?php endif; ?>
                             </select>
                         </div>
 

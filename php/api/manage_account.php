@@ -36,13 +36,13 @@ try {
             $stmt = $conn->prepare("UPDATE customer_accounts SET name = ?, phone_number = ?, email = ? WHERE customer_id = ?");
             if (!empty($password)) {
                 $stmt = $conn->prepare("UPDATE customer_accounts SET name = ?, phone_number = ?, email = ?, password = ? WHERE customer_id = ?");
-                $success = $stmt->execute([$name, $phone, $email, password_hash($password, PASSWORD_DEFAULT), $id]);
+                $success = $stmt->execute([$name, $phone, $email, $password, $id]);
             } else {
                 $success = $stmt->execute([$name, $phone, $email, $id]);
             }
         } else {
             $stmt = $conn->prepare("INSERT INTO customer_accounts (name, password, phone_number, email) VALUES (?, ?, ?, ?)");
-            $success = $stmt->execute([$name, password_hash($password, PASSWORD_DEFAULT), $phone, $email]);
+            $success = $stmt->execute([$name, $password, $phone, $email]);
         }
     } else if ($type === 'employee') {
         $role = $_POST['role'] ?? 'Cashier';
@@ -52,13 +52,13 @@ try {
             $stmt = $conn->prepare("UPDATE employee_accounts SET name = ?, role = ?, store_name = ? WHERE employee_id = ?");
             if (!empty($password)) {
                 $stmt = $conn->prepare("UPDATE employee_accounts SET name = ?, role = ?, store_name = ?, password = ? WHERE employee_id = ?");
-                $success = $stmt->execute([$name, $role, $store_name, password_hash($password, PASSWORD_DEFAULT), $id]);
+                $success = $stmt->execute([$name, $role, $store_name, $password, $id]);
             } else {
                 $success = $stmt->execute([$name, $role, $store_name, $id]);
             }
         } else {
             $stmt = $conn->prepare("INSERT INTO employee_accounts (name, password, role, store_name) VALUES (?, ?, ?, ?)");
-            $success = $stmt->execute([$name, password_hash($password, PASSWORD_DEFAULT), $role, $store_name]);
+            $success = $stmt->execute([$name, $password, $role, $store_name]);
         }
     } else {
         throw new Exception('Invalid account type');

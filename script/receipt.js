@@ -17,9 +17,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Get payment type
         let paymentType = 'cash';
-        const boxToggle = document.querySelector('.box-toggle');
-        if (userId !== 'C101' && boxToggle) {
-            if (boxToggle.querySelector('.ewallet-box.active')) paymentType = 'e-wallet';
+        if (userId !== 'C101') {
+            paymentType = window.currentPaymentType || 'cash';
         }
 
         // Get discount info
@@ -39,55 +38,58 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Prepare cart data
         const cart = cartItems.map(item => {
-            const productId = item.getAttribute('data-id') || item.id;
-            const name = item.querySelector('.cart-top-body-product-label-name')?.textContent || '';
-            const quantity = parseInt(item.querySelector('.cart-top-body-product-label-details-quantity')?.textContent || '0');
-            const unitPrice = parseFloat((item.querySelector('.cart-top-body-product-label-details-price')?.textContent || '0').replace(/[^\d.\-]/g, ''));
-            const total = parseFloat((item.querySelector('.cart-top-body-product-total_price')?.textContent || '0').replace(/[^\d.\-]/g, ''));
+            const productId = item.getAttribute('product');
+            const quantity = parseInt(item.querySelector('.cart-top-body-product-label-details-quantity').textContent);
+            const unitPrice = parseFloat(item.querySelector('.cart-top-body-product-label-details-price').textContent.replace(/[^\d.\-]/g, '')) / quantity;
+            const total = unitPrice * quantity;
+
             return {
-                product_id: parseInt(productId),
-                name,
-                quantity,
+                product_id: productId,
+                quantity: quantity,
                 unit_price: unitPrice,
-                total
+                total: total
             };
         });
 
-        // Send order to backend
+        // Send order to server
         try {
-            const res = await fetch('../../php/api/place_order.php', {
+            const response = await fetch('../../php/api/place_order.php', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify({
-                    cart,
+                    cart: cart,
                     discount_id: discountId,
                     discount_percent: discountPercent,
                     payment_type: paymentType,
                     sub_total: subTotal,
                     discount_amount: discountAmount,
-                    tax,
-                    total
+                    tax: tax,
+                    total: total
                 })
             });
-            const text = await res.text();
-            let data;
-            try {
-                data = JSON.parse(text);
-            } catch (jsonErr) {
-                console.error('Server did not return valid JSON:', text);
-                alert('Order failed! (Invalid server response)');
-                return;
+
+            const data = await response.json();
+            if (data.error) {
+                throw new Error(data.error);
             }
-            if (!data.success) {
-                alert(data.error || 'Order failed!');
-                console.error('Order failed:', data);
-                return;
-            }
+
+            // Clear cart and reset pricing displays
+            document.querySelector('.cart-top-body').innerHTML = '';
+            // Reset all price displays to 0
+            document.querySelectorAll('.t2.total-box-label-price').forEach(el => el.textContent = '₱0.00');
+            document.querySelectorAll('.t4.total-box-label-price').forEach(el => el.textContent = '-₱0.00');
+            document.querySelectorAll('.t6.total-box-label-price').forEach(el => el.textContent = '₱0.00');
+            document.querySelectorAll('.out7 .total-box-label-price').forEach(el => el.textContent = '₱0.00');
+
             // Show receipt
             showReceipt(data.receipt);
-        } catch (err) {
-            alert('Order failed!');
-            console.error('Order failed (exception):', err);
+            alert('Order placed successfully!');
+
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error placing order: ' + error.message);
         }
     });
 });

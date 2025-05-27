@@ -80,21 +80,41 @@ function createCategorySalesChart(data) {
     new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: data.map(category => category.name),
+            labels: data.map(item => item.name),
             datasets: [{
-                data: data.map(category => category.sales),
+                data: data.map(item => item.total_sold),
                 backgroundColor: [
                     '#0A401E',
-                    '#156835',
-                    '#1F914C',
-                    '#29BA63',
-                    '#33E37A'
+                    '#156F3C',
+                    '#45B07F',
+                    '#88D4AB',
+                    '#B7E4C7',
+                    '#D8F3DC'
                 ]
             }]
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Sales by Category This Week'
+                },
+                legend: {
+                    display: true,
+                    position: 'right'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            const percentage = ((context.raw / total) * 100).toFixed(1);
+                            return `${context.label}: ${context.raw} units (${percentage}%)`;
+                        }
+                    }
+                }
+            }
         }
     });
 }
@@ -149,17 +169,21 @@ function displayRecords(containerId, records, isAddition) {
         const recordElement = document.createElement('div');
         recordElement.className = 'record-item';
 
-        let discountInfo = '';
-        if (record.discount_id) {
-            discountInfo = `<div class="record-discount">Discount: ${record.discount_percentage}%</div>`;
-        }
+        // Format the date
+        const date = new Date(record.change_date);
+        const formattedDate = date.toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
 
         recordElement.innerHTML = `
             <div class="record-details">
                 <div class="record-product">${record.product_name}</div>
                 <div class="record-info">
-                    ${record.employee_name} • ${new Date(record.change_date).toLocaleString()}
-                    ${discountInfo}
+                    ${record.employee_name} • ${formattedDate}
                 </div>
             </div>
             <div class="record-quantity ${isAddition ? 'quantity-added' : 'quantity-reduced'}">
@@ -200,37 +224,100 @@ function showForm(type) {
     }
 }
 
-function handleProductSubmit(event) {
+function switchProductForm(type) {
+    const newForm = document.getElementById('add-product-form');
+    const existingForm = document.getElementById('update-product-form');
+    const buttons = document.querySelectorAll('.type-btn');
+
+    if (type === 'new') {
+        newForm.classList.add('active');
+        existingForm.classList.remove('active');
+        buttons[0].classList.add('active');
+        buttons[1].classList.remove('active');
+    } else {
+        newForm.classList.remove('active');
+        existingForm.classList.add('active');
+        buttons[0].classList.remove('active');
+        buttons[1].classList.add('active');
+        loadExistingProducts();
+    }
+}
+
+function loadExistingProducts() {
+    fetch('../../php/api/get_products.php')
+        .then(response => response.json())
+        .then(products => {
+            const select = document.getElementById('existing-product');
+            select.innerHTML = '<option value="">Select Product</option>';
+            products.forEach(product => {
+                select.innerHTML += `
+                    <option value="${product.product_id}" 
+                            data-stock="${product.stock_level}"
+                            data-category="${product.category_id}">
+                        ${product.name} (${product.category_name})
+                    </option>`;
+            });
+        })
+        .catch(error => console.error('Error loading products:', error));
+}
+
+function loadProductDetails(productId) {
+    if (!productId) {
+        document.getElementById('current-stock').value = '';
+        return;
+    }
+
+    const option = document.querySelector(`#existing-product option[value="${productId}"]`);
+    document.getElementById('current-stock').value = option.dataset.stock;
+}
+
+function handleProductSubmit(event, type) {
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
 
     // Reset messages
-    document.getElementById('product-error').style.display = 'none';
-    document.getElementById('product-success').style.display = 'none';
+    const errorElement = type === 'new' ? 'product-error' : 'update-error';
+    const successElement = type === 'new' ? 'product-success' : 'update-success';
+    document.getElementById(errorElement).style.display = 'none';
+    document.getElementById(successElement).style.display = 'none';
 
-    fetch('../../php/api/add_product.php', {
+    const endpoint = type === 'new' ? 'add_product.php' : 'update_product_stock.php';
+
+    fetch('../../php/api/' + endpoint, {
         method: 'POST',
         body: formData
     })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                document.getElementById('product-success').textContent = 'Product added successfully!';
-                document.getElementById('product-success').style.display = 'block';
+                document.getElementById(successElement).textContent =
+                    type === 'new' ? 'Product added successfully!' : 'Stock updated successfully!';
+                document.getElementById(successElement).style.display = 'block';
                 form.reset();
 
-                // Refresh inventory data
+                // Clear the current stock display if it's an update
+                if (type === 'existing') {
+                    document.getElementById('current-stock').value = '';
+                }
+
+                // Refresh all data
                 loadInventoryStats();
                 loadInventoryRecords();
+                loadExistingProducts();
+
+                // Force immediate refresh of records
+                setTimeout(() => {
+                    loadInventoryRecords();
+                }, 100);
             } else {
-                document.getElementById('product-error').textContent = data.error || 'Error adding product';
-                document.getElementById('product-error').style.display = 'block';
+                document.getElementById(errorElement).textContent = data.error || 'Error processing request';
+                document.getElementById(errorElement).style.display = 'block';
             }
         })
         .catch(error => {
-            document.getElementById('product-error').textContent = 'Error adding product';
-            document.getElementById('product-error').style.display = 'block';
+            document.getElementById(errorElement).textContent = 'Error processing request';
+            document.getElementById(errorElement).style.display = 'block';
         });
 }
 

@@ -1,26 +1,33 @@
 .center-bar {
+    flex: 1;
     padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    background-color: #f5f5f5;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: auto repeat(8, 1fr);
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
 }
 
-/* Header Section */
+/* Header stats */
 .inventory-header {
+    grid-area: 1 / 1 / 2 / 7;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
-    padding: 20px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: transparent;
+    box-shadow: none;
+    padding: 0;
+    margin-bottom: 0;
 }
 
 .stat-box {
-    padding: 15px;
-    border-radius: 6px;
-    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: white;
     text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .stat-title {
@@ -35,43 +42,91 @@
     color: #0A401E;
 }
 
-/* Charts Section */
+/* Charts Container */
 .charts-container {
+    grid-area: 2 / 1 / 7 / 7;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-bottom: 20px;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+}
+
+/* Popular Items Chart */
+.chart-box:nth-child(1) {
+    grid-area: 1 / 1 / 3 / 4;
+}
+
+/* Category Sales Chart */
+.chart-box:nth-child(2) {
+    grid-area: 1 / 4 / 3 / 7;
+}
+
+/* Reduction Rate Chart */
+.chart-box:nth-child(3) {
+    grid-area: 3 / 2 / 5 / 6;
+}
+
+/* Records Container */
+.inventory-body {
+    display: contents;
+}
+
+/* Stock Reductions */
+.inventory-body .records-section:nth-child(1) {
+    grid-area: 7 / 1 / 10 / 4;
+    margin: 0;
+}
+
+/* Stock Additions */
+.inventory-body .records-section:nth-child(2) {
+    grid-area: 7 / 4 / 10 / 7;
+    margin: 0;
 }
 
 .chart-box {
-    background-color: white;
-    border-radius: 8px;
+    background: white;
+    position: relative;
+    border-radius: 10px;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    height: 300px;
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    min-height: 0;
 }
 
 .chart-title {
+    position: absolute;
+    top: 10px;
+    left: 10px;
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 15px;
     color: #333;
 }
 
-/* Records Section */
-.inventory-body {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    height: calc(100vh - 500px);
+canvas {
+    flex: 1;
+    min-height: 0;
 }
 
 .records-section {
-    background-color: white;
-    border-radius: 8px;
+    background: white;
+    border-radius: 10px;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+}
+
+#reductions-container,
+#additions-container {
+    flex: 1;
     overflow-y: auto;
+    min-height: 0;
 }
 
 .records-header {
@@ -408,4 +463,39 @@
 .confirm-cancel {
     background-color: #6c757d;
     color: white;
+}
+
+.product-type-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.type-btn {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #0A401E;
+    background: white;
+    color: #0A401E;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.type-btn.active {
+    background: #0A401E;
+    color: white;
+}
+
+.product-form {
+    display: none;
+}
+
+.product-form.active {
+    display: block;
+}
+
+#current-stock {
+    background-color: #f8f9fa;
+    color: #666;
 }

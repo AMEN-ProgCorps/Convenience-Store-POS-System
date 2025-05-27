@@ -4,54 +4,43 @@ session_start();
 
 header('Content-Type: application/json');
 
+// Get POST data
+$data = json_decode(file_get_contents('php://input'), true);
+
+if (!isset($data['order_id']) || !isset($data['employee_id'])) {
+    echo json_encode(['error' => 'Missing required data']);
+    exit;
+}
+
+$order_id = intval($data['order_id']);
+$employee_id = $data['employee_id'];
+
 try {
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        throw new Exception('Invalid request method');
-    }
-
-    // Get the order ID from the request
-    $data = json_decode(file_get_contents('php://input'), true);
-    $order_id = $data['order_id'] ?? null;
-    $employee_id = $data['employee_id'] ?? null;
-
-    if (!$order_id || !$employee_id) {
-        throw new Exception('Missing required parameters');
-    }
-
     // Start transaction
     $conn->beginTransaction();
 
-    // Get all order items for this order
+    // Get order items
     $sql = "SELECT oi.product_id, oi.quantity 
             FROM order_item oi 
             WHERE oi.order_id = :order_id";
     
     $stmt = $conn->prepare($sql);
     $stmt->execute(['order_id' => $order_id]);
-    $orderItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $order_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // For each order item, create an inventory record and update product stock
-    foreach ($orderItems as $item) {
-        // Create inventory record (reduction)
-        $sql = "INSERT INTO inventory_records (product_id, employee_id, quantity_change, change_date) 
-                VALUES (:product_id, :employee_id, :quantity_change, CURRENT_TIMESTAMP)";
+    // Add inventory records for each item
+    foreach ($order_items as $item) {
+        // Insert negative quantity change to represent stock reduction
+        $sql = "INSERT INTO inventory_records 
+                (product_id, employee_id, quantity_change, change_date) 
+                VALUES 
+                (:product_id, :employee_id, :quantity_change, NOW())";
         
         $stmt = $conn->prepare($sql);
         $stmt->execute([
             'product_id' => $item['product_id'],
             'employee_id' => $employee_id,
             'quantity_change' => -$item['quantity'] // Negative for reduction
-        ]);
-
-        // Update product stock level
-        $sql = "UPDATE products 
-                SET stock_level = stock_level - :quantity 
-                WHERE product_id = :product_id";
-        
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([
-            'quantity' => $item['quantity'],
-            'product_id' => $item['product_id']
         ]);
     }
 

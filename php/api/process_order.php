@@ -23,27 +23,48 @@ try {
     $conn->beginTransaction();
 
     if ($action === 'approve') {
-        // Call the inventory update API
-        $ch = curl_init('http://' . $_SERVER['HTTP_HOST'] . '/Convenience-Store-POS-System/php/api/update_inventory_records.php');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
-            'order_id' => $order_id,
-            'employee_id' => $employee_id
-        ]));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+        // Update order status to completed and create inventory records
+        $sql = "UPDATE orders 
+                SET order_status = 'completed' 
+                WHERE order_id = :order_id";
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['order_id' => $order_id]);
 
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
+        // Get order items
+        $sql = "SELECT oi.product_id, oi.quantity 
+                FROM order_item oi 
+                WHERE oi.order_id = :order_id";
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['order_id' => $order_id]);
+        $order_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        if ($httpCode !== 200) {
-            throw new Exception('Failed to update inventory records');
-        }
+        // Add inventory records for each item
+        foreach ($order_items as $item) {
+            // Insert negative quantity change to represent stock reduction
+            $sql = "INSERT INTO inventory_records 
+                    (product_id, employee_id, quantity_change, change_date) 
+                    VALUES 
+                    (:product_id, :employee_id, :quantity_change, NOW())";
+            
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([
+                'product_id' => $item['product_id'],
+                'employee_id' => $employee_id,
+                'quantity_change' => -$item['quantity'] // Negative for reduction
+            ]);
 
-        $result = json_decode($response, true);
-        if (!$result['success']) {
-            throw new Exception($result['error'] ?? 'Failed to update inventory records');
+            // Update product stock level
+            $sql = "UPDATE products 
+                    SET stock_level = stock_level - :quantity 
+                    WHERE product_id = :product_id";
+            
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([
+                'quantity' => $item['quantity'],
+                'product_id' => $item['product_id']
+            ]);
         }
 
     } else if ($action === 'decline') {

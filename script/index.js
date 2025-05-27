@@ -6,7 +6,7 @@ document.querySelectorAll('.tab').forEach(tab => {
         // Add active class to the clicked tab
         if (tab.classList.contains('active')) return;
         tab.classList.add('active');
-        
+
         // Handle content container animations
         const activeContainer = document.querySelector('.content-container.active');
         if (activeContainer) {
@@ -22,7 +22,7 @@ document.querySelectorAll('.tab').forEach(tab => {
         setTimeout(() => {
             targetContainer.classList.add('active');
         }, 500); // bug Found kaya pala di nagana need nito
-     
+
     });
 });
 
@@ -40,7 +40,7 @@ function toggleCategory() {
     }
 }
 
-function toggleCart(){
+function toggleCart() {
     const cart_btn = document.querySelector('.cart_toggle');
     const cart_body = document.querySelector('.cart-bar');
     cart_btn.classList.toggle('active');
@@ -61,9 +61,16 @@ function toggleCart(){
 
 }
 
-function togglePayment() {
-    const cash = document.querySelector('.cash-box');
-    const ewallet = document.querySelector('.ewallet-box');
-    cash.classList.toggle('active');
-    ewallet.classList.toggle('active');
+function selectPaymentType(type) {
+    // Remove active class from all payment buttons
+    document.querySelectorAll('.payment-button').forEach(btn => {
+        if (btn.getAttribute('data-type') === type) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+
+    // Update the current payment type
+    window.currentPaymentType = type;
 }

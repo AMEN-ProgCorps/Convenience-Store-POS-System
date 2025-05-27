@@ -82,12 +82,6 @@ try {
         if (!$stmt->execute([$order_id, $product_id, $item_total, $quantity, $unit_price])) {
             throw new Exception('Order item insert failed');
         }
-
-        // Update product stock
-        $stmt = $conn->prepare("UPDATE products SET stock_level = stock_level - ? WHERE product_id = ?");
-        if (!$stmt->execute([intval($quantity), intval($product_id)])) {
-            throw new Exception('Failed to update product stock');
-        }
     }
 
     // Commit transaction

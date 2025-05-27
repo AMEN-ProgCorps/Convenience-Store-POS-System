@@ -143,7 +143,13 @@ session_start();
                     </div>
 
                     <div id="product-form" class="form-section active">
-                        <form id="add-product-form" onsubmit="handleProductSubmit(event)">
+                        <div class="product-type-selector">
+                            <button type="button" class="type-btn active" onclick="switchProductForm('new')">Add New Product</button>
+                            <button type="button" class="type-btn" onclick="switchProductForm('existing')">Update Existing Product</button>
+                        </div>
+
+                        <!-- New Product Form -->
+                        <form id="add-product-form" class="product-form active" onsubmit="handleProductSubmit(event, 'new')">
                             <div class="form-group">
                                 <label for="product-name">Product Name</label>
                                 <input type="text" id="product-name" name="name" required>
@@ -174,9 +180,33 @@ session_start();
                                 <input type="number" id="price" name="price" min="0" step="0.01" required>
                             </div>
 
-                            <button type="submit" class="submit-btn">Add Product</button>
+                            <button type="submit" class="submit-btn">Add New Product</button>
                             <div class="error-message" id="product-error"></div>
                             <div class="success-message" id="product-success"></div>
+                        </form>
+
+                        <!-- Existing Product Form -->
+                        <form id="update-product-form" class="product-form" onsubmit="handleProductSubmit(event, 'existing')">
+                            <div class="form-group">
+                                <label for="existing-product">Select Product</label>
+                                <select id="existing-product" name="product_id" required onchange="loadProductDetails(this.value)">
+                                    <option value="">Select Product</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="current-stock">Current Stock Level</label>
+                                <input type="text" id="current-stock" disabled>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="stock-change">Add Stock</label>
+                                <input type="number" id="stock-change" name="stock_change" min="1" required>
+                            </div>
+
+                            <button type="submit" class="submit-btn">Update Stock</button>
+                            <div class="error-message" id="update-error"></div>
+                            <div class="success-message" id="update-success"></div>
                         </form>
                     </div>
 
